@@ -8,6 +8,7 @@ import org.example.Model.UserResponse;
 import org.springframework.http.HttpStatus;
 import java.util.List;
 import org.example.Model.UpdateUserRequest;
+import org.example.Model.PaginationResponse;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -89,14 +90,14 @@ public class UserController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<List<UserResponse>> getUsersByPage(
+    public ResponseEntity<PaginationResponse> getUsersByPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) {
         if(page<1 || size<1){
             return ResponseEntity.badRequest().build();
         }
-        List<UserResponse> users=userService.getUsersByPage(page,size);
-        return ResponseEntity.ok(users);
+        PaginationResponse response=userService.getUsersByPage(page,size);
+        return ResponseEntity.ok(response);
     }
 
 

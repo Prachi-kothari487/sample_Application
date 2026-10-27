@@ -1,5 +1,6 @@
 package org.example.Service;
 import org.example.Dao.UserDao;
+import org.example.Model.PaginationResponse;
 import org.springframework.stereotype.Service;
 import org.example.Model.User;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 import org.example.Model.UpdateUserRequest;
+import org.example.Model.PaginationResponse;
 @Service
 public class UserService {
     private final UserDao userDao;
@@ -117,12 +119,19 @@ public class UserService {
         return true;
     }
 
-    public List<UserResponse> getUsersByPage(int page,int size){
+    public PaginationResponse getUsersByPage(int page,int size){
         int offset=(page-1)*size;
 
         List<User> users=userDao.findUsersByPage(size,offset);
 
-        return users.stream().map(user->new UserResponse(user.getId(),user.getName(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getRole(),user.getStatus())).toList();
+        List<UserResponse> userResponses= users.stream().map(user->new UserResponse(user.getId(),user.getName(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getRole(),user.getStatus())).toList();
+
+        int totalUsers= userDao.getUserCount();
+
+        int totalPages=(int) Math.ceil((double) totalUsers/size);
+        return new PaginationResponse(
+                userResponses,page,size,totalUsers,totalPages
+        );
 
     }
 
