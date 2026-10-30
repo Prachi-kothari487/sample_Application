@@ -125,12 +125,12 @@ public class UserDao {
 
 
     public int updateUser(int id, UpdateUserRequest request){
-        StringBuilder sql=new StringBuilder("UPDATE users set");
+        StringBuilder sql=new StringBuilder("UPDATE users set ");
         List<Object>params=new ArrayList<>();
         List<String>updates=new ArrayList<>();
 
         if(request.getFirstname()!=null){
-            updates.add(" first name = ? ");
+            updates.add(" first_name = ? ");
             params.add(request.getFirstname());
         }
         if(request.getLastname()!=null){

@@ -1,0 +1,180 @@
+.loginview .x-field-label,
+.loginview .x-label-el {
+    color: #9A765F !important;
+}
+
+.loginview .x-input-wrap {
+    border: 1px solid #C9A58B !important;
+    border-radius: 8px !important;
+    background-color: #FFFCF7 !important;
+    box-shadow: none !important;
+}
+
+.loginview input {
+    color: #4B3028 !important;
+}
+
+.loginview input::placeholder {
+    color: #B59A87 !important;
+    opacity: 1 !important;
+}
+
+.loginview .music-signin-button,
+.loginview .music-signin-button .x-inner {
+    background: #4B3028 !important;
+    background-color: #4B3028 !important;
+    background-image: none !important;
+    border-color: #4B3028 !important;
+    box-shadow: none !important;
+}
+
+.loginview .music-signin-button .x-text-el,
+.loginview .music-signin-button .x-button-label {
+    color: #FFFFFF !important;
+    line-height: 1.5 !important;
+    padding: 2px 0 !important;
+}
+
+
+/* =========================
+   Cappuccino Popup
+========================= */
+
+.x-dialog.cappuccino-alert {
+    background: #FFF8ED !important;
+    border: 1px solid #C9A58B !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 28px rgba(75, 48, 40, 0.18) !important;
+    overflow: hidden !important;
+}
+
+/* Header */
+.x-dialog.cappuccino-alert .x-dialogheader,
+.x-dialog.cappuccino-alert .x-header {
+    background: #4B3028 !important;
+    background-image: none !important;
+    border-color: #C9A58B !important;
+}
+
+.x-dialog.cappuccino-alert .x-title,
+.x-dialog.cappuccino-alert .x-title-el,
+.x-dialog.cappuccino-alert .x-title-text {
+    color: #FFF8ED !important;
+}
+.x-dialog.cappuccino-alert .x-footer,
+.x-dialog.cappuccino-alert .x-toolbar,
+.x-dialog.cappuccino-alert .x-toolbar-body-el {
+    background: #FFF8ED !important;
+    background-image: none !important;
+    border-color: #C9A58B !important;
+    box-shadow: none !important;
+}
+
+.x-dialog.cappuccino-alert .cappuccino-ok-button,
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-el {
+    background: #4B3028 !important;
+    background-color: #4B3028 !important;
+    background-image: none !important;
+    border: 1px solid #4B3028 !important;
+    box-shadow: none !important;
+}
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-text-el,
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-label {
+    color: #FFF8ED !important;
+    -webkit-text-fill-color: #FFF8ED !important;
+}
+
+.x-dialog.cappuccino-alert .x-panel-outer-border-rl {
+
+    border-color: #C9A58B !important;
+
+}
+
+
+
+/* =========================
+   Dashboard Sidebar
+========================= */
+
+.dashboard-sidebar {
+    background-image: url('/sample-application/resources/images/musicvault-sidebar-bg.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Leave space for the logo already in the image */
+    padding: 220px 16px 20px;
+}
+
+/* Navigation buttons */
+
+.dashboard-sidebar .dashboard-nav-button,
+.dashboard-sidebar .dashboard-nav-button .x-button-el {
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 10px !important;
+}
+
+.dashboard-sidebar .dashboard-nav-button .x-text-el {
+    color: #4B3028 !important;
+    font-size: 15px;
+}
+
+/* Active navigation item */
+
+.dashboard-sidebar .dashboard-nav-button.active,
+.dashboard-sidebar .dashboard-nav-button.active .x-button-el {
+    background: #B77B52 !important;
+    border-radius: 10px !important;
+}
+
+/* Main content */
+
+.dashboard-main {
+    background-color: #FFF8ED;
+    padding: 32px;
+}
+
+.dashboard-heading h1 {
+    color: #4B3028;
+    font-size: 30px;
+    margin: 0 0 8px;
+}
+
+.dashboard-heading p {
+    color: #80634F;
+    font-size: 15px;
+    margin: 0;
+}
+
+.dashboard-stat-card {
+    background-color: #FFF8ED;
+    border: 1px solid #C9A58B;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(75, 48, 40, 0.08);
+}
+
+.dashboard-stat-card h3 {
+    color: #8B6248;
+    font-size: 17px;
+}
+
+.dashboard-stat-card h1 {
+    color: #4B3028;
+    font-size: 34px;
+}
+/* Sidebar button text */
+.dashboard-sidebar .dashboard-nav-button .x-text-el {
+    font-family: Arial, sans-serif !important;
+    font-size: 15px !important;
+    line-height: normal !important;
+    padding: 6px 0 !important;
+}
+
+/* Give buttons enough vertical space */
+.dashboard-sidebar .dashboard-nav-button {
+    min-height: 44px !important;
+    height: auto !important;
+}
