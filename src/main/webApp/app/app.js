@@ -1,4 +1,3 @@
-
 Ext.application({
     name: 'MusicApp',
 
@@ -8,4 +7,3 @@ Ext.application({
         });
     }
 });
-

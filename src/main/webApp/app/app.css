@@ -92,6 +92,135 @@
 
 
 
+/*!* =========================*/
+/*   Dashboard Sidebar*/
+/*========================= *!*/
+
+/*.dashboard-sidebar {*/
+/*    background-image: url('/sample-application/resources/images/musicvault-sidebar-bg.png');*/
+/*    background-size: 100% 100%;*/
+/*    background-position: center;*/
+/*    background-repeat: no-repeat;*/
+
+/*    !* Leave space for the logo already in the image *!*/
+/*    padding: 220px 16px 20px;*/
+/*}*/
+
+/*!* Navigation buttons *!*/
+
+/*.dashboard-sidebar .dashboard-nav-button,*/
+/*.dashboard-sidebar .dashboard-nav-button .x-button-el {*/
+/*    background: transparent !important;*/
+/*    background-image: none !important;*/
+/*    border: none !important;*/
+/*    box-shadow: none !important;*/
+/*    border-radius: 10px !important;*/
+/*}*/
+
+/*.dashboard-sidebar .dashboard-nav-button .x-text-el {*/
+/*    color: #4B3028 !important;*/
+/*    font-size: 15px;*/
+/*}*/
+
+/*!* Active navigation item *!*/
+
+/*.dashboard-sidebar .dashboard-nav-button.active,*/
+/*.dashboard-sidebar .dashboard-nav-button.active .x-button-el {*/
+/*    background: #B77B52 !important;*/
+/*    border-radius: 10px !important;*/
+/*}*/
+
+/*!* Main content *!*/
+
+/*.dashboard-main {*/
+/*    background-color: #FFF8ED;*/
+/*    padding: 32px;*/
+/*}*/
+
+/*.dashboard-heading h1 {*/
+/*    color: #4B3028;*/
+/*    font-size: 30px;*/
+/*    margin: 0 0 8px;*/
+/*}*/
+
+/*.dashboard-heading p {*/
+/*    color: #80634F;*/
+/*    font-size: 15px;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.dashboard-stat-card {*/
+/*    background-color: #FFF8ED;*/
+/*    border: 1px solid #C9A58B;*/
+/*    border-radius: 14px;*/
+/*    box-shadow: 0 4px 14px rgba(75, 48, 40, 0.08);*/
+/*}*/
+
+/*.dashboard-stat-card h3 {*/
+/*    color: #8B6248;*/
+/*    font-size: 17px;*/
+/*}*/
+
+/*.dashboard-stat-card h1 {*/
+/*    color: #4B3028;*/
+/*    font-size: 34px;*/
+/*}*/
+/*!* Sidebar button text *!*/
+/*.dashboard-sidebar .dashboard-nav-button .x-text-el {*/
+/*    font-family: Arial, sans-serif !important;*/
+/*    font-size: 15px !important;*/
+/*    line-height: normal !important;*/
+/*    padding: 6px 0 !important;*/
+/*}*/
+
+/*!* Give buttons enough vertical space *!*/
+/*.dashboard-sidebar .dashboard-nav-button {*/
+/*    min-height: 44px !important;*/
+/*    height: auto !important;*/
+/*}*/
+
+/*!* Main dashboard area *!*/
+/*.dashboard-main {*/
+/*    background-color: #F5EBDD;*/
+/*    padding: 35px;*/
+/*}*/
+
+/*!* Dashboard heading *!*/
+/*.dashboard-heading h1 {*/
+/*    color: #4B3028;*/
+/*    font-size: 28px;*/
+/*    font-weight: 600;*/
+/*    margin: 0 0 8px 0;*/
+/*}*/
+
+/*.dashboard-heading p {*/
+/*    color: #8B6248;*/
+/*    font-size: 15px;*/
+/*    margin: 0;*/
+/*}*/
+
+/*!* Statistics cards *!*/
+/*.dashboard-stat-card {*/
+/*    background-color: #FFF8ED;*/
+/*    border: 1px solid #E2C1A6;*/
+/*    border-radius: 12px;*/
+/*}*/
+
+/*.dashboard-stat-card h3 {*/
+/*    color: #8B6248;*/
+/*    font-size: 16px;*/
+/*    font-weight: 500;*/
+/*    margin: 0 0 15px 0;*/
+/*}*/
+
+/*.dashboard-stat-card h1 {*/
+/*    color: #4B3028;*/
+/*    font-size: 30px;*/
+/*    font-weight: 600;*/
+/*    margin: 0;*/
+/*}*/
+
+
 /* =========================
    Dashboard Sidebar
 ========================= */
@@ -101,8 +230,6 @@
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
-
-    /* Leave space for the logo already in the image */
     padding: 220px 16px 20px;
 }
 
@@ -117,9 +244,17 @@
     border-radius: 10px !important;
 }
 
+.dashboard-sidebar .dashboard-nav-button {
+    min-height: 44px !important;
+    height: auto !important;
+}
+
 .dashboard-sidebar .dashboard-nav-button .x-text-el {
     color: #4B3028 !important;
-    font-size: 15px;
+    font-family: Arial, sans-serif !important;
+    font-size: 15px !important;
+    line-height: normal !important;
+    padding: 6px 0 !important;
 }
 
 /* Active navigation item */
@@ -130,51 +265,237 @@
     border-radius: 10px !important;
 }
 
-/* Main content */
+/* =========================
+   Main Dashboard
+========================= */
 
 .dashboard-main {
-    background-color: #FFF8ED;
-    padding: 32px;
+    background-color: #F5EBDD;
+    padding: 35px;
 }
+
+/* Dashboard heading */
 
 .dashboard-heading h1 {
     color: #4B3028;
-    font-size: 30px;
+    font-size: 28px;
+    font-weight: 600;
     margin: 0 0 8px;
 }
 
 .dashboard-heading p {
-    color: #80634F;
+    color: #8B6248;
     font-size: 15px;
     margin: 0;
 }
 
+/* Statistics cards */
+
 .dashboard-stat-card {
     background-color: #FFF8ED;
-    border: 1px solid #C9A58B;
-    border-radius: 14px;
+    border: 1px solid #E2C1A6;
+    border-radius: 12px;
     box-shadow: 0 4px 14px rgba(75, 48, 40, 0.08);
 }
 
 .dashboard-stat-card h3 {
     color: #8B6248;
-    font-size: 17px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 15px;
 }
 
 .dashboard-stat-card h1 {
     color: #4B3028;
-    font-size: 34px;
-}
-/* Sidebar button text */
-.dashboard-sidebar .dashboard-nav-button .x-text-el {
-    font-family: Arial, sans-serif !important;
-    font-size: 15px !important;
-    line-height: normal !important;
-    padding: 6px 0 !important;
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
 }
 
-/* Give buttons enough vertical space */
-.dashboard-sidebar .dashboard-nav-button {
-    min-height: 44px !important;
-    height: auto !important;
+/* ================================
+   USER MANAGEMENT - CAPPUCCINO
+================================ */
+
+.cappuccino-users-view {
+    background-color: #F5EBDD;
+    padding: 32px;
+}
+
+/* Page heading */
+.users-title {
+    color: #4B3028;
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.users-subtitle {
+    color: #98735F;
+    font-size: 17px;
+    margin-top: 8px;
+}
+
+/* Add User button */
+.cappuccino-users-view .cappuccino-primary-button {
+    background-color: #653B28;
+    background-image: none;
+    border: 1px solid #653B28;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.cappuccino-users-view .cappuccino-primary-button .x-text-el {
+    color: #FFF8EF;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Search field */
+.cappuccino-users-view .cappuccino-search-field .x-input-wrap {
+    background-color: #FFFAF4;
+    border: 1px solid #E8CBB5;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.cappuccino-users-view .cappuccino-search-field input {
+    color: #4B3028;
+}
+
+.cappuccino-users-view .cappuccino-search-field input::placeholder {
+    color: #A88976;
+}
+
+/* Grid */
+.cappuccino-users-view .cappuccino-users-grid {
+    background-color: #FFFAF4;
+    border: 1px solid #8b6248;
+    border-radius: 16px;
+}
+
+/* Grid headers */
+.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn {
+    background-color: #F0DDCC;
+    border-color: #E3C5AD;
+}
+
+/* Grid cells */
+.cappuccino-users-view .cappuccino-users-grid .x-gridcell {
+    background-color: #FFFAF4;
+    border-color: #F0DFD0;
+}
+
+/* Grid hover */
+.cappuccino-users-view .cappuccino-users-grid .x-gridrow-over .x-gridcell {
+    background-color: #F8EBDD;
+}
+
+/* Brown grid borders */
+.cappuccino-users-view .cappuccino-users-grid .x-gridcell {
+    border-color: #4e290d;
+}
+
+.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn {
+    border-color: #4e290d;
+}
+.cappuccino-users-view .cappuccino-users-grid .x-gridcell,
+.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn {
+    border-right: 1px solid #4e290d;
+    border-bottom: 1px solid #4e290d;
+}
+.cappuccino-users-view .cappuccino-users-grid {
+    background-color: #FFFAF4;
+}
+
+.cappuccino-users-view .cappuccino-users-grid .x-gridcell,
+.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn {
+    background-color: #FFFAF4;
+}
+.x-textfield.x-focused .x-input-wrap-el{
+    background-color: #FFFAF4;
+    border-color: #4e290d;
+
+}
+
+.x-textfield .x-input-wrap-el {
+    border: 1px solid #61422c;
+}
+
+.x-headercontainer {
+    border-width: 0 0 0;
+    border-style: solid;
+
+}
+.add-user-button.x-button {
+    background-color: #4B3028;
+    border: 1px solid #4B3028;
+    border-radius: 10px;
+}
+
+.add-user-button .x-button-label {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.x-panel-outer-border-rbl {
+    border-right-color: #4e290d !important;
+
+    border-bottom-color: #4e290d !important;
+
+    border-left-color: #4e290d !important;}
+.x-panelheader {
+    background-color: #4e290d;
+    background-image: none;
+    border: 1px solid #4e290d;
+}
+
+
+
+div#ext-element-722 {
+    background-color: #4e290d;
+}
+/*!* Add User popup footer *!*/
+/*.add-user-dialog .x-toolbar-footer {*/
+/*    background-color: #4e290d !important;*/
+/*    border-top: 1px solid #4e290d !important;*/
+/*}*/
+
+/*!* Cancel and Save User buttons *!*/
+/*.add-user-dialog .x-toolbar-footer .x-button {*/
+/*    background-color: #F5EBDD !important;*/
+/*    border: 1px solid #D8B99A !important;*/
+/*    border-radius: 6px !important;*/
+/*}*/
+
+/*!* Button text *!*/
+/*.add-user-dialog .x-toolbar-footer .x-button .x-button-label {*/
+/*    color: #4e290d !important;*/
+/*    font-size: 15px;*/
+/*    font-weight: 600;*/
+/*}*/
+
+.add-user-dialog .x-toolbar-footer {
+    background-color: #4B3028;
+    /*border: none;*/
+    padding: 12px;
+}
+
+.add-user-dialog .x-toolbar-footer .x-button {
+    background-color: #F5EBDD;
+    /*border: 1px solid #D8B99A;*/
+    border-radius: 7px;
+}
+
+.add-user-dialog .x-toolbar-footer .x-button .x-text-el {
+    color: #4B3028;
+    font-size: 15px;
+    font-weight: 600;
+}
+.x-panel-outer-border-trl {
+    border-top-color: #4e290d !important;
+
+    border-right-color: #4e290d !important;
+
+    border-left-color: #4e290d !important;
+
 }

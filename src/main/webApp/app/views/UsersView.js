@@ -2,10 +2,10 @@
 Ext.define('MusicApp.view.UsersView', {
     extend: 'Ext.Container',
     xtype: 'usersview',
-
+    cls: 'cappuccino-users-view',
     layout: 'vbox',
     scrollable: true,
-    padding: 24,
+
 
     items: [
         {
@@ -18,33 +18,39 @@ Ext.define('MusicApp.view.UsersView', {
             items: [
                 {
                     xtype: 'component',
+                    cls: 'users-page-heading',
                     flex: 1,
                     html: `
-                        <div style="font-size:28px; font-weight:600; color:#202938;">
-                            User Management
-                        </div>
-                        <div style="font-size:14px; color:#778095; margin-top:8px;">
-                            Manage users and their access to Music-application
-                        </div>
-                    `
+    <div class="users-title">
+        User Management
+    </div>
+    <div class="users-subtitle">
+        Manage users and their access to MusicVault
+    </div>
+`
                 },
                 {
                     xtype: 'button',
                     text: '+ Add User',
-                    ui: 'action',
+                    cls: 'add-user-button',
+                    ui:'plain',
+                    width: 150,
+                    height:56,
+
 
 
                     handler: function () {
                         var form = Ext.create('Ext.form.Panel', {
-                            title: 'Add New User',
                             width: 450,
                             bodyPadding: 20,
+
                             defaults: {
                                 xtype: 'textfield',
                                 labelAlign: 'top',
                                 width: '100%',
                                 required: true
                             },
+
                             items: [
                                 {
                                     name: 'username',
@@ -93,24 +99,43 @@ Ext.define('MusicApp.view.UsersView', {
                                     ],
                                     value: 'Active'
                                 }
-                            ],
+                            ]
+                        });
+
+                        var windowForm = Ext.create('Ext.Dialog', {
+                            title: 'Add User',
+                            cls: 'add-user-dialog',
+                            width: 480,
+                            maxHeight: '90%',
+                            scrollable: true,
+                            closable: true,
+                            modal: true,
+
+                            items: [form],
+
                             buttons: [
                                 {
                                     text: 'Cancel',
+                                    ui: 'plain',
                                     handler: function () {
                                         windowForm.destroy();
                                     }
                                 },
                                 {
                                     text: 'Save User',
-                                    ui: 'action',
+                                    ui: 'plain',
+
                                     handler: function () {
                                         var values = form.getValues();
 
                                         if (!values.username || !values.password ||
                                             !values.firstname || !values.lastname ||
                                             !values.email || !values.role || !values.status) {
-                                            Ext.Msg.alert('Validation', 'Please fill all fields.');
+
+                                            Ext.Msg.alert(
+                                                'Validation',
+                                                'Please fill all fields.'
+                                            );
                                             return;
                                         }
 
@@ -124,15 +149,23 @@ Ext.define('MusicApp.view.UsersView', {
                                         })
                                             .then(function (response) {
                                                 if (!response.ok) {
-                                                    throw new Error('Could not create user. Check the entered details.');
+                                                    throw new Error(
+                                                        'Could not create user. Check the entered details.'
+                                                    );
                                                 }
                                                 return response.json();
                                             })
                                             .then(function () {
                                                 windowForm.destroy();
-                                                Ext.Msg.alert('Success', 'User created successfully!');
 
-                                                var grid = Ext.ComponentQuery.query('usersview grid')[0];
+                                                Ext.Msg.alert(
+                                                    'Success',
+                                                    'User created successfully!'
+                                                );
+
+                                                var grid =
+                                                    Ext.ComponentQuery.query('usersview grid')[0];
+
                                                 if (grid) {
                                                     grid.getStore().reload();
                                                 }
@@ -145,18 +178,9 @@ Ext.define('MusicApp.view.UsersView', {
                             ]
                         });
 
-                        var windowForm = Ext.create('Ext.Dialog', {
-                            title: 'Add User',
-                            width: 480,
-                            maxHeight: '90%',
-                            scrollable: true,
-                            closable: true,
-                            modal: true,
-                            items: [form]
-                        });
-
                         windowForm.show();
                     }
+
 
 
                 }
@@ -164,18 +188,15 @@ Ext.define('MusicApp.view.UsersView', {
         },
         {
             xtype: 'container',
-            style: {
-                background: '#ffffff',
-                borderRadius: '12px',
-                border: '1px solid #e5e7eb'
-            },
-            padding: 20,
+            cls: 'users-content-panel',
+
             width: '100%',
             items: [
 
                 {
                     xtype: 'textfield',
-                    label: 'Search Users',
+                    // label: 'Search Users',
+                    cls: 'cappuccino-search-field',
                     placeholder: 'Search by username, name, or email...',
                     clearable: true,
                     width: '100%',
@@ -210,6 +231,7 @@ Ext.define('MusicApp.view.UsersView', {
 
                 {
                     xtype: 'grid',
+                    cls: 'cappuccino-users-grid',
                     width: '100%',
                     minHeight: 350,
                     margin: '16 0 0 0',
@@ -240,37 +262,38 @@ Ext.define('MusicApp.view.UsersView', {
                         {
                             text: 'ID',
                             dataIndex: 'id',
-                            width: 70
+                            width: 65
                         },
                         {
                             text: 'Username',
                             dataIndex: 'name',
-                            flex: 1
+                            width:145
                         },
                         {
                             text: 'First Name',
                             dataIndex: 'firstname',
-                            flex: 1
+                            width:135
                         },
                         {
                             text: 'Last Name',
                             dataIndex: 'lastname',
-                            flex: 1
+                            width:135
                         },
                         {
                             text: 'Email',
                             dataIndex: 'email',
-                            flex: 2
+                            flex: 2,
+                            minWidth:190
                         },
                         {
                             text: 'Role',
                             dataIndex: 'role',
-                            flex: 1
+                            width:115
                         },
                         {
                             text: 'Status',
                             dataIndex: 'status',
-                            flex: 1
+                            width:125
                         },
 
                         {
