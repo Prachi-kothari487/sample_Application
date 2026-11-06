@@ -7,15 +7,17 @@ import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
-
+import org.example.Service.UserService;
+import org.example.Model.UserResponse;
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController {
 
     private final LoginService loginService;
-
-    public LoginController(LoginService loginService){
+    private final UserService userService;
+    public LoginController(LoginService loginService,UserService userService){
         this.loginService=loginService;
+        this.userService = userService;
     }
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String,String> request,HttpSession session){
@@ -45,6 +47,27 @@ public class LoginController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("You are not logged in");
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session){
+        session.invalidate();
+
+        return ResponseEntity.ok("Logout Successful");
+
+    }
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(HttpSession session) {
+
+        String username = (String) session.getAttribute("loggedInUser");
+
+        if (username == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Please login first");
+        }
+
+        UserResponse profile = userService.getProfile(username);
+
+        return ResponseEntity.ok(profile);
     }
 
 

@@ -135,5 +135,27 @@ public class UserService {
 
     }
 
+    public UserResponse getProfile(String username) {
+
+        User user = userDao.findByName(username);
+
+        if (user == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "User not found"
+            );
+        }
+
+        return new UserResponse(
+                user.getId(),
+                user.getName(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole(),
+                user.getStatus()
+        );
+    }
+
 
 }
