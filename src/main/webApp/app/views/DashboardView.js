@@ -1,3 +1,411 @@
+// Ext.define('MusicApp.view.DashboardView', {
+//     extend: 'Ext.Container',
+//     xtype: 'dashboardview',
+//
+//     cls: 'music-dashboard',
+//
+//     layout: {
+//         type: 'vbox',
+//         align: 'stretch'
+//     },
+//
+//     scrollable: 'y',
+//     padding: 24,
+//
+//     items: [
+//
+//         // DASHBOARD HEADING
+//         {
+//             xtype: 'container',
+//             margin: '0 0 25 0',
+//
+//             items: [
+//                 {
+//                     xtype: 'component',
+//                     html: '<h1 class="dashboard-heading">Dashboard</h1>'
+//                 },
+//                 {
+//                     xtype: 'component',
+//                     html: '<p class="dashboard-welcome">Welcome back! Here is your music overview.</p>'
+//                 }
+//             ]
+//         },
+//
+//         // STATISTICS CARDS
+//         {
+//             xtype: 'container',
+//             cls: 'dashboard-stats',
+//             itemId: 'statsContainer',
+//             height: 135,
+//
+//             layout: {
+//                 type: 'hbox',
+//                 align: 'stretch'
+//             },
+//
+//             defaults: {
+//                 flex: 1,
+//                 margin: '0 12 0 0'
+//             },
+//
+//             items: [
+//                 {
+//                     xtype: 'container',
+//                     itemId: 'totalUsersCard',
+//                     cls: 'dashboard-stat-card',
+//                     padding: 20,
+//                     html: `
+//                         <div class="stat-icon">👥</div>
+//                         <p>Total Users</p>
+//                         <h2>Loading...</h2>
+//                         <span>Registered users</span>
+//                     `
+//                 },
+//                 {
+//                     xtype: 'container',
+//                     itemId: 'totalSongsCard',
+//                     cls: 'dashboard-stat-card',
+//                     padding: 20,
+//                     html: `
+//                         <div class="stat-icon">🎵</div>
+//                         <p>Total Songs</p>
+//                         <h2>Loading...</h2>
+//                         <span>Available tracks</span>
+//                     `
+//                 },
+//                 {
+//                     xtype: 'container',
+//                     itemId: 'totalGenresCard',
+//                     cls: 'dashboard-stat-card',
+//                     padding: 20,
+//                     html: `
+//                         <div class="stat-icon">🎧</div>
+//                         <p>Total Genres</p>
+//                         <h2>Loading...</h2>
+//                         <span>Music categories</span>
+//                     `
+//                 },
+//                 {
+//                     xtype: 'container',
+//                     itemId: 'activeUsersCard',
+//                     cls: 'dashboard-stat-card',
+//                     padding: 20,
+//                     html: `
+//                         <div class="stat-icon">🟢</div>
+//                         <p>Active Users</p>
+//                         <h2>Loading...</h2>
+//                         <span>Currently active</span>
+//                     `
+//                 }
+//             ]
+//         },
+//
+//         // SONGS BY GENRE CHART
+//         {
+//             xtype: 'container',
+//             itemId: 'genreChartCard',
+//             cls: 'dashboard-chart-card',
+//             height: 470,
+//             margin: '28 0 28 0',
+//             padding: 20,
+//
+//             layout: {
+//                 type: 'vbox',
+//                 align: 'stretch'
+//             },
+//
+//             items: [
+//                 {
+//                     xtype: 'component',
+//                     html: '<h2 class="dashboard-section-heading">Songs by Genre</h2>'
+//                 },
+//                 {
+//                     xtype: 'container',
+//                     flex: 1,
+//                     cls: 'genre-chart-layout',
+//
+//                     // IMPORTANT: stretch gives the chart its height
+//                     layout: {
+//                         type: 'hbox',
+//                         align: 'stretch'
+//                     },
+//
+//                     items: [
+//
+//                         // DOUGHNUT CHART
+//                         {
+//                             xtype: 'polar',
+//                             itemId: 'genreChart',
+//
+//                             flex: 1,
+//                             height: 360,
+//                             minWidth: 250,
+//
+//                             insetPadding: 20,
+//
+//                             colors: [
+//                                 '#6F4E37',
+//                                 '#987052',
+//                                 '#B68B67',
+//                                 '#D6BFA5',
+//                                 '#EADBC8',
+//                                 '#805A42',
+//                                 '#C19A78',
+//                                 '#A0785A'
+//                             ],
+//
+//                             store: {
+//                                 fields: ['genre', 'total'],
+//                                 data: []
+//                             },
+//
+//                             series: [
+//                                 {
+//                                     type: 'pie',
+//                                     angleField: 'total',
+//                                     donut: 60,
+//                                     highlight: true,
+//
+//                                     tooltip: {
+//                                         trackMouse: true,
+//
+//                                         renderer: function (tooltip, record) {
+//                                             tooltip.setHtml(
+//                                                 '<b>Genre:</b> ' +
+//                                                 Ext.String.htmlEncode(record.get('genre')) +
+//                                                 '<br><b>Total Songs:</b> ' +
+//                                                 record.get('total')
+//                                             );
+//                                         }
+//                                     }
+//                                 }
+//                             ]
+//                         },
+//
+//                         // CUSTOM GENRE LEGEND
+//                         {
+//                             xtype: 'component',
+//                             itemId: 'genreLegend',
+//                             width: 180,
+//                             cls: 'genre-custom-legend'
+//                         }
+//                     ]
+//                 }
+//             ]
+//         },
+//
+//         // RECENTLY ADDED SONGS
+//         {
+//             xtype: 'container',
+//             cls: 'dashboard-recent-card',
+//             padding: 20,
+//             margin: '0 0 20 0',
+//             itemId: 'recentSongsCard',
+//
+//             layout: {
+//                 type: 'vbox',
+//                 align: 'stretch'
+//             },
+//
+//             items: [
+//                 {
+//                     xtype: 'component',
+//                     html: '<h2 class="dashboard-section-heading">Recently Added Songs</h2>'
+//                 },
+//                 {
+//                     xtype: 'component',
+//                     itemId: 'recentSongsList',
+//                     html: '<p>Loading recent songs...</p>'
+//                 }
+//             ]
+//         }
+//     ],
+//
+//     listeners: {
+//         painted: function (dashboard) {
+//             dashboard.loadDashboardData();
+//         }
+//     },
+//
+//     loadDashboardData: function () {
+//
+//         var dashboard = this;
+//
+//         var statsContainer = dashboard.down('#statsContainer');
+//         var chartContainer = dashboard.down('#genreChartCard');
+//         var recentContainer = dashboard.down('#recentSongsCard');
+//
+//         console.log('Dashboard:', dashboard);
+//         console.log('Stats container:', statsContainer);
+//
+//         Ext.Ajax.request({
+//
+//             url: '/sample-application/api/dashboard/summary',
+//             method: 'GET',
+//
+//             success: function (response) {
+//
+//                 console.log('1. API SUCCESS');
+//                 console.log('2. HTTP STATUS:', response.status);
+//
+//                 var data = Ext.decode(response.responseText);
+//
+//                 console.log('3. COMPLETE API DATA:', data);
+//                 console.log('4. TOTAL USERS:', data.totalUsers);
+//                 console.log('5. TOTAL SONGS:', data.totalSongs);
+//                 console.log('6. TOTAL GENRES:', data.totalGenres);
+//                 console.log('7. ACTIVE USERS:', data.activeUsers);
+//                 console.log('Recent Songs:', data.recentSongs);
+//                 console.log('Recent Songs Count:', data.recentSongs?.length);
+//
+//
+//                 statsContainer.down('#totalUsersCard').setHtml(`
+//                     <div class="stat-icon">👥</div>
+//                     <p>Total Users</p>
+//                     <h2>${data.totalUsers}</h2>
+//                     <span>Registered users</span>
+//                 `);
+//
+//                 statsContainer.down('#totalSongsCard').setHtml(`
+//                     <div class="stat-icon">🎵</div>
+//                     <p>Total Songs</p>
+//                     <h2>${data.totalSongs}</h2>
+//                     <span>Available tracks</span>
+//                 `);
+//
+//                 statsContainer.down('#totalGenresCard').setHtml(`
+//                     <div class="stat-icon">🎧</div>
+//                     <p>Total Genres</p>
+//                     <h2>${data.totalGenres}</h2>
+//                     <span>Music categories</span>
+//                 `);
+//
+//                 statsContainer.down('#activeUsersCard').setHtml(`
+//                     <div class="stat-icon">🟢</div>
+//                     <p>Active Users</p>
+//                     <h2>${data.activeUsers}</h2>
+//                     <span>Currently active</span>
+//                 `);
+//
+//                 // UPDATE DOUGHNUT CHART
+//
+//                 var chart = chartContainer.down('#genreChart');
+//
+//                 var genreLegend = chartContainer.down('#genreLegend');
+//
+//                 var genreData = data.songsByGenre || [];
+//
+//                 if (chart) {
+//
+//                     console.log('API Genre Count:', genreData.length);
+//                     console.log('API Genre Data:', genreData);
+//
+//                     // Populate chart store
+//                     chart.getStore().setData(genreData);
+//
+//                     // Cappuccino colors
+//                     var genreColors = [
+//                         '#6F4E37',
+//                         '#987052',
+//                         '#B68B67',
+//                         '#D6BFA5',
+//                         '#EADBC8',
+//                         '#805A42',
+//                         '#C19A78',
+//                         '#A0785A'
+//                     ];
+//
+//                     // Generate legend dynamically
+//                     var legendHtml = genreData.map(function (item, index) {
+//
+//                         return `
+//                             <div class="genre-legend-item">
+//
+//                                 <span class="genre-legend-dot"
+//                                     style="background:${genreColors[index % genreColors.length]}">
+//                                 </span>
+//
+//                                 <span class="genre-legend-name">
+//                                     ${Ext.String.htmlEncode(item.genre || 'Unknown')}
+//                                 </span>
+//
+//                                 <strong class="genre-legend-count">
+//                                     ${item.total}
+//                                 </strong>
+//
+//                             </div>
+//                         `;
+//
+//                     }).join('');
+//
+//                     genreLegend.setHtml(
+//                         legendHtml || '<p>No genre data available.</p>'
+//                     );
+//
+//                     console.log('Chart Store Count:', chart.getStore().getCount());
+//
+//                     console.log('Chart Store Data:',
+//                         chart.getStore().getRange().map(function (record) {
+//                             return {
+//                                 genre: record.get('genre'),
+//                                 total: record.get('total')
+//                             };
+//                         })
+//                     );
+//
+//                     // Refresh chart layout after data population
+//                     chart.refresh();
+//                 }
+//
+//                 // UPDATE RECENT SONGS
+//
+//                 var recentSongsList = recentContainer.down('#recentSongsList');
+//
+//                 var icons = ['🎵', '🎶', '🎧', '🎼', '🎹'];
+//
+//                 var recentSongsHtml = (data.recentSongs || []).map(function (song, index) {
+//
+//                     return `
+//                         <div class="recent-song-row">
+//
+//                             <div class="recent-song-icon">
+//                                 ${icons[index % icons.length]}
+//                             </div>
+//
+//                             <div class="recent-song-info">
+//                                 <h3>${Ext.String.htmlEncode(song.title || '')}</h3>
+//                                 <p>${Ext.String.htmlEncode(song.artist || '')}</p>
+//                             </div>
+//
+//                             <span class="recent-song-genre">
+//                                 ${Ext.String.htmlEncode(song.genre || 'Unknown')}
+//                             </span>
+//
+//                         </div>
+//                     `;
+//
+//                 }).join('');
+//
+//                 recentSongsList.setHtml(
+//                     recentSongsHtml || '<p>No songs available.</p>'
+//                 );
+//
+//                 console.log('Dashboard loaded successfully!');
+//
+//             },
+//
+//             failure: function (response) {
+//
+//                 console.error('Dashboard API failed:', response.status);
+//
+//                 recentContainer.down('#recentSongsList').setHtml(
+//                     '<p>Unable to load recent songs.</p>'
+//                 );
+//             }
+//         });
+//     }
+// });
+
 Ext.define('MusicApp.view.DashboardView', {
     extend: 'Ext.Container',
     xtype: 'dashboardview',
@@ -14,7 +422,7 @@ Ext.define('MusicApp.view.DashboardView', {
 
     items: [
 
-
+        // DASHBOARD HEADING
         {
             xtype: 'container',
             margin: '0 0 25 0',
@@ -31,11 +439,11 @@ Ext.define('MusicApp.view.DashboardView', {
             ]
         },
 
+        // STATISTICS CARDS
         {
             xtype: 'container',
             cls: 'dashboard-stats',
             itemId: 'statsContainer',
-
             height: 135,
 
             layout: {
@@ -100,9 +508,10 @@ Ext.define('MusicApp.view.DashboardView', {
             ]
         },
 
-
+        // SONGS BY GENRE CHART
         {
             xtype: 'container',
+            itemId: 'genreChartCard',
             cls: 'dashboard-chart-card',
             height: 470,
             margin: '28 0 28 0',
@@ -119,65 +528,81 @@ Ext.define('MusicApp.view.DashboardView', {
                     html: '<h2 class="dashboard-section-heading">Songs by Genre</h2>'
                 },
                 {
-                    xtype: 'polar',
-                    itemId: 'genreChart',
+                    xtype: 'container',
                     flex: 1,
+                    cls: 'genre-chart-layout',
 
-                    insetPadding: 25,
-
-                    colors: [
-                        '#6F4E37',
-                        '#987052',
-                        '#B68B67',
-                        '#D6BFA5',
-                        '#EADBC8',
-                        '#805A42',
-                        '#C19A78',
-                        '#A0785A'
-                    ],
-
-                    legend: {
-                        docked: 'bottom'
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
                     },
 
-                    store: {
-                        fields: ['genre', 'total'],
-                        data: []
-                    },
+                    items: [
 
-                    series: [{
-                        type: 'pie',
-                        angleField: 'total',
-                        donut: 60,
+                        // DOUGHNUT CHART
+                        {
+                            xtype: 'polar',
+                            itemId: 'genreChart',
+                            flex: 1,
+                            height: 360,
+                            minWidth: 250,
+                            insetPadding: 20,
 
-                        highlight: true,
+                            colors: [
+                                '#6F4E37',
+                                '#987052',
+                                '#B68B67',
+                                '#D6BFA5',
+                                '#EADBC8',
+                                '#805A42',
+                                '#C19A78',
+                                '#A0785A'
+                            ],
 
-                        label: {
-                            field: 'genre',
-                            display: 'inside',
-                            color: '#4e290d',
-                            font: 'bold 12px Arial'
+                            store: {
+                                fields: ['genre', 'total'],
+                                data: []
+                            },
+
+                            series: [
+                                {
+                                    type: 'pie',
+                                    angleField: 'total',
+                                    donut: 60,
+                                    highlight: true,
+
+                                    tooltip: {
+                                        trackMouse: true,
+
+                                        renderer: function (tooltip, record) {
+                                            tooltip.setHtml(
+                                                '<b>Genre:</b> ' +
+                                                Ext.String.htmlEncode(record.get('genre')) +
+                                                '<br><b>Total Songs:</b> ' +
+                                                record.get('total')
+                                            );
+                                        }
+                                    }
+                                }
+                            ]
                         },
 
-                        tooltip: {
-                            trackMouse: true,
-
-                            renderer: function (tooltip, record) {
-                                tooltip.setHtml(
-                                    '<b>Genre:</b> ' +
-                                    Ext.String.htmlEncode(record.get('genre')) +
-                                    '<br><b>Total Songs:</b> ' +
-                                    record.get('total')
-                                );
-                            }
+                        // CUSTOM GENRE LEGEND
+                        {
+                            xtype: 'component',
+                            itemId: 'genreLegend',
+                            width: 180,
+                            cls: 'genre-custom-legend'
                         }
-                    }]
+                    ]
                 }
             ]
         },
 
+        // RECENTLY ADDED SONGS
         {
             xtype: 'container',
+            itemId: 'recentSongsCard',
             cls: 'dashboard-recent-card',
             padding: 20,
             margin: '0 0 20 0',
@@ -201,27 +626,29 @@ Ext.define('MusicApp.view.DashboardView', {
         }
     ],
 
-
     listeners: {
         painted: function (dashboard) {
             dashboard.loadDashboardData();
         }
     },
 
-
-
     loadDashboardData: function () {
 
         var dashboard = this;
 
+        var statsContainer = dashboard.down('#statsContainer');
+        var chartContainer = dashboard.down('#genreChartCard');
+        var recentContainer = dashboard.down('#recentSongsCard');
 
-        var statsContainer = dashboard.getComponent('statsContainer');
-
-        var chartContainer = dashboard.getComponent(2);
-        var recentContainer = dashboard.getComponent(3);
+        var recentSongsList = recentContainer
+            ? recentContainer.down('#recentSongsList')
+            : null;
 
         console.log('Dashboard:', dashboard);
         console.log('Stats container:', statsContainer);
+        console.log('Chart container:', chartContainer);
+        console.log('Recent container:', recentContainer);
+        console.log('Recent songs component:', recentSongsList);
 
         Ext.Ajax.request({
 
@@ -229,103 +656,162 @@ Ext.define('MusicApp.view.DashboardView', {
             method: 'GET',
 
             success: function (response) {
+
                 console.log('1. API SUCCESS');
                 console.log('2. HTTP STATUS:', response.status);
 
                 var data = Ext.decode(response.responseText);
+
                 console.log('3. COMPLETE API DATA:', data);
                 console.log('4. TOTAL USERS:', data.totalUsers);
                 console.log('5. TOTAL SONGS:', data.totalSongs);
                 console.log('6. TOTAL GENRES:', data.totalGenres);
                 console.log('7. ACTIVE USERS:', data.activeUsers);
-                console.log('API response:', data);
 
+                // UPDATE STATISTICS CARDS
 
-                var totalUsersCard = statsContainer.getComponent('totalUsersCard');
-                var totalSongsCard = statsContainer.getComponent('totalSongsCard');
-                var totalGenresCard = statsContainer.getComponent('totalGenresCard');
-                var activeUsersCard = statsContainer.getComponent('activeUsersCard');
+                if (statsContainer) {
 
+                    statsContainer.down('#totalUsersCard').setHtml(`
+                        <div class="stat-icon">👥</div>
+                        <p>Total Users</p>
+                        <h2>${data.totalUsers}</h2>
+                        <span>Registered users</span>
+                    `);
 
-                totalUsersCard.setHtml(`
-                <div class="stat-icon">👥</div>
-                <p>Total Users</p>
-                <h2>${data.totalUsers}</h2>
-                <span>Registered users</span>
-            `);
+                    statsContainer.down('#totalSongsCard').setHtml(`
+                        <div class="stat-icon">🎵</div>
+                        <p>Total Songs</p>
+                        <h2>${data.totalSongs}</h2>
+                        <span>Available tracks</span>
+                    `);
 
+                    statsContainer.down('#totalGenresCard').setHtml(`
+                        <div class="stat-icon">🎧</div>
+                        <p>Total Genres</p>
+                        <h2>${data.totalGenres}</h2>
+                        <span>Music categories</span>
+                    `);
 
-                totalSongsCard.setHtml(`
-                <div class="stat-icon">🎵</div>
-                <p>Total Songs</p>
-                <h2>${data.totalSongs}</h2>
-                <span>Available tracks</span>
-            `);
+                    statsContainer.down('#activeUsersCard').setHtml(`
+                        <div class="stat-icon">🟢</div>
+                        <p>Active Users</p>
+                        <h2>${data.activeUsers}</h2>
+                        <span>Currently active</span>
+                    `);
+                }
 
+                // UPDATE DOUGHNUT CHART
 
-                totalGenresCard.setHtml(`
-                <div class="stat-icon">🎧</div>
-                <p>Total Genres</p>
-                <h2>${data.totalGenres}</h2>
-                <span>Music categories</span>
-            `);
+                var chart = chartContainer
+                    ? chartContainer.down('#genreChart')
+                    : null;
 
+                var genreLegend = chartContainer
+                    ? chartContainer.down('#genreLegend')
+                    : null;
 
-                activeUsersCard.setHtml(`
-                <div class="stat-icon">🟢</div>
-                <p>Active Users</p>
-                <h2>${data.activeUsers}</h2>
-                <span>Currently active</span>
-            `);
-
-                // GENRE CHART
-                var chart = chartContainer.down('polar');
+                var genreData = data.songsByGenre || [];
 
                 if (chart) {
 
-                    console.log('API Genre Count:', data.songsByGenre.length);
-                    console.log('API Genre Data:', data.songsByGenre);
+                    console.log('API Genre Count:', genreData.length);
+                    console.log('API Genre Data:', genreData);
 
-                    chart.getStore().setData(data.songsByGenre || []);
+                    chart.getStore().setData(genreData);
+
+                    var genreColors = [
+                        '#6F4E37',
+                        '#987052',
+                        '#B68B67',
+                        '#D6BFA5',
+                        '#EADBC8',
+                        '#805A42',
+                        '#C19A78',
+                        '#A0785A'
+                    ];
+
+                    var legendHtml = genreData.map(function (item, index) {
+
+                        return `
+                            <div class="genre-legend-item">
+                                <span class="genre-legend-dot"
+                                    style="background:${genreColors[index % genreColors.length]}">
+                                </span>
+
+                                <span class="genre-legend-name">
+                                    ${Ext.String.htmlEncode(item.genre || 'Unknown')}
+                                </span>
+
+                                <strong class="genre-legend-count">
+                                    ${item.total}
+                                </strong>
+                            </div>
+                        `;
+
+                    }).join('');
+
+                    if (genreLegend) {
+                        genreLegend.setHtml(
+                            legendHtml || '<p>No genre data available.</p>'
+                        );
+                    }
 
                     console.log('Chart Store Count:', chart.getStore().getCount());
-                    console.log('Chart Store Data:', chart.getStore().getRange().map(function (record) {
-                        return {
-                            genre: record.get('genre'),
-                            total: record.get('total')
-                        };
-                    }));
+
+                    console.log(
+                        'Chart Store Data:',
+                        chart.getStore().getRange().map(function (record) {
+                            return {
+                                genre: record.get('genre'),
+                                total: record.get('total')
+                            };
+                        })
+                    );
+
+
                 }
 
-                // RECENT SONGS
-                var recentSongsList = recentContainer.getComponent(1);
+                // UPDATE RECENT SONGS
 
-                var icons = ['🎵', '🎶', '🎧', '🎼', '🎹'];
+                console.log('Recent Songs:', data.recentSongs);
+                console.log('Recent Songs Count:', data.recentSongs?.length);
 
-                var recentSongsHtml = (data.recentSongs || []).map(function (song, index) {
+                if (recentSongsList) {
 
-                    return `
-                    <div class="recent-song-row">
-                        <div class="recent-song-icon">
-                            ${icons[index % icons.length]}
-                        </div>
+                    var icons = ['🎵', '🎶', '🎧', '🎼', '🎹'];
 
-                        <div class="recent-song-info">
-                            <h3>${Ext.String.htmlEncode(song.title || '')}</h3>
-                            <p>${Ext.String.htmlEncode(song.artist || '')}</p>
-                        </div>
+                    var recentSongsHtml = (data.recentSongs || [])
+                        .map(function (song, index) {
 
-                        <span class="recent-song-genre">
-                            ${Ext.String.htmlEncode(song.genre || 'Unknown')}
-                        </span>
-                    </div>
-                `;
+                            return `
+                                <div class="recent-song-row">
 
-                }).join('');
+                                    <div class="recent-song-icon">
+                                        ${icons[index % icons.length]}
+                                    </div>
 
-                recentSongsList.setHtml(
-                    recentSongsHtml || '<p>No songs available.</p>'
-                );
+                                    <div class="recent-song-info">
+                                        <h3>${Ext.String.htmlEncode(song.title || '')}</h3>
+                                        <p>${Ext.String.htmlEncode(song.artist || '')}</p>
+                                    </div>
+
+                                    <span class="recent-song-genre">
+                                        ${Ext.String.htmlEncode(song.genre || 'Unknown')}
+                                    </span>
+
+                                </div>
+                            `;
+
+                        }).join('');
+
+                    recentSongsList.setHtml(
+                        recentSongsHtml || '<p>No songs available.</p>'
+                    );
+
+                } else {
+                    console.error('Recent songs component not found!');
+                }
 
                 console.log('Dashboard loaded successfully!');
 
@@ -335,11 +821,12 @@ Ext.define('MusicApp.view.DashboardView', {
 
                 console.error('Dashboard API failed:', response.status);
 
-                recentContainer.getComponent(1).setHtml(
-                    '<p>Unable to load recent songs.</p>'
-                );
+                if (recentSongsList) {
+                    recentSongsList.setHtml(
+                        '<p>Unable to load recent songs.</p>'
+                    );
+                }
             }
         });
     }
-
 });

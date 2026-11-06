@@ -1,17 +1,34 @@
+:root {
+    --coffee-dark: #4B3028;
+    --coffee-deep: #4e290d;
+    --coffee-medium: #8B6248;
+    --coffee-light: #C9A58B;
+    --cream: #FFF8ED;
+    --cream-light: #FFFAF4;
+    --cream-bg: #F5EBDD;
+    --text-primary: #49372d;
+    --text-secondary: #9A8575;
+    --border-color: #E8CBB5;
+}
+
+/* =========================================
+   LOGIN VIEW
+   ========================================= */
+
 .loginview .x-field-label,
 .loginview .x-label-el {
     color: #9A765F !important;
 }
 
 .loginview .x-input-wrap {
-    border: 1px solid #C9A58B !important;
-    border-radius: 8px !important;
     background-color: #FFFCF7 !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 8px !important;
     box-shadow: none !important;
 }
 
 .loginview input {
-    color: #4B3028 !important;
+    color: var(--coffee-dark) !important;
 }
 
 .loginview input::placeholder {
@@ -21,9 +38,9 @@
 
 .loginview .music-signin-button,
 .loginview .music-signin-button .x-inner {
-    background: #4B3028 !important;
+    background: var(--coffee-dark) !important;
     background-image: none !important;
-    border-color: #4B3028 !important;
+    border: 1px solid var(--coffee-dark) !important;
     box-shadow: none !important;
 }
 
@@ -34,67 +51,9 @@
     padding: 2px 0 !important;
 }
 
-
 /* =========================================
-   CAPPUCCINO ALERT POPUP
-========================================= */
-
-.x-dialog.cappuccino-alert {
-    background: #FFF8ED !important;
-    border: 1px solid #C9A58B !important;
-    border-radius: 14px !important;
-    box-shadow: 0 8px 28px rgba(75, 48, 40, 0.18) !important;
-    overflow: hidden !important;
-}
-
-/* Popup header */
-
-.x-dialog.cappuccino-alert .x-dialogheader,
-.x-dialog.cappuccino-alert .x-header {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border-color: #C9A58B !important;
-}
-
-.x-dialog.cappuccino-alert .x-title,
-.x-dialog.cappuccino-alert .x-title-el,
-.x-dialog.cappuccino-alert .x-title-text {
-    color: #FFF8ED !important;
-}
-
-/* Popup footer */
-
-.x-dialog.cappuccino-alert .x-footer,
-.x-dialog.cappuccino-alert .x-toolbar,
-.x-dialog.cappuccino-alert .x-toolbar-body-el {
-    background: #FFF8ED !important;
-    background-image: none !important;
-    border-color: #C9A58B !important;
-    box-shadow: none !important;
-}
-
-/* Popup OK button */
-
-.x-dialog.cappuccino-alert .cappuccino-ok-button,
-.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-el {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border: 1px solid #4B3028 !important;
-    box-shadow: none !important;
-}
-
-.x-dialog.cappuccino-alert .cappuccino-ok-button .x-text-el,
-.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-label {
-    color: #FFF8ED !important;
-    -webkit-text-fill-color: #FFF8ED !important;
-}
-
-.x-dialog.cappuccino-alert .x-panel-outer-border-rl {
-    border-color: #C9A58B !important;
-}
-
-
-
+   SIDEBAR
+   ========================================= */
 
 .dashboard-sidebar {
     background-image: url('/sample-application/resources/images/musicvault-sidebar-bg.png');
@@ -104,15 +63,13 @@
     padding: 220px 16px 20px;
 }
 
-
-
 .dashboard-sidebar .dashboard-nav-button,
 .dashboard-sidebar .dashboard-nav-button .x-button-el {
     background: transparent !important;
     background-image: none !important;
     border: none !important;
-    box-shadow: none !important;
     border-radius: 10px !important;
+    box-shadow: none !important;
 }
 
 .dashboard-sidebar .dashboard-nav-button {
@@ -121,13 +78,12 @@
 }
 
 .dashboard-sidebar .dashboard-nav-button .x-text-el {
-    color: #4B3028 !important;
+    color: var(--coffee-dark) !important;
     font-family: Arial, sans-serif !important;
     font-size: 15px !important;
     line-height: normal !important;
     padding: 6px 0 !important;
 }
-
 
 .dashboard-sidebar .dashboard-nav-button.active,
 .dashboard-sidebar .dashboard-nav-button.active .x-button-el {
@@ -135,489 +91,19 @@
     border-radius: 10px !important;
 }
 
-
-
-.dashboard-main {
-    /*background-color: #F5EBDD;*/
-    background-color: #c9a58b;
-
-    padding: 15px;
-}
-
-.dashboard-heading h1 {
-    color: #4B3028;
-    font-size: 28px;
-    font-weight: 600;
-    margin: 0 0 8px;
-}
-
-.dashboard-heading p {
-    color: #8B6248;
-    font-size: 15px;
-    margin: 0;
-}
-
-/* Statistics cards */
-
-.dashboard-stat-card {
-    background-color: #FFF8ED;
-    border: 1px solid #E2C1A6;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(75, 48, 40, 0.08);
-}
-
-.dashboard-stat-card h3 {
-    color: #8B6248;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0 0 15px;
-}
-
-.dashboard-stat-card h1 {
-    color: #4B3028;
-    font-size: 30px;
-    font-weight: 600;
-    margin: 0;
-}
-
-
 /* =========================================
-   SHARED CAPPUCCINO PAGE THEME
-   Users + Songs
-========================================= */
+   DASHBOARD
+   ========================================= */
 
-.cappuccino-users-view,
-.cappuccino-songs-view {
-    background-color: #F5EBDD;
-    padding: 32px;
-}
-
-/* Page headings */
-
-.users-title,
-.songs-title {
-    color: #4B3028;
-    font-size: 34px;
-    font-weight: 600;
-}
-
-.users-subtitle,
-.songs-subtitle {
-    color: #98735F;
-    font-size: 17px;
-    margin-top: 8px;
-}
-
-/* Primary buttons */
-
-.cappuccino-users-view .cappuccino-primary-button,
-.cappuccino-songs-view .cappuccino-primary-button,
-.add-user-button.x-button {
-    background-color: #4B3028;
-    background-image: none;
-    border: 1px solid #4B3028;
-    border-radius: 10px;
-    box-shadow: none;
-}
-
-.cappuccino-users-view .cappuccino-primary-button .x-text-el,
-.cappuccino-songs-view .cappuccino-primary-button .x-text-el {
-    color: #FFF8EF;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.add-user-button .x-button-label {
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-/* Search fields */
-
-.cappuccino-users-view .cappuccino-search-field .x-input-wrap,
-.cappuccino-songs-view .cappuccino-search-field .x-input-wrap {
-    background-color: #FFFAF4;
-    border: 1px solid #E8CBB5;
-    border-radius: 12px;
-    box-shadow: none;
-}
-
-.cappuccino-users-view .cappuccino-search-field input,
-.cappuccino-songs-view .cappuccino-search-field input {
-    color: #4B3028;
-}
-
-.cappuccino-users-view .cappuccino-search-field input::placeholder,
-.cappuccino-songs-view .cappuccino-search-field input::placeholder {
-    color: #A88976;
-}
-
-/* Grids */
-
-.cappuccino-users-view .cappuccino-users-grid,
-.cappuccino-songs-view .cappuccino-songs-grid {
-    background-color: #FFFAF4;
-    border: 1px solid #4e290d;
-    border-radius: 16px;
-}
-
-/* Grid headers and cells */
-
-.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn,
-.cappuccino-songs-view .cappuccino-songs-grid .x-gridcolumn {
-    background-color: #F0DDCC;
-    border-color: #4e290d !important;
-    border-right: 1px solid #4e290d !important;
-    border-bottom: 1px solid #4e290d !important;
-}
-
-.cappuccino-users-view .cappuccino-users-grid .x-gridcell,
-.cappuccino-songs-view .cappuccino-songs-grid .x-gridcell {
-    background-color: #FFFAF4;
-    border-color: #4e290d !important;
-    border-right: 1px solid #4e290d !important;
-    border-bottom: 1px solid #4e290d !important;
-}
-
-/* Grid row hover */
-
-.cappuccino-users-view .cappuccino-users-grid .x-gridrow-over .x-gridcell,
-.cappuccino-songs-view .cappuccino-songs-grid .x-gridrow-over .x-gridcell {
-    background-color: #F8EBDD;
-}
-
-
-/* =========================================
-   SHARED FORM FIELD STYLING
-========================================= */
-
-.x-textfield .x-input-wrap-el {
-    border: 1px solid #61422c;
-    border-radius: 10px;
-}
-
-.x-textfield.x-focused .x-input-wrap-el {
-    background-color: #FFFAF4;
-    border-color: #4e290d;
-}
-
-
-/* =========================================
-   GRID STRUCTURE
-========================================= */
-
-.x-headercontainer {
-    border-width: 0;
-}
-
-.x-gridcolumn > .x-header-el {
-    border-width: 0 !important;
-}
-
-
-/* =========================================
-   USER DIALOG
-========================================= */
-
-.add-user-dialog .x-panelheader {
-    background-color: #4e290d;
-    background-image: none;
-    border: 1px solid #4e290d;
-}
-
-.add-user-dialog .x-toolbar-footer {
-    background-color: #4e290d;
-    padding: 12px;
-}
-
-.add-user-dialog .x-toolbar-footer .x-button {
-    background-color: #F5EBDD;
-    border-radius: 7px;
-}
-
-.add-user-dialog .x-toolbar-footer .x-button .x-text-el {
-    color: #4B3028;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-/* User dialog panel borders */
-
-.add-user-dialog .x-panel-outer-border-rbl,
-.add-user-dialog .x-panel-outer-border-trl,
-.add-user-dialog .x-panel-outer-border-rl {
-    border-color: #c9a58b !important;
-}
-
-
-/* =========================================
-   GENERAL TEXT COLORS
-========================================= */
-
-.x-panel-body-el,
-.x-listitem {
-    color: #4e290d !important;
-}
-
-
-/* =========================================
-   TOOLBAR FOOTER
-========================================= */
-
-.x-toolbar-footer {
-    background-color: #4e290d !important;
-}
-
-/* =========================================
-   GLOBAL CAPPUCCINO DIALOG THEME
-========================================= */
-
-/* Dialog background and outer border */
-
-.x-dialog {
-    background-color: #FFF8ED !important;
-    border: 1px solid #C9A58B !important;
-    border-radius: 14px !important;
-    box-shadow: 0 8px 28px rgba(75, 48, 40, 0.18) !important;
-}
-
-/* Dialog header */
-
-.x-dialog .x-header,
-.x-dialog .x-dialogheader {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border-color: #C9A58B !important;
-}
-
-.x-dialog .x-title,
-.x-dialog .x-title-el,
-.x-dialog .x-title-text {
-    color: #FFF8ED !important;
-}
-
-/* Dialog body */
-
-.x-dialog .x-body,
-.x-dialog .x-panel-body-el {
-    background-color: #FFF8ED !important;
-    color: #4B3028 !important;
-}
-
-/* Dialog footer and toolbar */
-
-.x-dialog .x-footer,
-.x-dialog .x-toolbar,
-.x-dialog .x-toolbar-body-el,
-.x-dialog .x-toolbar-footer {
-    background: #FFF8ED !important;
-    background-image: none !important;
-    border-color: #C9A58B !important;
-    box-shadow: none !important;
-}
-
-/* Dialog buttons */
-
-/* =========================================
-   COMMON CAPPUCCINO DIALOG BUTTONS
-========================================= */
-
-/* Save buttons */
-.cappuccino-form-dialog .cappuccino-dialog-save,
-.cappuccino-form-dialog .cappuccino-dialog-save .x-inner {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border-color: #4B3028 !important;
-    box-shadow: none !important;
-}
-
-.cappuccino-form-dialog .cappuccino-dialog-save .x-text-el {
-    color: #FFF8ED !important;
-    -webkit-text-fill-color: #FFF8ED !important;
-}
-
-/* Cancel buttons */
-.cappuccino-form-dialog .cappuccino-dialog-cancel,
-.cappuccino-form-dialog .cappuccino-dialog-cancel .x-inner {
-    background: #F5EBDD !important;
-    background-image: none !important;
-    border-color: #C9A58B !important;
-    box-shadow: none !important;
-}
-
-.cappuccino-form-dialog .cappuccino-dialog-cancel .x-text-el {
-    color: #4B3028 !important;
-    -webkit-text-fill-color: #4B3028 !important;
-}
-
-/* Form fields inside dialogs */
-
-.x-dialog .x-input-wrap,
-.x-dialog .x-input-wrap-el {
-    background-color: #FFFCF7 !important;
-    border: 1px solid #C9A58B !important;
-    border-radius: 8px !important;
-    box-shadow: none !important;
-}
-
-.x-dialog .x-field-label,
-.x-dialog .x-label-el {
-    color: #9A765F !important;
-}
-
-/* Focused fields */
-
-.x-dialog .x-focused .x-input-wrap,
-.x-dialog .x-focused .x-input-wrap-el {
-    border-color: #8B6248 !important;
-    box-shadow: none !important;
-}
-
-/* Validation error text */
-
-.x-error-message,
-.x-form-error-msg,
-.x-invalid .x-error-message {
-    color: #A33D32 !important;
-}
-
-/* Invalid field border */
-
-.x-dialog .x-invalid .x-input-wrap,
-.x-dialog .x-invalid .x-input-wrap-el {
-    border-color: #A33D32 !important;
-    box-shadow: none !important;
-}
-
-/* Validation tooltip / error popup */
-
-.x-tip,
-.x-tooltip {
-    background-color: #FFF8ED !important;
-    border: 1px solid #C9A58B !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 12px rgba(75, 48, 40, 0.15) !important;
-}
-
-.x-tip .x-body,
-.x-tooltip .x-body,
-.x-tip .x-innerhtml {
-    color: #4B3028 !important;
-}
-
-/* Remove default blue focus outline */
-
-.x-dialog .x-focused {
-    outline-color: #8B6248 !important;
-}
-.x-panel-outer-border-rl {
-    border-right-color: #c9a58b !important;
-
-    border-left-color: #c9a58b !important;
-
-}
-/* Dialog buttons - visible background */
-.x-dialog .x-button {
-    background-color: #4B3028 !important;
-    background-image: none !important;
-    border: 1px solid #4B3028 !important;
-    box-shadow: none !important;
-}
-
-/* Actual visible button content */
-.x-dialog .x-button .x-inner,
-.x-dialog .x-button .x-body-el,
-.x-dialog .x-button .x-text-el {
-    background-color: #4B3028 !important;
-    background-image: none !important;
-}
-
-.x-dialog .x-button .x-text-el,
-.x-dialog .x-button .x-button-label {
-    color: #FFF8ED !important;
-}
-/* Validation and message box OK button */
-
-.x-msgbox .x-button-action,
-.x-msgbox .x-button-action .x-inner {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border-color: #4B3028 !important;
-    box-shadow: none !important;
-}
-
-.x-msgbox .x-button-action .x-text-el {
-    color: #FFF8ED !important;
-    -webkit-text-fill-color: #FFF8ED !important;
-}
-.cappuccino-form-dialog .cappuccino-dialog-cancel .x-text-el,
-.cappuccino-form-dialog .cappuccino-dialog-cancel .x-button-label {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #e8e2e0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-.cappuccino-alert .x-button,
-.cappuccino-alert .x-button .x-inner {
-    background: #4B3028 !important;
-    background-image: none !important;
-    border: 1px solid #4B3028 !important;
-    box-shadow: none !important;
-    border-radius: 8px !important;
-}
-
-.cappuccino-alert .x-button .x-text-el {
-    color: #FFF8ED !important;
-    -webkit-text-fill-color: #FFF8ED !important;
-}
-.cappuccino-users-grid .x-tool .x-icon-el:before,
-.cappuccino-songs-grid .x-tool .x-icon-el:before {
-
-    color: #4B3028 !important;
-}
-.cappuccino-users-grid .x-gridcolumn:last-child,
-.cappuccino-songs-grid .x-gridcolumn:last-child {
-    border-right: none !important;
-}
-.cappuccino-users-grid .x-gridcell:last-child,
-.cappuccino-songs-grid .x-gridcell:last-child {
-    border-right: none !important;
-}
-
-.cappuccino-users-view .cappuccino-users-grid {
-    height: 450px !important;
-    min-height: 450px !important;
-}
-
-.x-gridcolumn > .x-header-el .x-trigger-el {
-
-    color: #4e290d;
-    background-color: #d9bba5;
-
-    border-color: #4e290d;
-}
-
-.x-gridcolumn .x-trigger-el {
-    opacity: 1;}
-
-.x-show-selection > .x-listitem.x-selected {
-    background-color: #8b6248;
-    border-color: #4e290d;
-}
-.cappuccino-songs-view .cappuccino-songs-grid {
-    height: 450px !important;
-    min-height: 450px !important;
-}
-
-
-/* Dashboard background */
 .music-dashboard {
     background: #F8F5F0;
 }
 
-/* Welcome heading */
+.dashboard-main {
+    background-color: var(--coffee-light);
+    padding: 15px;
+}
+
 .dashboard-welcome {
     display: flex;
     justify-content: space-between;
@@ -645,12 +131,14 @@
     font-weight: 600;
 }
 
-/* Statistics cards */
+/* Dashboard cards */
+
 .dashboard-stat-card {
     background: #FFFFFF;
     border: 1px solid #EDE3D8;
     border-radius: 14px;
     box-shadow: 0 3px 12px rgba(70, 45, 25, 0.05);
+    padding: 10px !important;
 }
 
 .dashboard-stat-card p {
@@ -662,8 +150,8 @@
 .dashboard-stat-card h2 {
     color: #4B3022;
     font-size: 28px;
-    margin: 0 0 5px;
     font-weight: 700;
+    margin: 0 0 5px;
 }
 
 .dashboard-stat-card span {
@@ -676,13 +164,15 @@
     color: #351904;
 }
 
-/* Chart panel */
+/* Dashboard chart and recent songs */
+
 .dashboard-chart-card,
 .dashboard-recent-card {
     background: #FFFFFF;
     border: 1px solid #EDE3D8;
     border-radius: 14px;
     box-shadow: 0 3px 12px rgba(70, 45, 25, 0.05);
+    padding: 10px !important;
 }
 
 .dashboard-section-heading h2 {
@@ -699,6 +189,7 @@
 }
 
 /* Recently added songs */
+
 .recent-song-row {
     display: flex;
     align-items: center;
@@ -709,6 +200,7 @@
 .recent-song-icon {
     width: 42px;
     height: 42px;
+    min-width: 42px;
     border-radius: 10px;
     background: #F1E7DC;
     display: flex;
@@ -742,19 +234,359 @@
     font-size: 11px;
     font-weight: 600;
 }
-.dashboard-stat-card,
-.dashboard-chart-card,
-.dashboard-recent-card {
-    padding: 10px !important;
+
+/* =========================================
+   USERS AND SONGS VIEWS
+   ========================================= */
+
+.cappuccino-users-view,
+.cappuccino-songs-view {
+    background-color: var(--cream-bg);
+    padding: 32px;
 }
 
+/* Page headings */
 
-/* ==============================
-   PROFILE PAGE - CAPPUCCINO THEME
-================================ */
+.users-title,
+.songs-title {
+    color: var(--coffee-dark);
+    font-size: 34px;
+    font-weight: 600;
+}
+
+.users-subtitle,
+.songs-subtitle {
+    color: #98735F;
+    font-size: 17px;
+    margin-top: 8px;
+}
+
+/* Primary buttons */
+
+.cappuccino-users-view .cappuccino-primary-button,
+.cappuccino-songs-view .cappuccino-primary-button,
+.add-user-button.x-button {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border: 1px solid var(--coffee-dark) !important;
+    border-radius: 10px;
+    box-shadow: none !important;
+}
+
+.cappuccino-users-view .cappuccino-primary-button .x-text-el,
+.cappuccino-songs-view .cappuccino-primary-button .x-text-el {
+    color: #FFF8EF;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.add-user-button .x-button-label {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Search fields */
+
+.cappuccino-users-view .cappuccino-search-field .x-input-wrap,
+.cappuccino-songs-view .cappuccino-search-field .x-input-wrap {
+    background-color: var(--cream-light);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.cappuccino-users-view .cappuccino-search-field input,
+.cappuccino-songs-view .cappuccino-search-field input {
+    color: var(--coffee-dark);
+}
+
+.cappuccino-users-view .cappuccino-search-field input::placeholder,
+.cappuccino-songs-view .cappuccino-search-field input::placeholder {
+    color: #A88976;
+}
+
+/* Grids */
+
+.cappuccino-users-view .cappuccino-users-grid,
+.cappuccino-songs-view .cappuccino-songs-grid {
+    background-color: var(--cream-light);
+    border: 1px solid var(--coffee-deep);
+    border-radius: 16px;
+    height: 450px !important;
+    min-height: 450px !important;
+}
+
+.cappuccino-users-grid .x-gridcolumn,
+.cappuccino-songs-grid .x-gridcolumn,
+.cappuccino-users-view .cappuccino-users-grid .x-gridcolumn,
+.cappuccino-songs-view .cappuccino-songs-grid .x-gridcolumn {
+    background-color: #F0DDCC;
+    border-right: 1px solid var(--coffee-deep) !important;
+    border-bottom: 1px solid var(--coffee-deep) !important;
+}
+
+.cappuccino-users-grid .x-gridcell,
+.cappuccino-songs-grid .x-gridcell,
+.cappuccino-users-view .cappuccino-users-grid .x-gridcell,
+.cappuccino-songs-view .cappuccino-songs-grid .x-gridcell {
+    background-color: var(--cream-light);
+    border-right: 1px solid var(--coffee-deep) !important;
+    border-bottom: 1px solid var(--coffee-deep) !important;
+}
+
+.cappuccino-users-grid .x-gridrow-over .x-gridcell,
+.cappuccino-songs-grid .x-gridrow-over .x-gridcell {
+    background-color: #F8EBDD;
+}
+
+.cappuccino-users-grid .x-gridcolumn:last-child,
+.cappuccino-songs-grid .x-gridcolumn:last-child,
+.cappuccino-users-grid .x-gridcell:last-child,
+.cappuccino-songs-grid .x-gridcell:last-child {
+    border-right: none !important;
+}
+
+.cappuccino-users-grid .x-tool .x-icon-el:before,
+.cappuccino-songs-grid .x-tool .x-icon-el:before {
+    color: var(--coffee-dark) !important;
+}
+
+.x-gridcolumn > .x-header-el {
+    border-width: 0 !important;
+}
+
+.x-gridcolumn > .x-header-el .x-trigger-el {
+    color: var(--coffee-deep);
+    background-color: #D9BBA5;
+    border-color: var(--coffee-deep);
+}
+
+.x-gridcolumn .x-trigger-el {
+    opacity: 1;
+}
+
+.x-show-selection > .x-listitem.x-selected {
+    background-color: #8B6248;
+    border-color: var(--coffee-deep);
+}
+
+.x-headercontainer {
+    border-width: 0;
+}
+
+/* =========================================
+   COMMON FORM FIELDS
+   ========================================= */
+
+.x-textfield .x-input-wrap-el {
+    border: 1px solid #61422C;
+    border-radius: 10px;
+}
+
+.x-textfield.x-focused .x-input-wrap-el {
+    background-color: var(--cream-light);
+    border-color: var(--coffee-deep);
+}
+
+/* =========================================
+   DIALOGS AND POPUPS
+   ========================================= */
+
+.x-dialog {
+    background-color: var(--cream) !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 28px rgba(75, 48, 40, 0.18) !important;
+    overflow: hidden;
+}
+
+/* Dialog header */
+
+.x-dialog .x-header,
+.x-dialog .x-dialogheader {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border-color: var(--coffee-light) !important;
+}
+
+.x-dialog .x-title,
+.x-dialog .x-title-el,
+.x-dialog .x-title-text {
+    color: var(--cream) !important;
+}
+
+/* Dialog body */
+
+.x-dialog .x-body,
+.x-dialog .x-panel-body-el {
+    background-color: var(--cream) !important;
+    color: var(--coffee-dark) !important;
+}
+
+/* Dialog footer */
+
+.x-dialog .x-footer,
+.x-dialog .x-toolbar,
+.x-dialog .x-toolbar-body-el,
+.x-dialog .x-toolbar-footer {
+    background: var(--cream) !important;
+    background-image: none !important;
+    border-color: var(--coffee-light) !important;
+    box-shadow: none !important;
+}
+
+/* Dialog buttons */
+
+.x-dialog .x-button,
+.x-dialog .x-button .x-inner {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border: 1px solid var(--coffee-dark) !important;
+    box-shadow: none !important;
+}
+
+.x-dialog .x-button .x-text-el,
+.x-dialog .x-button .x-button-label {
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+}
+
+/* Cappuccino alert */
+
+.x-dialog.cappuccino-alert {
+    background: var(--cream) !important;
+}
+
+.x-dialog.cappuccino-alert .cappuccino-ok-button,
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-el {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border: 1px solid var(--coffee-dark) !important;
+}
+
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-text-el,
+.x-dialog.cappuccino-alert .cappuccino-ok-button .x-button-label {
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+}
+
+/* User form dialog */
+
+.add-user-dialog .x-panelheader {
+    background: var(--coffee-deep);
+    background-image: none;
+    border: 1px solid var(--coffee-deep);
+}
+
+.add-user-dialog .x-toolbar-footer {
+    background-color: var(--coffee-deep);
+    padding: 12px;
+}
+
+.add-user-dialog .x-toolbar-footer .x-button {
+    background-color: var(--cream-bg);
+    border-radius: 7px;
+}
+
+.add-user-dialog .x-toolbar-footer .x-button .x-text-el {
+    color: var(--coffee-dark);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.add-user-dialog .x-panel-outer-border-rbl,
+.add-user-dialog .x-panel-outer-border-trl,
+.add-user-dialog .x-panel-outer-border-rl {
+    border-color: var(--coffee-light) !important;
+}
+
+/* Common form dialog buttons */
+
+.cappuccino-form-dialog .cappuccino-dialog-save,
+.cappuccino-form-dialog .cappuccino-dialog-save .x-inner {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border-color: var(--coffee-dark) !important;
+    box-shadow: none !important;
+}
+
+.cappuccino-form-dialog .cappuccino-dialog-save .x-text-el {
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+}
+
+.cappuccino-form-dialog .cappuccino-dialog-cancel,
+.cappuccino-form-dialog .cappuccino-dialog-cancel .x-inner {
+    background: var(--cream-bg) !important;
+    background-image: none !important;
+    border-color: var(--coffee-light) !important;
+    box-shadow: none !important;
+}
+
+.cappuccino-form-dialog .cappuccino-dialog-cancel .x-text-el,
+.cappuccino-form-dialog .cappuccino-dialog-cancel .x-button-label {
+    color: var(--coffee-dark) !important;
+    -webkit-text-fill-color: var(--coffee-dark) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Dialog form fields */
+
+.x-dialog .x-input-wrap,
+.x-dialog .x-input-wrap-el {
+    background-color: #FFFCF7 !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+.x-dialog .x-field-label,
+.x-dialog .x-label-el {
+    color: #9A765F !important;
+}
+
+.x-dialog .x-focused .x-input-wrap,
+.x-dialog .x-focused .x-input-wrap-el {
+    border-color: var(--coffee-medium) !important;
+    box-shadow: none !important;
+}
+
+/* Validation */
+
+.x-error-message,
+.x-form-error-msg,
+.x-invalid .x-error-message {
+    color: #A33D32 !important;
+}
+
+.x-dialog .x-invalid .x-input-wrap,
+.x-dialog .x-invalid .x-input-wrap-el {
+    border-color: #A33D32 !important;
+    box-shadow: none !important;
+}
+
+.x-tip,
+.x-tooltip {
+    background-color: var(--cream) !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(75, 48, 40, 0.15) !important;
+}
+
+.x-tip .x-body,
+.x-tooltip .x-body,
+.x-tip .x-innerhtml {
+    color: var(--coffee-dark) !important;
+}
+
+/* =========================================
+   PROFILE PAGE
+   ========================================= */
 
 .profile-view {
-    background: #f6f0e8;
+    background: #F6F0E8;
 }
 
 .profile-page-heading {
@@ -762,14 +594,14 @@
 }
 
 .profile-page-heading h2 {
+    color: var(--text-primary);
     font-size: 27px;
     font-weight: 700;
-    color: #49372d;
     margin: 0 0 8px;
 }
 
 .profile-page-heading p {
-    color: #9a8575;
+    color: var(--text-secondary);
     font-size: 14px;
     margin: 0;
 }
@@ -780,16 +612,16 @@
     gap: 22px;
 }
 
-/* PROFILE HERO */
+/* Profile hero */
 
 .profile-hero {
     display: flex;
     align-items: center;
     gap: 22px;
-    background: linear-gradient( 120deg, #4e290d, #8e6b52);
+    background: linear-gradient(120deg, var(--coffee-deep), #8E6B52);
     padding: 30px;
     border-radius: 16px;
-    color: #fffaf4;
+    color: #FFFAF4;
     box-shadow: 0 8px 25px rgba(73, 55, 45, 0.14);
 }
 
@@ -801,11 +633,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ead5bd;
+    background: #EAD5BD;
     color: #624532;
     font-size: 27px;
     font-weight: 700;
-    border: 4px solid rgba(255,255,255,0.3);
+    border: 4px solid rgba(255, 255, 255, 0.3);
 }
 
 .profile-hero-info {
@@ -813,24 +645,24 @@
 }
 
 .profile-hero-info h2 {
+    color: #FFFAF4;
     font-size: 23px;
     margin: 0 0 6px;
-    color: #fffaf4;
 }
 
 .profile-hero-info p {
-    margin: 0 0 12px;
-    color: #e5d4c5;
+    color: #E5D4C5;
     font-size: 14px;
+    margin: 0 0 12px;
 }
 
 .profile-role {
     display: inline-block;
     background: rgba(255, 238, 219, 0.18);
+    color: #FFF4E8;
     padding: 6px 13px;
     border-radius: 20px;
     font-size: 12px;
-    color: #fff4e8;
 }
 
 .profile-status {
@@ -842,33 +674,33 @@
 }
 
 .profile-status-active {
-    background: #e1ead8;
-    color: #49663e;
+    background: #E1EAD8;
+    color: #49663E;
 }
 
 .profile-status-inactive {
-    background: #f4dcd4;
-    color: #9c4938;
+    background: #F4DCD4;
+    color: #9C4938;
 }
 
-/* INFORMATION SECTIONS */
+/* Profile information */
 
 .profile-section {
-    background: #fffdf9;
+    background: #FFFDF9;
     padding: 25px;
     border-radius: 14px;
-    border: 1px solid #4e290d;
+    border: 1px solid var(--coffee-deep);
     box-shadow: 0 3px 15px rgba(73, 55, 45, 0.06);
 }
 
 .profile-section h3 {
-    color: #49372d;
+    color: var(--text-primary);
     font-size: 18px;
     margin: 0 0 7px;
 }
 
 .profile-section-subtitle {
-    color: #a08b7b;
+    color: #A08B7B;
     font-size: 13px;
     margin: 0 0 22px;
 }
@@ -880,39 +712,94 @@
 }
 
 .profile-info-item {
-    background: #f8f1e8;
+    background: #F8F1E8;
     padding: 17px;
     border-radius: 10px;
-    border: 1px solid #8b6248;
+    border: 1px solid var(--coffee-medium);
     min-width: 0;
 }
 
 .profile-info-item span {
     display: block;
-    color: #4e290d;
+    color: var(--coffee-deep);
     font-size: 12px;
     margin-bottom: 9px;
 }
 
 .profile-info-item strong {
     display: block;
-    color: #49372d;
+    color: var(--text-primary);
     font-size: 14px;
     overflow-wrap: anywhere;
 }
 
-/* LOADING & ERROR */
+/* Profile loading and error */
 
 .profile-loading,
 .profile-error {
     padding: 30px;
-    background: #fffdf9;
+    background: #FFFDF9;
+    border: 1px solid #EEE2D5;
     border-radius: 12px;
-    color: #806c5d;
-    border: 1px solid #eee2d5;
+    color: #806C5D;
 }
 
-/* RESPONSIVE */
+/* =========================================
+   DASHBOARD GENRE CUSTOM LEGEND
+   ========================================= */
+
+.genre-chart-layout {
+    width: 100%;
+}
+
+.genre-custom-legend {
+    padding-left: 12px;
+}
+
+.genre-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    min-width: 0;
+}
+
+.genre-legend-dot {
+    width: 11px;
+    height: 11px;
+    min-width: 11px;
+    border-radius: 50%;
+}
+
+.genre-legend-name {
+    color: #6F4E37;
+    font-size: 13px;
+    flex: 1;
+    overflow-wrap: anywhere;
+}
+
+.genre-legend-count {
+    color: var(--text-primary);
+    font-size: 12px;
+}
+
+/* =========================================
+   GLOBAL SHARED STYLES
+   ========================================= */
+
+.x-panel-body-el,
+.x-listitem {
+    color: var(--coffee-deep) !important;
+}
+
+.x-panel-outer-border-rl {
+    border-left-color: var(--coffee-light) !important;
+    border-right-color: var(--coffee-light) !important;
+}
+
+/* =========================================
+   RESPONSIVE STYLES
+   ========================================= */
 
 @media (max-width: 600px) {
     .profile-hero {
@@ -923,4 +810,37 @@
     .profile-info-grid {
         grid-template-columns: 1fr;
     }
+
+    .cappuccino-users-view,
+    .cappuccino-songs-view {
+        padding: 16px;
+    }
+}
+/* NORMAL BUTTON */
+.x-button-action .x-inner-el {
+    border-color: #351904 !important;
+    background-color: #351904 !important;
+    background-image: none !important;
+}
+
+
+.x-button-action.x-hover .x-inner-el,
+.x-button-action:hover .x-inner-el {
+    border-color: #6F4E37 !important;
+    background-color: #6F4E37 !important;
+    background-image: none !important;
+}
+
+
+.x-button-action.x-pressed .x-inner-el,
+.x-button-action.x-button-pressing .x-inner-el {
+    border-color: #987052 !important;
+    background-color: #987052 !important;
+    background-image: none !important;
+}
+
+
+.x-button-action .x-inner-el,
+.x-button-action .x-inner-el .x-innerhtml {
+    color: #F5E6D3 !important;
 }
