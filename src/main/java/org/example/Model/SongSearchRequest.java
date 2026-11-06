@@ -7,7 +7,7 @@ public class SongSearchRequest {
     private String album;
     private String genre;
     private Integer year;
-
+    private String keyword;
     public SongSearchRequest() {
     }
 
@@ -49,5 +49,11 @@ public class SongSearchRequest {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+    public String getKeyword() {
+        return keyword;
+    }
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

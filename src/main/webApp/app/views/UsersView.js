@@ -104,7 +104,7 @@ Ext.define('MusicApp.view.UsersView', {
 
                         var windowForm = Ext.create('Ext.Dialog', {
                             title: 'Add User',
-                            cls: 'add-user-dialog',
+                            cls: 'add-user-dialog cappuccino-form-dialog',
                             width: 480,
                             maxHeight: '90%',
                             scrollable: true,
@@ -117,6 +117,7 @@ Ext.define('MusicApp.view.UsersView', {
                                 {
                                     text: 'Cancel',
                                     ui: 'plain',
+                                    cls: 'cappuccino-dialog-cancel',
                                     handler: function () {
                                         windowForm.destroy();
                                     }
@@ -124,7 +125,7 @@ Ext.define('MusicApp.view.UsersView', {
                                 {
                                     text: 'Save User',
                                     ui: 'plain',
-
+                                    cls: 'cappuccino-dialog-save',
                                     handler: function () {
                                         var values = form.getValues();
 
@@ -248,15 +249,64 @@ Ext.define('MusicApp.view.UsersView', {
                         ],
 
                         autoLoad: true,
+                        currentPage: 1,
+                        totalPages: 1,
 
                         proxy: {
                             type: 'ajax',
-                            url: '/sample-application/api/users',
+                            url: '/sample-application/api/users/page',
+
+                            extraParams: {
+                                page: 1,
+                                size: 12
+                            },
+
                             reader: {
-                                type: 'json'
+                                type: 'json',
+                                rootProperty: 'users',
+                                keepRawData: true
+                            }
+                        },
+                        listeners: {
+                            load: function (store, records, successful) {
+                                if (!successful) {
+                                    return;
+                                }
+
+                                var data = store.getProxy().getReader().rawData;
+
+                                console.log('Pagination response:', data);
+
+                                if (!data) {
+                                    console.error('Pagination data not found');
+                                    return;
+                                }
+
+                                store.currentPage = data.currentPage;
+                                store.totalPages = data.totalPages;
+
+                                var pageInfo = Ext.ComponentQuery.query('#usersPageInfo')[0];
+                                var prevButton = Ext.ComponentQuery.query('#usersPrevPage')[0];
+                                var nextButton = Ext.ComponentQuery.query('#usersNextPage')[0];
+
+                                if (pageInfo) {
+                                    pageInfo.setHtml(
+                                        'Page ' + data.currentPage + ' of ' + data.totalPages
+                                    );
+                                }
+
+                                if (prevButton) {
+                                    prevButton.setDisabled(data.currentPage <= 1);
+                                }
+
+                                if (nextButton) {
+                                    nextButton.setDisabled(data.currentPage >= data.totalPages);
+                                }
                             }
                         }
                     },
+
+
 
                     columns: [
                         {
@@ -369,25 +419,31 @@ Ext.define('MusicApp.view.UsersView', {
                                                 scrollable: true,
                                                 modal: true,
                                                 items: [form],
-
+                                                cls: 'cappuccino-form-dialog',
                                                 buttons: [
                                                     {
                                                         text: 'Cancel',
+                                                        ui: 'plain',
+                                                        cls: 'cappuccino-dialog-cancel',
                                                         handler: function () {
                                                             windowForm.destroy();
                                                         }
                                                     },
                                                     {
                                                         text: 'Save Changes',
-                                                        ui: 'action',
-
+                                                        ui: 'plain',
+                                                        cls: 'cappuccino-dialog-save',
                                                         handler: function () {
                                                             var values = form.getValues();
 
                                                             if (!values.name) {
                                                                 Ext.Msg.alert(
                                                                     'Validation',
-                                                                    'Username is required.'
+                                                                    'Username is required.',
+                                                                    null,
+                                                                    {
+                                                                        cls: 'cappuccino-alert'
+                                                                    }
                                                                 );
                                                                 return;
                                                             }
@@ -423,7 +479,11 @@ Ext.define('MusicApp.view.UsersView', {
 
                                                                     Ext.Msg.alert(
                                                                         'Success',
-                                                                        'User updated successfully!'
+                                                                        'User updated successfully!',
+                                                                        null,
+                                                                        {
+                                                                            cls: 'cappuccino-alert'
+                                                                        }
                                                                     );
 
                                                                     var usersGrid =
@@ -444,6 +504,47 @@ Ext.define('MusicApp.view.UsersView', {
                                             windowForm.show();
                                         }
 
+                                    },
+                                    delete: {
+                                        iconCls: 'x-fa fa-trash',
+                                        text: 'Delete',
+
+                                        handler: function (grid, location) {
+
+                                            var record = location.record;
+                                            var userId = record.get('id');
+
+                                            Ext.Msg.confirm(
+                                                'Confirm Delete',
+                                                'Are you sure you want to delete this user?',
+                                                function (button) {
+
+                                                    if (button === 'yes') {
+
+                                                        fetch('/sample-application/api/users/' + userId, {
+                                                            method: 'DELETE',
+                                                            credentials: 'same-origin'
+                                                        })
+                                                            .then(function (response) {
+
+                                                                if (!response.ok) {
+                                                                    throw new Error('Could not delete user.');
+                                                                }
+
+                                                                Ext.Msg.alert(
+                                                                    'Success',
+                                                                    'User deleted successfully!'
+                                                                );
+
+                                                                grid.getStore().reload();
+                                                            })
+                                                            .catch(function (error) {
+                                                                Ext.Msg.alert('Error', error.message);
+                                                            });
+                                                    }
+                                                }
+                                            );
+                                        }
                                     }
                                 }
                             }
@@ -451,6 +552,63 @@ Ext.define('MusicApp.view.UsersView', {
 
                     ]
                 },
+
+                {
+                    xtype: 'container',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'center',
+                        align: 'center'
+                    },
+                    margin: '20 0',
+                    items: [
+                        {
+                            xtype: 'button',
+                            itemId: 'usersPrevPage',
+                            text: 'Previous',
+                            disabled: true,
+                            handler: function () {
+                                var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+
+                                var previousPage = store.currentPage - 1;
+
+                                if (previousPage >= 1) {
+                                    store.load({
+                                        params: {
+                                            page: previousPage,
+                                            size: 12
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'component',
+                            itemId: 'usersPageInfo',
+                            html: 'Page 1',
+                            margin: '0 15'
+                        },
+                        {
+                            xtype: 'button',
+                            itemId: 'usersNextPage',
+                            text: 'Next',
+                            handler: function () {
+                                var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+
+                                var nextPage = store.currentPage + 1;
+
+                                if (nextPage <= store.totalPages) {
+                                    store.load({
+                                        params: {
+                                            page: nextPage,
+                                            size: 12
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    ]
+                }
 
             ]
         }

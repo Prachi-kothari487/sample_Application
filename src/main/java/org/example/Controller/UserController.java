@@ -92,7 +92,7 @@ public class UserController {
     @GetMapping("/page")
     public ResponseEntity<PaginationResponse> getUsersByPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
+            @RequestParam(value = "size", defaultValue = "10") int size) {
         if(page<1 || size<1){
             return ResponseEntity.badRequest().build();
         }

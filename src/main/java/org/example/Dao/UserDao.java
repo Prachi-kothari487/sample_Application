@@ -185,7 +185,7 @@ public class UserDao {
         }
 
         if(status!=null && !status.isBlank()){
-            sql.append("  status = ? ");
+            sql.append(" AND status = ? ");
             params.add(status);
         }
 
@@ -212,6 +212,7 @@ public class UserDao {
             User user=new User();
             user.setId(rs.getInt("id"));
             user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
             user.setFirstName(rs.getString("first_name"));
             user.setLastName(rs.getString("last_name"));
@@ -220,7 +221,12 @@ public class UserDao {
             return user;
         },limit,offset);
     }
+    public Integer getActiveUserCount() {
 
+        String sql = "SELECT COUNT(*) FROM users WHERE UPPER(status) = 'ACTIVE'";
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 
 
 

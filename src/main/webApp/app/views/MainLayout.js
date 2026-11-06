@@ -27,11 +27,26 @@ Ext.define('MusicApp.view.MainLayout', {
     ],
 
     showPage: function (pageXtype) {
-        var pageContainer = this.down('#pageContainer');
+
+        console.log('Requested page:', pageXtype);
+
+        var pageContainer = this.getComponent('pageContainer');
+
+        if (!pageContainer) {
+            console.error('Page container not found!');
+            return;
+        }
+
+        console.log('Page container found:', pageContainer);
 
         pageContainer.removeAll(true);
-        pageContainer.add({
+
+        var newPage = Ext.create({
             xtype: pageXtype
         });
+
+        pageContainer.add(newPage);
+
+        console.log('Page loaded:', pageXtype);
     }
 });

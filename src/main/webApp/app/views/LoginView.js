@@ -1,44 +1,6 @@
-
-// function showCappuccinoAlert(title, message) {
-//     var popup = Ext.create('Ext.Dialog', {
-//         title: title,
-//         cls: 'cappuccino-alert',
-//         modal: true,
-//         centered: true,
-//         width: 420,
-//         maxWidth: '90%',
-//         closable: false,
-//         closeAction: 'destroy',
-//         bodyPadding: 24,
-//
-//         items: [{
-//             xtype: 'component',
-//             cls:'cappuccino-message',
-//             html: '<div style="' +
-//                 'color:#6B4B3A;' +
-//                 'font-size:16px;' +
-//                 'line-height:1.6;' +
-//                 '">' + Ext.String.htmlEncode(message) + '</div>'
-//         }],
-//
-//         buttons: [{
-//             text: 'OK',
-//             ui: 'plain',
-//             cls: 'cappuccino-ok-button',
-//             handler: function () {
-//                 popup.destroy();
-//             }
-//         }]
-//     });
-//
-//     popup.show();
-// }
-
 function showCappuccinoAlert(title, message) {
     Ext.Msg.alert(title, message);
 }
-
-
 
 Ext.define('MusicApp.view.LoginView', {
     extend: 'Ext.Container',

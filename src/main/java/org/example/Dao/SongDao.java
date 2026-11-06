@@ -2,6 +2,8 @@ package org.example.Dao;
 import org.example.Model.Song;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.example.Model.UpdateSongRequest;
 import org.example.Model.SongSearchRequest;
 import org.example.Model.User;
@@ -128,7 +130,6 @@ public class SongDao {
             return song;
         },limit,offset);
     }
-
     public List<Song> searchSongs(SongSearchRequest request, int limit, int offset) {
 
         StringBuilder sql = new StringBuilder(
@@ -137,6 +138,21 @@ public class SongDao {
 
         List<Object> params = new ArrayList<>();
 
+        // Global keyword search
+        if (request.getKeyword() != null &&
+                !request.getKeyword().isBlank()) {
+
+            sql.append(" AND (title LIKE ? OR artist LIKE ? OR album LIKE ? OR genre LIKE ?)");
+
+            String keyword = "%" + request.getKeyword().trim() + "%";
+
+            params.add(keyword);
+            params.add(keyword);
+            params.add(keyword);
+            params.add(keyword);
+        }
+
+        // Individual filters
         if (request.getTitle() != null && !request.getTitle().isBlank()) {
             sql.append(" AND title LIKE ?");
             params.add("%" + request.getTitle() + "%");
@@ -190,6 +206,21 @@ public class SongDao {
 
         List<Object> params = new ArrayList<>();
 
+        // Global keyword search
+        if (request.getKeyword() != null &&
+                !request.getKeyword().isBlank()) {
+
+            sql.append(" AND (title LIKE ? OR artist LIKE ? OR album LIKE ? OR genre LIKE ?)");
+
+            String keyword = "%" + request.getKeyword().trim() + "%";
+
+            params.add(keyword);
+            params.add(keyword);
+            params.add(keyword);
+            params.add(keyword);
+        }
+
+        // Individual filters
         if (request.getTitle() != null && !request.getTitle().isBlank()) {
             sql.append(" AND title LIKE ?");
             params.add("%" + request.getTitle() + "%");
@@ -220,5 +251,40 @@ public class SongDao {
                 Integer.class,
                 params.toArray()
         );
+    }
+    public Integer getGenreCount() {
+
+        String sql = """
+        SELECT COUNT(DISTINCT TRIM(genre))
+        FROM songs
+        WHERE genre IS NOT NULL
+        AND TRIM(genre) <> ''
+    """;
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+    public List<Map<String, Object>> getSongsByGenre() {
+
+        String sql = """
+        SELECT genre, COUNT(*) AS total
+        FROM songs
+        WHERE genre IS NOT NULL
+        AND TRIM(genre) <> ''
+        GROUP BY genre
+        ORDER BY total DESC
+    """;
+
+        return jdbcTemplate.queryForList(sql);
+    }
+    public List<Map<String, Object>> getRecentSongs() {
+
+        String sql = """
+        SELECT id, title, artist, album, genre, year
+        FROM songs
+        ORDER BY id DESC
+        LIMIT 5
+    """;
+
+        return jdbcTemplate.queryForList(sql);
     }
 }
