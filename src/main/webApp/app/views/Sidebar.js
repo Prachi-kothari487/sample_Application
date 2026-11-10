@@ -1,3 +1,4 @@
+
 Ext.define('MusicApp.view.Sidebar', {
     extend: 'Ext.Container',
     xtype: 'appsidebar',
@@ -22,9 +23,11 @@ Ext.define('MusicApp.view.Sidebar', {
         },
         {
             xtype: 'button',
+            itemId: 'usersNavButton',
             text: '♟   Users',
             cls: 'dashboard-nav-button',
             margin: '8 0',
+            hidden: true,
             handler: function (button) {
                 button.up('mainlayout').showPage('usersview');
             }
@@ -43,7 +46,7 @@ Ext.define('MusicApp.view.Sidebar', {
             text: '♙   Profile',
             cls: 'dashboard-nav-button',
             margin: '8 0',
-            handler: function(button){
+            handler: function (button) {
                 button.up('mainlayout').showPage('profileview');
             }
         },
@@ -54,13 +57,10 @@ Ext.define('MusicApp.view.Sidebar', {
             margin: '8 0',
 
             handler: function (button) {
-
                 Ext.Msg.confirm(
                     'Logout',
                     'Are you sure you want to logout?',
                     function (choice) {
-
-                        console.log('Confirmation:', choice);
 
                         if (choice !== 'yes') {
                             return;
@@ -71,38 +71,59 @@ Ext.define('MusicApp.view.Sidebar', {
                             credentials: 'same-origin'
                         })
                             .then(response => {
-                                console.log('Logout API status:', response.status);
-
                                 if (!response.ok) {
                                     throw new Error('Logout API failed');
                                 }
-
                                 return response.text();
                             })
                             .then(message => {
-
                                 console.log('Logout response:', message);
 
-                                // Destroy current application screen
                                 Ext.Viewport.removeAll(true);
 
-                                // Create Login View
-                                const loginView = Ext.create('MusicApp.view.LoginView');
+                                const loginView =
+                                    Ext.create('MusicApp.view.LoginView');
 
                                 Ext.Viewport.add(loginView);
-
-                                console.log('Login page displayed');
                             })
                             .catch(error => {
                                 console.error('Logout error:', error);
-                                Ext.Msg.alert('Error', 'Logout failed. Please try again.');
+                                Ext.Msg.alert(
+                                    'Error',
+                                    'Logout failed. Please try again.'
+                                );
                             });
                     }
                 );
             }
-
         }
-    ]
+    ],
 
+    initialize: function () {
+        this.callParent(arguments);
 
+        const usersButton = this.down('#usersNavButton');
+
+        fetch('/sample-application/api/auth/role', {
+            method: 'GET',
+            credentials: 'same-origin'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Unable to fetch user role');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const role = (data.role || '').trim().toUpperCase();
+
+                usersButton.setHidden(role !== 'ADMIN');
+
+                console.log('Logged-in role:', role);
+            })
+            .catch(error => {
+                usersButton.setHidden(true);
+                console.error('Role fetch error:', error);
+            });
+    }
 });

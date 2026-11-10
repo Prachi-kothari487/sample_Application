@@ -11,9 +11,6 @@
     --border-color: #E8CBB5;
 }
 
-/* =========================================
-   LOGIN VIEW
-   ========================================= */
 
 .loginview .x-field-label,
 .loginview .x-label-el {
@@ -51,9 +48,6 @@
     padding: 2px 0 !important;
 }
 
-/* =========================================
-   SIDEBAR
-   ========================================= */
 
 .dashboard-sidebar {
     background-image: url('/sample-application/resources/images/musicvault-sidebar-bg.png');
@@ -91,16 +85,12 @@
     border-radius: 10px !important;
 }
 
-/* =========================================
-   DASHBOARD
-   ========================================= */
-
 .music-dashboard {
     background: #F8F5F0;
 }
 
 .dashboard-main {
-    background-color: var(--coffee-light);
+    background-color: #f5ebdd;
     padding: 15px;
 }
 
@@ -130,8 +120,6 @@
     border-radius: 10px;
     font-weight: 600;
 }
-
-/* Dashboard cards */
 
 .dashboard-stat-card {
     background: #FFFFFF;
@@ -164,7 +152,6 @@
     color: #351904;
 }
 
-/* Dashboard chart and recent songs */
 
 .dashboard-chart-card,
 .dashboard-recent-card {
@@ -188,7 +175,6 @@
     margin: 0;
 }
 
-/* Recently added songs */
 
 .recent-song-row {
     display: flex;
@@ -235,9 +221,6 @@
     font-weight: 600;
 }
 
-/* =========================================
-   USERS AND SONGS VIEWS
-   ========================================= */
 
 .cappuccino-users-view,
 .cappuccino-songs-view {
@@ -245,7 +228,7 @@
     padding: 32px;
 }
 
-/* Page headings */
+
 
 .users-title,
 .songs-title {
@@ -261,7 +244,7 @@
     margin-top: 8px;
 }
 
-/* Primary buttons */
+
 
 .cappuccino-users-view .cappuccino-primary-button,
 .cappuccino-songs-view .cappuccino-primary-button,
@@ -286,7 +269,6 @@
     font-weight: 700;
 }
 
-/* Search fields */
 
 .cappuccino-users-view .cappuccino-search-field .x-input-wrap,
 .cappuccino-songs-view .cappuccino-search-field .x-input-wrap {
@@ -306,15 +288,14 @@
     color: #A88976;
 }
 
-/* Grids */
 
 .cappuccino-users-view .cappuccino-users-grid,
 .cappuccino-songs-view .cappuccino-songs-grid {
     background-color: var(--cream-light);
     border: 1px solid var(--coffee-deep);
     border-radius: 16px;
-    height: 450px !important;
-    min-height: 450px !important;
+    height: 443px !important;
+    min-height: 443px !important;
 }
 
 .cappuccino-users-grid .x-gridcolumn,
@@ -375,9 +356,6 @@
     border-width: 0;
 }
 
-/* =========================================
-   COMMON FORM FIELDS
-   ========================================= */
 
 .x-textfield .x-input-wrap-el {
     border: 1px solid #61422C;
@@ -389,9 +367,6 @@
     border-color: var(--coffee-deep);
 }
 
-/* =========================================
-   DIALOGS AND POPUPS
-   ========================================= */
 
 .x-dialog {
     background-color: var(--cream) !important;
@@ -401,7 +376,6 @@
     overflow: hidden;
 }
 
-/* Dialog header */
 
 .x-dialog .x-header,
 .x-dialog .x-dialogheader {
@@ -416,7 +390,6 @@
     color: var(--cream) !important;
 }
 
-/* Dialog body */
 
 .x-dialog .x-body,
 .x-dialog .x-panel-body-el {
@@ -424,7 +397,7 @@
     color: var(--coffee-dark) !important;
 }
 
-/* Dialog footer */
+
 
 .x-dialog .x-footer,
 .x-dialog .x-toolbar,
@@ -436,7 +409,7 @@
     box-shadow: none !important;
 }
 
-/* Dialog buttons */
+
 
 .x-dialog .x-button,
 .x-dialog .x-button .x-inner {
@@ -452,7 +425,7 @@
     -webkit-text-fill-color: var(--cream) !important;
 }
 
-/* Cappuccino alert */
+
 
 .x-dialog.cappuccino-alert {
     background: var(--cream) !important;
@@ -471,7 +444,6 @@
     -webkit-text-fill-color: var(--cream) !important;
 }
 
-/* User form dialog */
 
 .add-user-dialog .x-panelheader {
     background: var(--coffee-deep);
@@ -501,7 +473,7 @@
     border-color: var(--coffee-light) !important;
 }
 
-/* Common form dialog buttons */
+
 
 .cappuccino-form-dialog .cappuccino-dialog-save,
 .cappuccino-form-dialog .cappuccino-dialog-save .x-inner {
@@ -532,7 +504,7 @@
     visibility: visible !important;
 }
 
-/* Dialog form fields */
+
 
 .x-dialog .x-input-wrap,
 .x-dialog .x-input-wrap-el {
@@ -553,7 +525,7 @@
     box-shadow: none !important;
 }
 
-/* Validation */
+
 
 .x-error-message,
 .x-form-error-msg,
@@ -581,9 +553,6 @@
     color: var(--coffee-dark) !important;
 }
 
-/* =========================================
-   PROFILE PAGE
-   ========================================= */
 
 .profile-view {
     background: #F6F0E8;
@@ -612,7 +581,7 @@
     gap: 22px;
 }
 
-/* Profile hero */
+
 
 .profile-hero {
     display: flex;
@@ -683,7 +652,7 @@
     color: #9C4938;
 }
 
-/* Profile information */
+
 
 .profile-section {
     background: #FFFDF9;
@@ -733,7 +702,7 @@
     overflow-wrap: anywhere;
 }
 
-/* Profile loading and error */
+
 
 .profile-loading,
 .profile-error {
@@ -744,9 +713,6 @@
     color: #806C5D;
 }
 
-/* =========================================
-   DASHBOARD GENRE CUSTOM LEGEND
-   ========================================= */
 
 .genre-chart-layout {
     width: 100%;
@@ -783,9 +749,6 @@
     font-size: 12px;
 }
 
-/* =========================================
-   GLOBAL SHARED STYLES
-   ========================================= */
 
 .x-panel-body-el,
 .x-listitem {
@@ -797,9 +760,7 @@
     border-right-color: var(--coffee-light) !important;
 }
 
-/* =========================================
-   RESPONSIVE STYLES
-   ========================================= */
+
 
 @media (max-width: 600px) {
     .profile-hero {
@@ -816,7 +777,7 @@
         padding: 16px;
     }
 }
-/* NORMAL BUTTON */
+
 .x-button-action .x-inner-el {
     border-color: #351904 !important;
     background-color: #351904 !important;
@@ -826,16 +787,16 @@
 
 .x-button-action.x-hover .x-inner-el,
 .x-button-action:hover .x-inner-el {
-    border-color: #6F4E37 !important;
-    background-color: #6F4E37 !important;
+    border-color: #e1b18f !important;
+    background-color: #cca488 !important;
     background-image: none !important;
 }
 
 
 .x-button-action.x-pressed .x-inner-el,
 .x-button-action.x-button-pressing .x-inner-el {
-    border-color: #987052 !important;
-    background-color: #987052 !important;
+    border-color: #c39d80 !important;
+    background-color: #c89c7a !important;
     background-image: none !important;
 }
 

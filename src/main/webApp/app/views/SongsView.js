@@ -42,6 +42,8 @@ Ext.define('MusicApp.view.SongsView', {
                     ui: 'plain',
                     width: 150,
                     height: 56,
+                    itemId: 'addSongButton',
+                    hidden:true,
 
                     handler: function () {
 
@@ -360,6 +362,8 @@ Ext.define('MusicApp.view.SongsView', {
 
                         // Edit Action
                         {
+                            itemId:'songActionsColumn',
+                            hidden:true,
                             text: 'Action',
                             width: 100,
 
@@ -667,5 +671,50 @@ Ext.define('MusicApp.view.SongsView', {
                 }
             ]
         }
-    ]
+    ],
+    initialize: function () {
+        this.callParent(arguments);
+
+        var addButton = this.down('#addSongButton');
+        var actionColumn = this.down('#songActionsColumn');
+
+        fetch('/sample-application/api/auth/role', {
+            method: 'GET',
+            credentials: 'same-origin'
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error('Unable to fetch user role');
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                var role = (data.role || '').trim().toUpperCase();
+                var isAdmin = role === 'ADMIN';
+
+                if (addButton) {
+                    addButton.setHidden(!isAdmin);
+                }
+
+                if (actionColumn) {
+                    actionColumn.setHidden(!isAdmin);
+                }
+
+                console.log('SongsView role:', role);
+            })
+            .catch(function (error) {
+                if (addButton) {
+                    addButton.setHidden(true);
+                }
+
+                if (actionColumn) {
+                    actionColumn.setHidden(true);
+                }
+
+                console.error('Role fetch error:', error);
+            });
+    }
+
+
+
 });

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Map;
 import org.example.Service.UserService;
 import org.example.Model.UserResponse;
+import org.example.Model.User;
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController {
@@ -20,21 +21,33 @@ public class LoginController {
         this.userService = userService;
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String,String> request,HttpSession session){
-        String name= request.get("name");
-        String password=request.get("password");
+    public ResponseEntity<String> login(
+            @RequestBody Map<String, String> request,
+            HttpSession session) {
 
-        boolean valid=loginService.login(name,password);
-        if(valid){
+        String name = request.get("name");
+        String password = request.get("password");
 
-            session.setAttribute("loggedInUser", name);
+        User user = loginService.authenticate(name, password);
+
+        if (user != null) {
+
+            String role = user.getRole();
+
+            if (role == null || role.isBlank()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("User role is not configured");
+            }
+
+            session.setAttribute("loggedInUser", user.getName());
+            session.setAttribute("loggedInRole", role.trim().toUpperCase());
 
             return ResponseEntity.ok("Login successful");
-
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("invalid username or password");
-    }
 
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Invalid username or password");
+    }
 
     @GetMapping("/session")
     public ResponseEntity<String> checkSession(HttpSession session) {
@@ -70,7 +83,18 @@ public class LoginController {
         return ResponseEntity.ok(profile);
     }
 
+    @GetMapping("/role")
+    public ResponseEntity<?> getRole(HttpSession session) {
 
+        String role = (String) session.getAttribute("loggedInRole");
+
+        if (role == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Please login first");
+        }
+
+        return ResponseEntity.ok(Map.of("role", role));
+    }
 
 
 
