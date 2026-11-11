@@ -124,6 +124,38 @@ public class UserDao {
     }
 
 
+    public User findByEmail(String email) {
+
+        String sql = "SELECT * FROM users WHERE LOWER(email) = LOWER(?)";
+
+        return jdbcTemplate.query(
+                sql,
+                new Object[]{email},
+                rs -> {
+
+                    if (rs.next()) {
+
+                        User user = new User();
+
+                        user.setId(rs.getInt("id"));
+                        user.setName(rs.getString("name"));
+                        user.setPassword(rs.getString("password"));
+                        user.setFirstName(rs.getString("first_name"));
+                        user.setLastName(rs.getString("last_name"));
+                        user.setEmail(rs.getString("email"));
+                        user.setRole(rs.getString("role"));
+                        user.setStatus(rs.getString("status"));
+
+                        return user;
+                    }
+
+                    return null;
+                }
+        );
+    }
+
+
+
     public int updateUser(int id, UpdateUserRequest request){
         StringBuilder sql=new StringBuilder("UPDATE users set ");
         List<Object>params=new ArrayList<>();
@@ -227,7 +259,12 @@ public class UserDao {
 
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
+    public int updatePassword(int userId, String encodedPassword) {
 
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+
+        return jdbcTemplate.update(sql, encodedPassword, userId);
+    }
 
 
 }

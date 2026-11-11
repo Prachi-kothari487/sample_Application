@@ -14,7 +14,7 @@ Ext.define('MusicApp.view.DashboardView', {
 
     items: [
 
-        // DASHBOARD HEADING
+
         {
             xtype: 'container',
             margin: '0 0 25 0',
@@ -31,7 +31,7 @@ Ext.define('MusicApp.view.DashboardView', {
             ]
         },
 
-        // STATISTICS CARDS
+
         {
             xtype: 'container',
             cls: 'dashboard-stats',
@@ -100,7 +100,7 @@ Ext.define('MusicApp.view.DashboardView', {
             ]
         },
 
-        // SONGS BY GENRE CHART
+
         {
             xtype: 'container',
             itemId: 'genreChartCard',
@@ -131,7 +131,7 @@ Ext.define('MusicApp.view.DashboardView', {
 
                     items: [
 
-                        // DOUGHNUT CHART
+
                         {
                             xtype: 'polar',
                             itemId: 'genreChart',
@@ -179,7 +179,7 @@ Ext.define('MusicApp.view.DashboardView', {
                             ]
                         },
 
-                        // CUSTOM GENRE LEGEND
+
                         {
                             xtype: 'component',
                             itemId: 'genreLegend',
@@ -191,7 +191,7 @@ Ext.define('MusicApp.view.DashboardView', {
             ]
         },
 
-        // RECENTLY ADDED SONGS
+
         {
             xtype: 'container',
             itemId: 'recentSongsCard',
@@ -260,7 +260,7 @@ Ext.define('MusicApp.view.DashboardView', {
                 console.log('6. TOTAL GENRES:', data.totalGenres);
                 console.log('7. ACTIVE USERS:', data.activeUsers);
 
-                // UPDATE STATISTICS CARDS
+
 
                 if (statsContainer) {
 
@@ -293,7 +293,7 @@ Ext.define('MusicApp.view.DashboardView', {
                     `);
                 }
 
-                // UPDATE DOUGHNUT CHART
+
 
                 var chart = chartContainer
                     ? chartContainer.down('#genreChart')
@@ -364,7 +364,6 @@ Ext.define('MusicApp.view.DashboardView', {
 
                 }
 
-                // UPDATE RECENT SONGS
 
                 console.log('Recent Songs:', data.recentSongs);
                 console.log('Recent Songs Count:', data.recentSongs?.length);
