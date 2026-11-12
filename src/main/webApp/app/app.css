@@ -4,7 +4,7 @@
     --coffee-medium: #8B6248;
     --coffee-light: #C9A58B;
     --cream: #FFF8ED;
-    --cream-light: #FFFAF4;
+    --cream-light: #ffffff;
     --cream-bg: #F5EBDD;
     --text-primary: #49372d;
     --text-secondary: #9A8575;
@@ -65,7 +65,14 @@
     border-radius: 10px !important;
     box-shadow: none !important;
 }
-
+.dashboard-heading {
+    color: #4e290d;
+    font-size: 28px;
+    font-weight: 700;
+}
+.dashboard-welcome{
+    color:#4e290d
+}
 .dashboard-sidebar .dashboard-nav-button {
     min-height: 44px !important;
     height: auto !important;
@@ -123,7 +130,7 @@
 
 .dashboard-stat-card {
     background: #FFFFFF;
-    border: 1px solid #EDE3D8;
+    border: 1px solid #351904;
     border-radius: 14px;
     box-shadow: 0 3px 12px rgba(70, 45, 25, 0.05);
     padding: 10px !important;
@@ -156,7 +163,7 @@
 .dashboard-chart-card,
 .dashboard-recent-card {
     background: #FFFFFF;
-    border: 1px solid #EDE3D8;
+    border: 1px solid #351904;
     border-radius: 14px;
     box-shadow: 0 3px 12px rgba(70, 45, 25, 0.05);
     padding: 10px !important;
@@ -348,8 +355,8 @@
 }
 
 .x-show-selection > .x-listitem.x-selected {
-    background-color: #8B6248;
-    border-color: var(--coffee-deep);
+    background-color: #dcb9a2;
+    border-color: var(--coffee-deep) !important;
 }
 
 .x-headercontainer {
@@ -804,4 +811,403 @@
 .x-button-action .x-inner-el,
 .x-button-action .x-inner-el .x-innerhtml {
     color: #F5E6D3 !important;
+}
+
+
+
+/* ==========================================
+   INSPO STYLE - SECURITY QUESTION SETUP
+========================================== */
+
+.security-setup-screen {
+    background:
+            radial-gradient(ellipse at 10% 10%, #FFF4E8 0%, transparent 35%),
+            radial-gradient(ellipse at 90% 90%, #C99B78 0%, transparent 40%),
+            linear-gradient(135deg, #E9C5A7 0%, #F8E3CF 48%, #B98461 100%) !important;
+    min-height: 100%;
+    padding: 35px 20px;
+}
+
+.security-setup-card {
+    background: rgba(255, 250, 244, 0.96) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 30px !important;
+    box-shadow: 0 18px 45px rgba(91, 53, 32, 0.18) !important;
+    padding: 32px !important;
+    max-width: 650px;
+}
+
+.security-setup-brand {
+    color: #8B6248;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.security-setup-title {
+    color: #4B3028;
+    font-size: 30px;
+    font-weight: 800;
+    text-align: center;
+    margin: 0 0 16px;
+}
+
+.security-setup-description {
+    color: #8B5637;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: center;
+    margin: 0;
+}
+
+.security-setup-divider {
+    height: 2px;
+    background: #E8C2A5;
+    margin: 25px 0;
+}
+
+.security-setup-instruction {
+    background: #F7E1CE;
+    border-radius: 15px;
+    color: #805033;
+    padding: 17px 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.security-question-heading {
+    color: #4B3028;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 18px 0 10px;
+}
+
+/* Question and answer fields */
+
+.security-setup-field {
+    margin-bottom: 18px !important;
+}
+
+.security-setup-field .x-label-el,
+.security-setup-field .x-field-label {
+    color: #603D2B !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.security-setup-field .x-input-wrap,
+.security-setup-field .x-input-wrap-el {
+    background: #FFFAF5 !important;
+    border: 1.5px solid #DDB99F !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    min-height: 54px;
+}
+
+.security-setup-field input,
+.security-setup-field .x-input-el {
+    color: #4B3028 !important;
+    font-size: 15px !important;
+}
+
+.security-setup-field input::placeholder {
+    color: #A98B77 !important;
+    opacity: 1 !important;
+}
+
+.security-setup-field.x-focused .x-input-wrap,
+.security-setup-field.x-focused .x-input-wrap-el {
+    border-color: #8B6248 !important;
+}
+
+/* Save button */
+
+.security-setup-screen .security-setup-button,
+.security-setup-screen .security-setup-button .x-inner,
+.security-setup-screen .security-setup-button .x-inner-el {
+    background: linear-gradient(110deg, #4B3028, #75452C) !important;
+    background-image: none !important;
+    border: 1px solid #4B3028 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 18px rgba(91, 53, 32, 0.2) !important;
+    min-height: 54px;
+}
+
+.security-setup-screen .security-setup-button .x-text-el,
+.security-setup-screen .security-setup-button .x-button-label,
+.security-setup-screen .security-setup-button .x-innerhtml {
+    color: #FFF8ED !important;
+    -webkit-text-fill-color: #FFF8ED !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.security-setup-screen .security-setup-button.x-hover .x-inner-el,
+.security-setup-screen .security-setup-button:hover .x-inner-el {
+    background: #8B6248 !important;
+}
+
+.security-setup-loading {
+    color: #8B6248;
+    text-align: center;
+    padding: 20px;
+}
+
+.security-setup-error {
+    color: #A33D32;
+    font-weight: 600;
+    padding: 15px;
+}
+
+
+
+/* =========================================
+   SECURITY QUESTION SETUP
+   Cappuccino Theme
+========================================= */
+
+.security-setup-screen {
+    background-color: var(--cream-bg) !important;
+    padding: 25px;
+    min-height: 100%;
+}
+
+.security-setup-card {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 5px 20px rgba(75, 48, 40, 0.08) !important;
+    padding: 30px !important;
+    max-width: 650px;
+}
+
+.security-setup-brand {
+    color: var(--coffee-medium);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.security-setup-title {
+    color: var(--coffee-dark);
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 10px;
+}
+
+.security-setup-description {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+    margin: 0;
+}
+
+.security-setup-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 22px 0;
+}
+
+.security-setup-instruction {
+    background-color: #F3E8DC;
+    color: var(--coffee-medium);
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.security-question-heading {
+    color: var(--coffee-dark);
+    font-size: 15px;
+    font-weight: 700;
+    margin: 15px 0 10px;
+}
+
+/* Security question fields */
+
+.security-setup-field .x-label-el,
+.security-setup-field .x-field-label {
+    color: var(--coffee-medium) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.security-setup-field .x-input-wrap,
+.security-setup-field .x-input-wrap-el {
+    background-color: #FFFCF7 !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.security-setup-field input,
+.security-setup-field .x-input-el {
+    color: var(--coffee-dark) !important;
+}
+
+.security-setup-field input::placeholder {
+    color: #B59A87 !important;
+    opacity: 1 !important;
+}
+
+.security-setup-field.x-focused .x-input-wrap,
+.security-setup-field.x-focused .x-input-wrap-el {
+    border-color: var(--coffee-medium) !important;
+}
+
+/* Security setup button */
+
+.security-setup-screen .security-setup-button,
+.security-setup-screen .security-setup-button .x-inner,
+.security-setup-screen .security-setup-button .x-inner-el {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border: 1px solid var(--coffee-dark) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.security-setup-screen .security-setup-button .x-text-el,
+.security-setup-screen .security-setup-button .x-button-label,
+.security-setup-screen .security-setup-button .x-innerhtml {
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+.security-setup-loading {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 20px;
+}
+
+.security-setup-error {
+    color: #A33D32;
+    font-weight: 600;
+    padding: 12px;
+}
+
+
+/* =========================================
+   RESET PASSWORD
+   Cappuccino Theme
+========================================= */
+
+.reset-password-screen {
+    background-color: var(--cream-bg) !important;
+    padding: 25px;
+    min-height: 100%;
+}
+
+.reset-password-card {
+    background-color:#ffffff !important;
+    border: 1px solid #4b3028 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 5px 20px rgba(75, 48, 40, 0.08) !important;
+    padding: 32px !important;
+    max-width: 520px;
+}
+
+
+.reset-password-card h1,
+.reset-password-card h2,
+.reset-password-card h3 {
+    color: var(--coffee-dark) !important;
+    font-weight: 700;
+}
+
+.reset-password-card p {
+    color: var(--text-secondary) !important;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+.reset-password-card .x-field-label,
+.reset-password-card .x-label-el {
+    color: var(--coffee-medium) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.reset-password-card .x-input-wrap,
+.reset-password-card .x-input-wrap-el {
+    background-color: #FFFCF7 !important;
+    border: 1px solid var(--coffee-light) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.reset-password-card input,
+.reset-password-card .x-input-el {
+    color: var(--coffee-dark) !important;
+}
+
+.reset-password-card input::placeholder {
+    color: #B59A87 !important;
+    opacity: 1 !important;
+}
+
+.reset-password-card .x-focused .x-input-wrap,
+.reset-password-card .x-focused .x-input-wrap-el {
+    border-color: var(--coffee-medium) !important;
+}
+
+.reset-password-card .x-button,
+.reset-password-card .x-button .x-inner,
+.reset-password-card .x-button .x-inner-el {
+    background: var(--coffee-dark) !important;
+    background-image: none !important;
+    border: 1px solid var(--coffee-dark) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.reset-password-card .x-button .x-text-el,
+.reset-password-card .x-button .x-button-label,
+.reset-password-card .x-button .x-innerhtml {
+    color: var(--cream) !important;
+    -webkit-text-fill-color: var(--cream) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+}
+
+
+@media (max-width: 600px) {
+    .security-setup-screen,
+    .reset-password-screen {
+        padding: 15px;
+    }
+
+    .security-setup-card,
+    .reset-password-card {
+        padding: 20px !important;
+        border-radius: 14px !important;
+    }
+
+    .security-setup-title {
+        font-size: 22px;
+    }
+}
+.x-formpanel-body-el {
+    background-color: #ffffff;
+}
+.reset-password-footer {
+    padding: 20px 0 0 0 !important;
+}
+.x-textfield .x-input-el {
+    background-color: #ffffff !important;
 }

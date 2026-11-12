@@ -93,6 +93,9 @@ Ext.define('MusicApp.view.LoginView', {
                             revealable: true,
                             labelAlign: 'top'
                         },
+
+
+
                         {
                             xtype: 'button',
                             text: 'Sign In',
@@ -146,13 +149,43 @@ Ext.define('MusicApp.view.LoginView', {
                                             );
                                         });
                                     })
+
                                     .then(function () {
+
+                                        return fetch(
+                                            '/sample-application/api/auth/security-questions/status',
+                                            {
+                                                method: 'GET',
+                                                credentials: 'same-origin'
+                                            }
+                                        );
+                                    })
+                                    .then(function (response) {
+
+                                        if (!response.ok) {
+                                            throw new Error('Unable to check security question setup.');
+                                        }
+
+                                        return response.json();
+                                    })
+                                    .then(function (isSetupCompleted) {
+
                                         Ext.Viewport.removeAll(true);
 
-                                        Ext.Viewport.add({
-                                            xtype: 'mainlayout'
-                                        });
+                                        if (isSetupCompleted === false) {
+
+                                            Ext.Viewport.add({
+                                                xtype: 'securityquestionsetupview'
+                                            });
+
+                                        } else {
+
+                                            Ext.Viewport.add({
+                                                xtype: 'mainlayout'
+                                            });
+                                        }
                                     })
+
                                     .catch(function (error) {
                                         showCappuccinoAlert(
                                             'Login Failed',
@@ -162,6 +195,28 @@ Ext.define('MusicApp.view.LoginView', {
                                     .finally(function () {
                                         button.setDisabled(false);
                                     });
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            text: 'Forgot Password?',
+                            ui: 'plain',
+                            width: '100%',
+                            margin: '12 0 0 0',
+
+                            style: {
+                                background: 'transparent',
+                                color: '#9A6748',
+                                fontSize: '13px',
+                                fontWeight: '600'
+                            },
+
+                            handler: function () {
+                                Ext.Viewport.removeAll(true);
+
+                                Ext.Viewport.add({
+                                    xtype: 'forgotpasswordview'
+                                });
                             }
                         },
                         {
