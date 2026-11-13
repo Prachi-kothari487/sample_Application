@@ -72,7 +72,7 @@ public class UserService {
         );
     }
     public UserResponse updateUser(int id,UpdateUserRequest request){
-        if(request.getFirstname()==null && request.getLastname()==null && request.getEmail()==null && request.getRole()==null && request.getStatus()==null){
+        if(request.getName()==null && request.getFirstname()==null && request.getLastname()==null && request.getEmail()==null && request.getRole()==null && request.getStatus()==null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"at least one field is required to update");
         }
         User existingUser=userDao.findById(id);

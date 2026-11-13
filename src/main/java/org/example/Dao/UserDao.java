@@ -160,7 +160,10 @@ public class UserDao {
         StringBuilder sql=new StringBuilder("UPDATE users set ");
         List<Object>params=new ArrayList<>();
         List<String>updates=new ArrayList<>();
-
+        if(request.getName() != null) {
+            updates.add("name = ?");
+            params.add(request.getName());
+        }
         if(request.getFirstname()!=null){
             updates.add(" first_name = ? ");
             params.add(request.getFirstname());

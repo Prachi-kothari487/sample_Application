@@ -116,7 +116,7 @@ public class SongDao {
     }
 
     public List<Song> findSongsByPage(int limit, int offset){
-        String sql="select * from songs order by id limit ? offset ?";
+        String sql="select * from songs order by id desc limit ? offset ?";
 
         return jdbcTemplate.query(sql,(rs,rowNum)->{
             Song song=new Song();
@@ -138,7 +138,6 @@ public class SongDao {
 
         List<Object> params = new ArrayList<>();
 
-        // Global keyword search
         if (request.getKeyword() != null &&
                 !request.getKeyword().isBlank()) {
 
@@ -152,7 +151,6 @@ public class SongDao {
             params.add(keyword);
         }
 
-        // Individual filters
         if (request.getTitle() != null && !request.getTitle().isBlank()) {
             sql.append(" AND title LIKE ?");
             params.add("%" + request.getTitle() + "%");
@@ -206,7 +204,6 @@ public class SongDao {
 
         List<Object> params = new ArrayList<>();
 
-        // Global keyword search
         if (request.getKeyword() != null &&
                 !request.getKeyword().isBlank()) {
 
@@ -220,7 +217,6 @@ public class SongDao {
             params.add(keyword);
         }
 
-        // Individual filters
         if (request.getTitle() != null && !request.getTitle().isBlank()) {
             sql.append(" AND title LIKE ?");
             params.add("%" + request.getTitle() + "%");
