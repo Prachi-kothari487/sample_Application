@@ -84,6 +84,7 @@ Ext.define('MusicApp.view.LoginView', {
                             clearable: true,
                             labelAlign: 'top'
                         },
+
                         {
                             xtype: 'passwordfield',
                             name: 'password',
@@ -91,8 +92,25 @@ Ext.define('MusicApp.view.LoginView', {
                             placeholder: 'Enter your password',
                             required: true,
                             revealable: true,
-                            labelAlign: 'top'
+                            labelAlign: 'top',
+
+                            listeners: {
+                                action: function (field) {
+
+                                    var form = field.up('formpanel');
+                                    var signInButton = form.down('#signInButton');
+
+                                    if (signInButton && !signInButton.getDisabled()) {
+                                        var handler = signInButton.getHandler();
+
+                                        if (handler) {
+                                            handler.call(signInButton, signInButton);
+                                        }
+                                    }
+                                }
+                            }
                         },
+
 
 
 
@@ -100,6 +118,7 @@ Ext.define('MusicApp.view.LoginView', {
                             xtype: 'button',
                             text: 'Sign In',
                             ui: 'plain',
+                            itemId: 'signInButton',
                             cls: 'music-signin-button',
                             height: 56,
                             width: '100%',

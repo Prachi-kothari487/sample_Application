@@ -6,7 +6,8 @@ import org.example.Dao.UserDao;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
@@ -64,6 +65,18 @@ public class PasswordResetService {
 
         return userId != null;
     }
+    private void validatePassword(String password) {
+
+        String passwordRegex =
+                "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9\\s])\\S{8,16}$";
+
+        if (password == null || !password.matches(passwordRegex)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Password must contain 8-16 characters, at least one uppercase letter, one lowercase letter, one number and one special character. Spaces are not allowed."
+            );
+        }
+    }
     @Transactional
     public boolean resetPassword(String rawToken, String newPassword) {
 
@@ -79,6 +92,7 @@ public class PasswordResetService {
         if (userId == null) {
             return false;
         }
+        validatePassword(newPassword);
 
         String encodedPassword = passwordEncoder.encode(newPassword);
 

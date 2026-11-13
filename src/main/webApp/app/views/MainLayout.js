@@ -26,6 +26,25 @@ Ext.define('MusicApp.view.MainLayout', {
         }
     ],
 
+    initialize: function () {
+        this.callParent(arguments);
+
+        var savedPage = window.location.hash.substring(1);
+
+        var allowedPages = [
+            'dashboardview',
+            'usersview',
+            'songsview',
+            'profileview'
+        ];
+
+        if (allowedPages.indexOf(savedPage) !== -1) {
+            this.showPage(savedPage);
+        } else {
+            window.location.hash = 'dashboardview';
+        }
+    },
+
     showPage: function (pageXtype) {
 
         console.log('Requested page:', pageXtype);
@@ -37,8 +56,6 @@ Ext.define('MusicApp.view.MainLayout', {
             return;
         }
 
-        console.log('Page container found:', pageContainer);
-
         pageContainer.removeAll(true);
 
         var newPage = Ext.create({
@@ -46,6 +63,8 @@ Ext.define('MusicApp.view.MainLayout', {
         });
 
         pageContainer.add(newPage);
+
+        window.location.hash = pageXtype;
 
         console.log('Page loaded:', pageXtype);
     }

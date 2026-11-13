@@ -33,6 +33,18 @@ public class UserService {
         return new UserResponse(user.getId(),user.getName(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getRole(), user.getStatus());
 
     }
+    private void validatePassword(String password) {
+
+        String passwordRegex =
+                "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9\\s])\\S{8,16}$";
+
+        if (password == null || !password.matches(passwordRegex)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Password must contain 8-16 characters, at least one uppercase letter, one lowercase letter, one number and one special character. Spaces are not allowed."
+            );
+        }
+    }
 
     public UserResponse createUser(User user){
         User existingUser=userDao.findByName(user.getName());
@@ -41,6 +53,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Username already exists");
         }
 
+        validatePassword(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         int rowsInserted=userDao.createUser(user);

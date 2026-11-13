@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context docBase="/Users/kothari/IdeaProjects/Sample_Application/src/main/webApp">
+  <Resources cacheMaxSize="10240">
+    <PreResources base="/Users/kothari/IdeaProjects/Sample_Application/build/classes/java/main" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
+    <PreResources base="/Users/kothari/IdeaProjects/Sample_Application/build/resources/main" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
+  </Resources>
+</Context>

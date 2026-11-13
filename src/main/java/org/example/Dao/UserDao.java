@@ -238,7 +238,7 @@ public class UserDao {
 
 
     public List<User> findUsersByPage(int limit,int offset){
-        String sql="select * from users order by id limit ? offset ?";
+        String sql="select * from users order by id desc limit ? offset ?";
 
         return jdbcTemplate.query(sql,(rs,rowNum)->{
             User user=new User();

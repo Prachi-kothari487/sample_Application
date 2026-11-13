@@ -1211,3 +1211,13 @@
 .x-textfield .x-input-el {
     background-color: #ffffff !important;
 }
+.password-validation-message {
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    background: #FFFFFF;
+    border-radius: 8px;
+}
+.clickable-dashboard-card {
+    cursor: pointer;
+}

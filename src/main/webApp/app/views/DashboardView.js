@@ -52,38 +52,94 @@ Ext.define('MusicApp.view.DashboardView', {
                 {
                     xtype: 'container',
                     itemId: 'totalUsersCard',
-                    cls: 'dashboard-stat-card',
+                    cls: 'dashboard-stat-card clickable-dashboard-card',
                     padding: 20,
+
                     html: `
-                        <div class="stat-icon">👥</div>
-                        <p>Total Users</p>
-                        <h2>Loading...</h2>
-                        <span>Registered users</span>
-                    `
+        <div class="stat-icon">👥</div>
+        <p>Total Users</p>
+        <h2>Loading...</h2>
+        <span>Registered users</span>
+    `,
+
+                    listeners: {
+                        tap: {
+                            element: 'element',
+                            fn: function () {
+                                var mainLayout = Ext.ComponentQuery.query('mainlayout')[0];
+
+                                if (mainLayout) {
+                                    mainLayout.showPage('usersview');
+                                }
+                            }
+                        }
+                    }
                 },
                 {
                     xtype: 'container',
                     itemId: 'totalSongsCard',
-                    cls: 'dashboard-stat-card',
+                    cls: 'dashboard-stat-card clickable-dashboard-card',
                     padding: 20,
+
                     html: `
-                        <div class="stat-icon">🎵</div>
-                        <p>Total Songs</p>
-                        <h2>Loading...</h2>
-                        <span>Available tracks</span>
-                    `
+        <div class="stat-icon">🎵</div>
+        <p>Total Songs</p>
+        <h2>Loading...</h2>
+        <span>Available tracks</span>
+    `,
+
+                    listeners: {
+                        tap: {
+                            element: 'element',
+                            fn: function () {
+                                var mainLayout = Ext.ComponentQuery.query('mainlayout')[0];
+
+                                if (mainLayout) {
+                                    mainLayout.showPage('songsview');
+                                }
+                            }
+                        }
+                    }
                 },
                 {
                     xtype: 'container',
                     itemId: 'totalGenresCard',
-                    cls: 'dashboard-stat-card',
+                    cls: 'dashboard-stat-card clickable-dashboard-card',
                     padding: 20,
                     html: `
-                        <div class="stat-icon">🎧</div>
-                        <p>Total Genres</p>
-                        <h2>Loading...</h2>
-                        <span>Music categories</span>
-                    `
+        <div class="stat-icon">🎧</div>
+        <p>Total Genres</p>
+        <h2>Loading...</h2>
+        <span>Music categories</span>
+    `,
+                    listeners: {
+                        tap: {
+                            element: 'element',
+                            fn: function () {
+
+                                console.log('Total Genres card clicked');
+
+                                var dashboard = Ext.ComponentQuery.query('dashboardview')[0];
+
+                                if (!dashboard) {
+                                    console.log('Dashboard not found');
+                                    return;
+                                }
+
+                                var chartCard = dashboard.down('#genreChartCard');
+
+                                if (!chartCard || !chartCard.el) {
+                                    console.log('Genre chart card not found');
+                                    return;
+                                }
+
+                                chartCard.el.dom.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }
+                    }
                 },
                 {
                     xtype: 'container',
@@ -107,7 +163,7 @@ Ext.define('MusicApp.view.DashboardView', {
             cls: 'dashboard-chart-card',
             height: 470,
             margin: '28 0 28 0',
-            padding: 20,
+            padding: 30,
 
             layout: {
                 type: 'vbox',
@@ -138,7 +194,8 @@ Ext.define('MusicApp.view.DashboardView', {
                             flex: 1,
                             height: 360,
                             minWidth: 250,
-                            insetPadding: 20,
+                            insetPadding: 30,
+
 
                             colors: [
                                 '#6F4E37',
@@ -161,7 +218,7 @@ Ext.define('MusicApp.view.DashboardView', {
                                     type: 'pie',
                                     angleField: 'total',
                                     donut: 60,
-                                    highlight: true,
+                                    highlight: false,
 
                                     tooltip: {
                                         trackMouse: true,

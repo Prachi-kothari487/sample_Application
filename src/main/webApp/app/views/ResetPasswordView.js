@@ -94,8 +94,87 @@ Ext.define('MusicApp.view.ResetPasswordView', {
                             label: 'New Password',
                             required: true,
                             placeHolder: 'Enter your new password',
+                            minLength: 8,
+                            maxLength: 16,
+                            enforceMaxLength: true,
+                            margin: '0 0 8 0',
+                            labelAlign: 'top',
+
+                            listeners: {
+                                change: function (field, newValue) {
+
+                                    var validationBox = field.up('formpanel').down('#resetPasswordRules');
+
+                                    if (!newValue) {
+                                        validationBox.hide();
+                                        return;
+                                    }
+
+                                    validationBox.show();
+
+                                    var rules = [
+                                        {
+                                            text: '8 to 16 characters',
+                                            valid: newValue.length >= 8 && newValue.length <= 16
+                                        },
+                                        {
+                                            text: 'At least one uppercase letter (A-Z)',
+                                            valid: /[A-Z]/.test(newValue)
+                                        },
+                                        {
+                                            text: 'At least one lowercase letter (a-z)',
+                                            valid: /[a-z]/.test(newValue)
+                                        },
+                                        {
+                                            text: 'At least one number (0-9)',
+                                            valid: /[0-9]/.test(newValue)
+                                        },
+                                        {
+                                            text: 'At least one special character',
+                                            valid: /[^A-Za-z0-9\s]/.test(newValue)
+                                        },
+                                        {
+                                            text: 'No spaces or whitespace',
+                                            valid: !/\s/.test(newValue)
+                                        }
+                                    ];
+
+                                    var html = rules.map(function (rule) {
+
+                                        var color = rule.valid ? '#4F8A5B' : '#B85C50';
+                                        var symbol = rule.valid ? '&#10003;' : '&#10007;';
+
+                                        return `
+                    <div style="color:${color}; margin-bottom:5px;">
+                        ${symbol} ${rule.text}
+                    </div>
+                `;
+
+                                    }).join('');
+
+                                    var allValid = rules.every(function (rule) {
+                                        return rule.valid;
+                                    });
+
+                                    if (allValid) {
+                                        html += `
+                    <div style="color:#4F8A5B; font-weight:600; margin-top:6px;">
+                        Password looks good!
+                    </div>
+                `;
+                                    }
+
+                                    validationBox.setHtml(html);
+                                }
+                            }
+                        },
+                        {
+                            xtype: 'component',
+                            itemId: 'resetPasswordRules',
+                            hidden: true,
                             margin: '0 0 18 0',
-                            labelAlign:'top'
+                            cls: 'password-validation-message',
+                            html: ''
                         },
                         {
                             xtype: 'passwordfield',
@@ -103,8 +182,10 @@ Ext.define('MusicApp.view.ResetPasswordView', {
                             label: 'Confirm Password',
                             required: true,
                             placeHolder: 'Re-enter your new password',
+                            maxLength: 16,
+                            enforceMaxLength: true,
                             margin: '0 0 24 0',
-                            labelAlign:'top'
+                            labelAlign: 'top'
                         },
                         {
                             xtype: 'button',
@@ -280,6 +361,16 @@ Ext.define('MusicApp.view.ResetPasswordView', {
             showCappuccinoAlert(
                 'Validation',
                 'Please enter and confirm your new password.'
+            );
+            return;
+        }
+        var passwordRegex =
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9\s])\S{8,16}$/;
+
+        if (!passwordRegex.test(values.newPassword)) {
+            showCappuccinoAlert(
+                'Invalid Password',
+                'Password must contain 8-16 characters, at least one uppercase letter, one lowercase letter, one number and one special character. Spaces are not allowed.'
             );
             return;
         }
