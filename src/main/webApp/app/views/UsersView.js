@@ -40,7 +40,12 @@ Ext.define('MusicApp.view.UsersView', {
 
 
                     handler: function () {
+                        var emailCheckRequestId = 0;
+                        var emailAlreadyExists = false;
+                        var emailCheckInProgress = false;
+                        var windowForm=null;
                         var form = Ext.create('Ext.form.Panel', {
+
                             width: 450,
                             bodyPadding: 20,
 
@@ -155,9 +160,43 @@ Ext.define('MusicApp.view.UsersView', {
                                 },
                                 {
                                     name: 'email',
+                                    itemId: 'emailField',
                                     label: 'Email',
                                     inputType: 'email',
-                                    placeholder: 'Enter email'
+                                    placeholder: 'Enter email',
+
+                                    listeners: {
+                                        blur:function (field){
+                                            var email=(field.getValue()||'').trim();
+
+                                            if(!email){
+                                                return ;
+                                            }
+                                            checkEmailExists(email);
+                                        },
+                                        change:function (field,newValue){
+                                            emailCheckRequestId++;
+                                            emailAlreadyExists=false;
+                                            emailCheckInProgress=false;
+
+                                            var validationBox=form.down('#emailValidation');
+
+                                            if(validationBox){
+                                                validationBox.hide();
+                                                validationBox.setHtml('');
+                                            }
+                                            updateSaveButton();
+                                        }
+                                    }
+
+
+                                },
+                                {
+                                    xtype: 'component',
+                                    itemId: 'emailValidation',
+                                    hidden: true,
+                                    margin:'0 0 12 0',
+                                    html:''
                                 },
                                 {
                                     xtype: 'selectfield',
@@ -181,8 +220,104 @@ Ext.define('MusicApp.view.UsersView', {
                                 }
                             ]
                         });
+                        function updateSaveButton(){
+                            var saveButton=windowForm && windowForm.down('#saveUserButton');
 
-                        var windowForm = Ext.create('Ext.Dialog', {
+                            if(saveButton){
+                                saveButton.setDisabled(emailAlreadyExists||emailCheckInProgress);
+                            }
+                        }
+                        function showEmailMessage(message, color) {
+                            var validationBox = form.down('#emailValidation');
+
+                            if (!validationBox) {
+                                return;
+                            }
+
+                            validationBox.setHtml(
+                                '<div style="color:' + color + '; margin-top:4px;">' +
+                                message +
+                                '</div>'
+                            );
+
+                            validationBox.show();
+                        }
+
+                        function checkEmailExists(email) {
+
+                            var requestId = ++emailCheckRequestId;
+
+                            emailCheckInProgress = true;
+                            updateSaveButton();
+
+                            return fetch(
+                                '/sample-application/api/users/check-email?email=' +
+                                encodeURIComponent(email),
+                                {
+                                    method: 'GET',
+                                    credentials: 'same-origin'
+                                }
+                            )
+                                .then(function (response) {
+
+                                    if (!response.ok) {
+                                        throw new Error('Unable to verify email.');
+                                    }
+
+                                    return response.json();
+                                })
+                                .then(function (exists) {
+
+                                    if (requestId !== emailCheckRequestId) {
+                                        return null;
+                                    }
+
+                                    emailAlreadyExists = exists === true;
+
+                                    if (emailAlreadyExists) {
+
+                                        showEmailMessage(
+                                            'This email already exists.',
+                                            '#B85C50'
+                                        );
+
+                                    } else {
+
+                                        showEmailMessage(
+                                            'Email is available.',
+                                            '#4F8A5B'
+                                        );
+                                    }
+
+                                    return emailAlreadyExists;
+                                })
+                                .catch(function () {
+
+                                    if (requestId === emailCheckRequestId) {
+
+                                        // Fail closed: don't allow saving if verification fails.
+                                        emailAlreadyExists = true;
+
+                                        showEmailMessage(
+                                            'Could not verify email. Please try again.',
+                                            '#B85C50'
+                                        );
+                                    }
+
+                                    return null;
+                                })
+                                .finally(function () {
+
+                                    if (requestId === emailCheckRequestId) {
+
+                                        emailCheckInProgress = false;
+                                        updateSaveButton();
+                                    }
+                                });
+                        }
+
+
+                         windowForm = Ext.create('Ext.Dialog', {
                             title: 'Add User',
                             cls: 'add-user-dialog cappuccino-form-dialog',
                             width: 480,
@@ -205,6 +340,7 @@ Ext.define('MusicApp.view.UsersView', {
                                 {
                                     text: 'Save User',
                                     ui: 'plain',
+                                    itemId: 'saveUserButton',
                                     cls: 'cappuccino-dialog-save',
                                     handler: function () {
                                         var values = form.getValues();
@@ -231,42 +367,65 @@ Ext.define('MusicApp.view.UsersView', {
 
                                             return;
                                         }
+                                        values.email=values.email.trim();
 
-                                        fetch('/sample-application/api/users', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            credentials: 'same-origin',
-                                            body: JSON.stringify(values)
-                                        })
-                                            .then(function (response) {
-                                                if (!response.ok) {
-                                                    throw new Error(
-                                                        'Could not create user. Check the entered details.'
-                                                    );
-                                                }
-                                                return response.json();
-                                            })
-                                            .then(function () {
-                                                windowForm.destroy();
+                                        checkEmailExists(values.email).then(function (exists) {
+
+                                            if (exists === null) {
 
                                                 Ext.Msg.alert(
-                                                    'Success',
-                                                    'User created successfully!'
+                                                    'Error',
+                                                    'Unable to verify email. Please try again.'
                                                 );
 
-                                                var grid =
-                                                    Ext.ComponentQuery.query('usersview grid')[0];
+                                                return;
+                                            }
 
-                                                if (grid) {
-                                                    grid.getStore().reload();
-                                                }
+                                            if (exists === true) {
+                                                return;
+                                            }
+
+                                            fetch('/sample-application/api/users', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                credentials: 'same-origin',
+                                                body: JSON.stringify(values)
                                             })
-                                            .catch(function (error) {
-                                                Ext.Msg.alert('Error', error.message);
-                                            });
-                                    }
+                                                .then(function (response) {
+
+                                                    if (!response.ok) {
+                                                        throw new Error(
+                                                            'Could not create user. Check the entered details.'
+                                                        );
+                                                    }
+
+                                                    return response.json();
+                                                })
+                                                .then(function () {
+
+                                                    windowForm.destroy();
+
+                                                    Ext.Msg.alert(
+                                                        'Success',
+                                                        'User created successfully!'
+                                                    );
+
+                                                    var grid = Ext.ComponentQuery.query(
+                                                        'usersview grid'
+                                                    )[0];
+
+                                                    if (grid) {
+                                                        grid.getStore().reload();
+                                                    }
+                                                })
+                                                .catch(function (error) {
+
+                                                    Ext.Msg.alert('Error', error.message);
+                                                });
+                                        });
+                                                                         }
                                 }
                             ]
                         });
@@ -288,11 +447,12 @@ Ext.define('MusicApp.view.UsersView', {
 
                 {
                     xtype: 'textfield',
-                    // label: 'Search Users',
                     cls: 'cappuccino-search-field',
+                    itemId: 'usersSearchField',
                     placeholder: 'Search by username, name, or email...',
                     clearable: true,
                     width: '100%',
+
 
                     listeners: {
                         change: function (field, newValue) {
@@ -303,22 +463,22 @@ Ext.define('MusicApp.view.UsersView', {
                             }
 
                             var store = grid.getStore();
-                            var searchText = (newValue || '').toLowerCase().trim();
+                            var searchText = (newValue || '').trim();
 
-                            store.clearFilter();
+                            // Search results always start from page 1
+                            store.currentPage = 1;
 
-                            if (searchText) {
-                                store.filterBy(function (record) {
-                                    return (
-                                        (record.get('name') || '').toLowerCase().includes(searchText) ||
-                                        (record.get('firstname') || '').toLowerCase().includes(searchText) ||
-                                        (record.get('lastname') || '').toLowerCase().includes(searchText) ||
-                                        (record.get('email') || '').toLowerCase().includes(searchText)
-                                    );
-                                });
-                            }
+                            // Send search text to backend
+                            store.load({
+                                params: {
+                                    page: 1,
+                                    size: 12,
+                                    search: searchText
+                                }
+                            });
                         }
                     }
+
                 },
 
 
@@ -359,40 +519,68 @@ Ext.define('MusicApp.view.UsersView', {
                                 keepRawData: true
                             }
                         },
+                        // listeners: {
+                        //     load: function (store, records, successful) {
+                        //         if (!successful) {
+                        //             return;
+                        //         }
+                        //
+                        //         var data = store.getProxy().getReader().rawData;
+                        //
+                        //         console.log('Pagination response:', data);
+                        //
+                        //         if (!data) {
+                        //             console.error('Pagination data not found');
+                        //             return;
+                        //         }
+                        //
+                        //         store.currentPage = data.currentPage;
+                        //         store.totalPages = data.totalPages;
+                        //
+                        //         var pageInfo = Ext.ComponentQuery.query('#usersPageInfo')[0];
+                        //         var prevButton = Ext.ComponentQuery.query('#usersPrevPage')[0];
+                        //         var nextButton = Ext.ComponentQuery.query('#usersNextPage')[0];
+                        //
+                        //         if (pageInfo) {
+                        //             pageInfo.setHtml(
+                        //                 'Page ' + data.currentPage + ' of ' + data.totalPages
+                        //             );
+                        //         }
+                        //
+                        //         if (prevButton) {
+                        //             prevButton.setDisabled(data.currentPage <= 1);
+                        //         }
+                        //
+                        //         if (nextButton) {
+                        //             nextButton.setDisabled(data.currentPage >= data.totalPages);
+                        //         }
+                        //     }
+                        // }
+
                         listeners: {
                             load: function (store, records, successful) {
+
                                 if (!successful) {
                                     return;
                                 }
 
                                 var data = store.getProxy().getReader().rawData;
 
-                                console.log('Pagination response:', data);
-
                                 if (!data) {
-                                    console.error('Pagination data not found');
+                                    console.error('User pagination data not found');
                                     return;
                                 }
 
                                 store.currentPage = data.currentPage;
                                 store.totalPages = data.totalPages;
 
-                                var pageInfo = Ext.ComponentQuery.query('#usersPageInfo')[0];
-                                var prevButton = Ext.ComponentQuery.query('#usersPrevPage')[0];
-                                var nextButton = Ext.ComponentQuery.query('#usersNextPage')[0];
+                                var usersView = Ext.ComponentQuery.query('usersview')[0];
 
-                                if (pageInfo) {
-                                    pageInfo.setHtml(
-                                        'Page ' + data.currentPage + ' of ' + data.totalPages
+                                if (usersView) {
+                                    usersView.updateUsersPagination(
+                                        data.currentPage,
+                                        data.totalPages
                                     );
-                                }
-
-                                if (prevButton) {
-                                    prevButton.setDisabled(data.currentPage <= 1);
-                                }
-
-                                if (nextButton) {
-                                    nextButton.setDisabled(data.currentPage >= data.totalPages);
                                 }
                             }
                         }
@@ -486,6 +674,7 @@ Ext.define('MusicApp.view.UsersView', {
                                                         name: 'role',
                                                         label: 'Role',
                                                         value: record.get('role'),
+
                                                         options: [
                                                             { text: 'User', value: 'User' },
                                                             { text: 'Admin', value: 'Admin' }
@@ -496,6 +685,7 @@ Ext.define('MusicApp.view.UsersView', {
                                                         name: 'status',
                                                         label: 'Status',
                                                         value: record.get('status'),
+
                                                         options: [
                                                             { text: 'Active', value: 'Active' },
                                                             { text: 'Inactive', value: 'Inactive' }
@@ -645,57 +835,155 @@ Ext.define('MusicApp.view.UsersView', {
                     ]
                 },
 
+                // {
+                //     xtype: 'container',
+                //     layout: {
+                //         type: 'hbox',
+                //         pack: 'center',
+                //         align: 'center'
+                //     },
+                //     margin: '20 0',
+                //     items: [
+                //         {
+                //             xtype: 'button',
+                //             itemId: 'usersPrevPage',
+                //             text: 'Previous',
+                //             disabled: true,
+                //             handler: function () {
+                //                 var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+                //
+                //                 var previousPage = store.currentPage - 1;
+                //
+                //                 var searchField = Ext.ComponentQuery.query('#usersSearchField')[0];
+                //                 var searchText = searchField ? (searchField.getValue() || '').trim() : '';
+                //
+                //                 if (previousPage >= 1) {
+                //                     store.load({
+                //                         params: {
+                //                             page: previousPage,
+                //                             size: 12,
+                //                             search: searchText
+                //                         }
+                //                     });
+                //                 }
+                //             }
+                //         },
+                //         {
+                //             xtype: 'component',
+                //             itemId: 'usersPageInfo',
+                //             html: 'Page 1',
+                //             margin: '0 15'
+                //         },
+                //         {
+                //             xtype: 'button',
+                //             itemId: 'usersNextPage',
+                //             text: 'Next',
+                //             handler: function () {
+                //                 var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+                //
+                //                 var nextPage = store.currentPage + 1;
+                //
+                //                 var searchField = Ext.ComponentQuery.query('#usersSearchField')[0];
+                //                 var searchText = searchField ? (searchField.getValue() || '').trim() : '';
+                //
+                //                 if (nextPage <= store.totalPages) {
+                //                     store.load({
+                //                         params: {
+                //                             page: nextPage,
+                //                             size: 12,
+                //                             search: searchText
+                //                         }
+                //                     });
+                //                 }
+                //             }
+                //         }
+                //     ]
+                // }
+
                 {
                     xtype: 'container',
+                    itemId: 'usersPagination',
+                    cls: 'cappuccino-pagination',
+
+                    width: '100%',
+                    margin: '20 0',
+
                     layout: {
                         type: 'hbox',
                         pack: 'center',
                         align: 'center'
                     },
-                    margin: '20 0',
+
                     items: [
+
+                        // Previous Arrow
                         {
                             xtype: 'button',
                             itemId: 'usersPrevPage',
-                            text: 'Previous',
+                            iconCls: 'x-fa fa-chevron-left',
+                            ui: 'plain',
+                            cls: 'cappuccino-page-arrow',
+                            width: 40,
+                            height: 40,
                             disabled: true,
+
                             handler: function () {
-                                var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+                                var view = Ext.ComponentQuery.query('usersview')[0];
 
-                                var previousPage = store.currentPage - 1;
-
-                                if (previousPage >= 1) {
-                                    store.load({
-                                        params: {
-                                            page: previousPage,
-                                            size: 12
-                                        }
-                                    });
+                                if (view) {
+                                    var grid = view.down('grid');
+                                    view.loadUsersPage(grid.getStore().currentPage - 1);
                                 }
                             }
                         },
+
+                        // Page Number Input
+                        {
+                            xtype: 'numberfield',
+                            itemId: 'usersPageInput',
+                            value: 1,
+                            minValue: 1,
+                            width: 75,
+                            height: 40,
+                            cls: 'cappuccino-page-input',
+                            margin: '0 10',
+
+                            listeners: {
+                                action: function (field) {
+                                    var view = Ext.ComponentQuery.query('usersview')[0];
+
+                                    if (view) {
+                                        view.loadUsersPage(field.getValue());
+                                    }
+                                }
+                            }
+                        },
+
+                        // Total Pages
                         {
                             xtype: 'component',
-                            itemId: 'usersPageInfo',
-                            html: 'Page 1',
-                            margin: '0 15'
+                            itemId: 'usersTotalPages',
+                            html: 'of 1',
+                            cls: 'cappuccino-total-pages',
+                            margin: '0 10'
                         },
+
+                        // Next Arrow
                         {
                             xtype: 'button',
                             itemId: 'usersNextPage',
-                            text: 'Next',
+                            iconCls: 'x-fa fa-chevron-right',
+                            ui: 'plain',
+                            cls: 'cappuccino-page-arrow',
+                            width: 40,
+                            height: 40,
+
                             handler: function () {
-                                var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
+                                var view = Ext.ComponentQuery.query('usersview')[0];
 
-                                var nextPage = store.currentPage + 1;
-
-                                if (nextPage <= store.totalPages) {
-                                    store.load({
-                                        params: {
-                                            page: nextPage,
-                                            size: 12
-                                        }
-                                    });
+                                if (view) {
+                                    var grid = view.down('grid');
+                                    view.loadUsersPage(grid.getStore().currentPage + 1);
                                 }
                             }
                         }
@@ -704,5 +992,84 @@ Ext.define('MusicApp.view.UsersView', {
 
             ]
         }
-    ]
+    ],
+
+
+loadUsersPage: function (page) {
+
+    var grid = this.down('grid');
+
+    if (!grid) {
+        return;
+    }
+
+    var store = grid.getStore();
+
+    page = parseInt(page, 10);
+
+    var totalPages = store.totalPages || 0;
+
+    // Validate page number
+    if (
+        isNaN(page) ||
+        page < 1 ||
+        page > totalPages ||
+        totalPages === 0
+    ) {
+        var pageInput = this.down('#usersPageInput');
+
+        if (pageInput) {
+            pageInput.setValue(store.currentPage || 1);
+        }
+
+        return;
+    }
+
+    var searchField = this.down('#usersSearchField');
+
+    var searchText = searchField
+        ? (searchField.getValue() || '').trim()
+        : '';
+
+    store.load({
+        params: {
+            page: page,
+            size: 12,
+            search: searchText
+        }
+    });
+},
+
+updateUsersPagination: function (currentPage, totalPages) {
+
+    var pageInput = this.down('#usersPageInput');
+    var totalPagesText = this.down('#usersTotalPages');
+    var prevButton = this.down('#usersPrevPage');
+    var nextButton = this.down('#usersNextPage');
+
+    totalPages = totalPages || 0;
+
+    if (pageInput) {
+        pageInput.setValue(currentPage || 1);
+        pageInput.setMaxValue(Math.max(totalPages, 1));
+    }
+
+    if (totalPagesText) {
+        totalPagesText.setHtml('of ' + totalPages);
+    }
+
+    if (prevButton) {
+        prevButton.setDisabled(
+            currentPage <= 1 || totalPages === 0
+        );
+    }
+
+    if (nextButton) {
+        nextButton.setDisabled(
+            currentPage >= totalPages || totalPages === 0
+        );
+    }
+}
+
+
 });

@@ -4,6 +4,8 @@ import org.example.Model.PaginationResponse;
 import org.springframework.stereotype.Service;
 import org.example.Model.User;
 import java.util.List;
+import java.util.Locale;
+
 import org.example.Model.UserResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpStatus;
@@ -53,6 +55,14 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Username already exists");
         }
 
+        String email=user.getEmail().trim().toLowerCase();
+        User existingEmail=userDao.findByEmail(email);
+
+        if(existingEmail!=null){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Email already exists");
+        }
+        user.setEmail(email);
+
         validatePassword(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -80,9 +90,38 @@ public class UserService {
         if(existingUser==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"User not found");
         }
+
+        if (request.getEmail() != null) {
+
+            if (request.getEmail().isBlank()) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Email cannot be empty"
+                );
+            }
+
+            String email = request.getEmail()
+                    .trim()
+                    .toLowerCase(java.util.Locale.ROOT);
+
+            User emailOwner = userDao.findByEmail(email);
+
+            if (emailOwner != null && emailOwner.getId() != id) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT,
+                        "Email already exists"
+                );
+            }
+
+            request.setEmail(email);
+        }
         userDao.updateUser(id,request);
         return getUserById(id);
+
+
     }
+
+
 
     public UserResponse disableUser(int id){
         User existingUser=userDao.findById(id);
@@ -132,20 +171,46 @@ public class UserService {
         return true;
     }
 
-    public PaginationResponse getUsersByPage(int page,int size){
-        int offset=(page-1)*size;
+    public PaginationResponse getUsersByPage(int page, int size, String search) {
 
-        List<User> users=userDao.findUsersByPage(size,offset);
+        int offset = (page - 1) * size;
 
-        List<UserResponse> userResponses= users.stream().map(user->new UserResponse(user.getId(),user.getName(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getRole(),user.getStatus())).toList();
+        List<User> users;
+        int totalUsers;
 
-        int totalUsers= userDao.getUserCount();
+        if (search == null || search.isBlank()) {
 
-        int totalPages=(int) Math.ceil((double) totalUsers/size);
+            users = userDao.findUsersByPage(size, offset);
+            totalUsers = userDao.getUserCount();
+
+        } else {
+
+            users = userDao.searchUsersByPage(search, size, offset);
+            totalUsers = userDao.getSearchUserCount(search);
+
+        }
+
+        List<UserResponse> userResponses = users.stream()
+                .map(user -> new UserResponse(
+                        user.getId(),
+                        user.getName(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getRole(),
+                        user.getStatus()
+                ))
+                .toList();
+
+        int totalPages = (int) Math.ceil((double) totalUsers / size);
+
         return new PaginationResponse(
-                userResponses,page,size,totalUsers,totalPages
+                userResponses,
+                page,
+                size,
+                totalUsers,
+                totalPages
         );
-
     }
 
     public UserResponse getProfile(String username) {
@@ -168,6 +233,15 @@ public class UserService {
                 user.getRole(),
                 user.getStatus()
         );
+    }
+    public boolean emailExists(String email) {
+        if (email == null || email.isBlank()) {
+            return false;
+        }
+
+        String normalizedEmail = email.trim().toLowerCase(java.util.Locale.ROOT);
+
+        return userDao.findByEmail(normalizedEmail) != null;
     }
 
 

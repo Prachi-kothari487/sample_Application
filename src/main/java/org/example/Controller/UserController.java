@@ -91,13 +91,29 @@ public class UserController {
 
     @GetMapping("/page")
     public ResponseEntity<PaginationResponse> getUsersByPage(
+
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size) {
-        if(page<1 || size<1){
+
+            @RequestParam(value = "size", defaultValue = "10") int size,
+
+            @RequestParam(value = "search", required = false) String search
+
+    ) {
+
+        if (page < 1 || size < 1) {
             return ResponseEntity.badRequest().build();
         }
-        PaginationResponse response=userService.getUsersByPage(page,size);
+
+        PaginationResponse response =
+                userService.getUsersByPage(page, size, search);
+
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmailExists(
+            @RequestParam("email") String email) {
+
+        return ResponseEntity.ok(userService.emailExists(email));
     }
 
 

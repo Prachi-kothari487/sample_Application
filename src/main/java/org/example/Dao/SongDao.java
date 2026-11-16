@@ -130,6 +130,59 @@ public class SongDao {
             return song;
         },limit,offset);
     }
+
+    public List<Song> searchSongsByPage(String search, int limit, int offset) {
+
+        String sql = """
+        SELECT * FROM songs
+        WHERE LOWER(COALESCE(title, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(artist, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(album, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(genre, '')) LIKE LOWER(?)
+           OR CAST(`year` AS CHAR) LIKE ?
+        ORDER BY id DESC
+        LIMIT ? OFFSET ?
+        """;
+
+        String keyword = "%" + search.trim() + "%";
+
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    Song song = new Song();
+                    song.setId(rs.getInt("id"));
+                    song.setTitle(rs.getString("title"));
+                    song.setArtist(rs.getString("artist"));
+                    song.setAlbum(rs.getString("album"));
+                    song.setGenre(rs.getString("genre"));
+                    song.setYear(rs.getInt("year"));
+                    return song;
+                },
+                keyword, keyword, keyword, keyword, keyword, limit, offset
+        );
+    }
+
+
+    public Integer getSearchSongCount(String search) {
+
+        String sql = """
+        SELECT COUNT(*) FROM songs
+        WHERE LOWER(COALESCE(title, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(artist, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(album, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(genre, '')) LIKE LOWER(?)
+           OR CAST(`year` AS CHAR) LIKE ?
+        """;
+
+        String keyword = "%" + search.trim() + "%";
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                keyword, keyword, keyword, keyword, keyword
+        );
+    }
+
     public List<Song> searchSongs(SongSearchRequest request, int limit, int offset) {
 
         StringBuilder sql = new StringBuilder(

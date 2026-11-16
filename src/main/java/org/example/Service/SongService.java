@@ -84,6 +84,38 @@ public class SongService {
 
         return new SongPaginationResponse(songs,page,size,totalSongs,totalPages);
     }
+
+    public SongPaginationResponse getSongByPage(int page, int size, String search) {
+
+        int offset = (page - 1) * size;
+
+        List<Song> songs;
+        int totalSongs;
+
+        if (search == null || search.isBlank()) {
+
+            // Normal pagination when search is empty
+            songs = songDao.findSongsByPage(size, offset);
+            totalSongs = songDao.getSongCount();
+
+        } else {
+
+            // Global search across all songs
+            songs = songDao.searchSongsByPage(search, size, offset);
+            totalSongs = songDao.getSearchSongCount(search);
+        }
+
+        int totalPages = (int) Math.ceil((double) totalSongs / size);
+
+        return new SongPaginationResponse(
+                songs,
+                page,
+                size,
+                totalSongs,
+                totalPages
+        );
+    }
+
     public SongPaginationResponse searchSongs(
             SongSearchRequest request,
             int page,

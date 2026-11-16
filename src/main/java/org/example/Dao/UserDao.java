@@ -256,6 +256,57 @@ public class UserDao {
             return user;
         },limit,offset);
     }
+    public List<User> searchUsersByPage(String search, int limit, int offset) {
+
+        String sql = """
+        SELECT * FROM users
+        WHERE LOWER(COALESCE(name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(first_name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(last_name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(email, '')) LIKE LOWER(?)
+        ORDER BY id DESC
+        LIMIT ? OFFSET ?
+        """;
+
+        String keyword = "%" + search.trim() + "%";
+
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setName(rs.getString("name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFirstName(rs.getString("first_name"));
+                    user.setLastName(rs.getString("last_name"));
+                    user.setRole(rs.getString("role"));
+                    user.setStatus(rs.getString("status"));
+                    return user;
+                },
+                keyword, keyword, keyword, keyword, limit, offset
+        );
+    }
+
+
+    public Integer getSearchUserCount(String search) {
+
+        String sql = """
+        SELECT COUNT(*) FROM users
+        WHERE LOWER(COALESCE(name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(first_name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(last_name, '')) LIKE LOWER(?)
+           OR LOWER(COALESCE(email, '')) LIKE LOWER(?)
+        """;
+
+        String keyword = "%" + search.trim() + "%";
+
+        return jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                keyword, keyword, keyword, keyword
+        );
+    }
     public Integer getActiveUserCount() {
 
         String sql = "SELECT COUNT(*) FROM users WHERE UPPER(status) = 'ACTIVE'";

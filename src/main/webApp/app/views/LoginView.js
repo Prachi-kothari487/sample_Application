@@ -63,7 +63,7 @@ Ext.define('MusicApp.view.LoginView', {
                                         margin:0 0 10px;
                                         font-size:30px;
                                         font-weight:700;
-                                    ">Welcome Back</h2>
+                                    ">Welcome</h2>
 
                                     <p style="
                                         margin:0 0 24px;
@@ -116,7 +116,7 @@ Ext.define('MusicApp.view.LoginView', {
 
                         {
                             xtype: 'button',
-                            text: 'Sign In',
+                            text: 'Log In',
                             ui: 'plain',
                             itemId: 'signInButton',
                             cls: 'music-signin-button',

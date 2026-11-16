@@ -197,47 +197,29 @@ Ext.define('MusicApp.view.SongsView', {
                     clearable: true,
                     width: '100%',
 
+
                     listeners: {
                         change: function (field, newValue) {
 
-                            var grid =
-                                Ext.ComponentQuery.query('songsview grid')[0];
+                            var grid = Ext.ComponentQuery.query('#songsGrid')[0];
 
                             if (!grid) {
                                 return;
                             }
 
                             var store = grid.getStore();
+                            var searchText = (newValue || '').trim();
 
-                            var searchText =
-                                (newValue || '').toLowerCase().trim();
-
-                            store.clearFilter();
-
-                            if (searchText) {
-
-                                store.filterBy(function (record) {
-
-                                    return (
-                                        (record.get('title') || '')
-                                            .toLowerCase().includes(searchText) ||
-
-                                        (record.get('artist') || '')
-                                            .toLowerCase().includes(searchText) ||
-
-                                        (record.get('album') || '')
-                                            .toLowerCase().includes(searchText) ||
-
-                                        (record.get('genre') || '')
-                                            .toLowerCase().includes(searchText) ||
-
-                                        String(record.get('year') || '')
-                                            .includes(searchText)
-                                    );
-                                });
-                            }
+                            store.load({
+                                params: {
+                                    page: 1,
+                                    size: 12,
+                                    search: searchText
+                                }
+                            });
                         }
                     }
+
                 },
 
 
@@ -280,6 +262,52 @@ Ext.define('MusicApp.view.SongsView', {
                             }
                         },
 
+                        // listeners: {
+                        //     load: function (store, records, successful) {
+                        //
+                        //         if (!successful) {
+                        //             return;
+                        //         }
+                        //
+                        //         var data = store.getProxy().getReader().rawData;
+                        //
+                        //         console.log('Song Pagination response:', data);
+                        //
+                        //         if (!data) {
+                        //             console.error('Song pagination data not found');
+                        //             return;
+                        //         }
+                        //
+                        //         store.currentPage = data.currentPage;
+                        //         store.totalPages = data.totalPages;
+                        //
+                        //         var pageInfo =
+                        //             Ext.ComponentQuery.query('#songsPageInfo')[0];
+                        //
+                        //         var prevButton =
+                        //             Ext.ComponentQuery.query('#songsPrevPage')[0];
+                        //
+                        //         var nextButton =
+                        //             Ext.ComponentQuery.query('#songsNextPage')[0];
+                        //
+                        //         if (pageInfo) {
+                        //             pageInfo.setHtml(
+                        //                 'Page ' + data.currentPage +
+                        //                 ' of ' + data.totalPages
+                        //             );
+                        //         }
+                        //
+                        //         if (prevButton) {
+                        //             prevButton.setDisabled(data.currentPage <= 1);
+                        //         }
+                        //
+                        //         if (nextButton) {
+                        //             nextButton.setDisabled(
+                        //                 data.currentPage >= data.totalPages
+                        //             );
+                        //         }
+                        //     }
+                        // }
                         listeners: {
                             load: function (store, records, successful) {
 
@@ -289,39 +317,19 @@ Ext.define('MusicApp.view.SongsView', {
 
                                 var data = store.getProxy().getReader().rawData;
 
-                                console.log('Song Pagination response:', data);
-
                                 if (!data) {
-                                    console.error('Song pagination data not found');
                                     return;
                                 }
 
                                 store.currentPage = data.currentPage;
                                 store.totalPages = data.totalPages;
 
-                                var pageInfo =
-                                    Ext.ComponentQuery.query('#songsPageInfo')[0];
+                                var songsView = Ext.ComponentQuery.query('songsview')[0];
 
-                                var prevButton =
-                                    Ext.ComponentQuery.query('#songsPrevPage')[0];
-
-                                var nextButton =
-                                    Ext.ComponentQuery.query('#songsNextPage')[0];
-
-                                if (pageInfo) {
-                                    pageInfo.setHtml(
-                                        'Page ' + data.currentPage +
-                                        ' of ' + data.totalPages
-                                    );
-                                }
-
-                                if (prevButton) {
-                                    prevButton.setDisabled(data.currentPage <= 1);
-                                }
-
-                                if (nextButton) {
-                                    nextButton.setDisabled(
-                                        data.currentPage >= data.totalPages
+                                if (songsView) {
+                                    songsView.updateSongsPagination(
+                                        data.currentPage,
+                                        data.totalPages
                                     );
                                 }
                             }
@@ -598,8 +606,104 @@ Ext.define('MusicApp.view.SongsView', {
                 },
 
 
+                // {
+                //     xtype: 'container',
+                //
+                //     layout: {
+                //         type: 'hbox',
+                //         pack: 'center',
+                //         align: 'center'
+                //     },
+                //
+                //     margin: '20 0',
+                //
+                //     items: [
+                //         {
+                //             xtype: 'button',
+                //             itemId: 'songsPrevPage',
+                //             text: 'Previous',
+                //             disabled: true,
+                //
+                //
+                //             handler: function () {
+                //
+                //                 var grid = Ext.ComponentQuery.query('#songsGrid')[0];
+                //
+                //                 if (!grid) {
+                //                     return;
+                //                 }
+                //
+                //                 var store = grid.getStore();
+                //                 var previousPage = store.currentPage - 1;
+                //
+                //                 var searchField = Ext.ComponentQuery.query('#songSearch')[0];
+                //                 var searchText = searchField
+                //                     ? (searchField.getValue() || '').trim()
+                //                     : '';
+                //
+                //                 if (previousPage >= 1) {
+                //                     store.load({
+                //                         params: {
+                //                             page: previousPage,
+                //                             size: 12,
+                //                             search: searchText
+                //                         }
+                //                     });
+                //                 }
+                //             }
+                //
+                //         },
+                //
+                //         {
+                //             xtype: 'component',
+                //             itemId: 'songsPageInfo',
+                //             html: 'Page 1',
+                //             margin: '0 15'
+                //         },
+                //
+                //         {
+                //             xtype: 'button',
+                //             itemId: 'songsNextPage',
+                //             text: 'Next',
+                //
+                //
+                //             handler: function () {
+                //
+                //                 var grid = Ext.ComponentQuery.query('#songsGrid')[0];
+                //
+                //                 if (!grid) {
+                //                     return;
+                //                 }
+                //
+                //                 var store = grid.getStore();
+                //                 var nextPage = store.currentPage + 1;
+                //
+                //                 var searchField = Ext.ComponentQuery.query('#songSearch')[0];
+                //                 var searchText = searchField
+                //                     ? (searchField.getValue() || '').trim()
+                //                     : '';
+                //
+                //                 if (nextPage <= store.totalPages) {
+                //                     store.load({
+                //                         params: {
+                //                             page: nextPage,
+                //                             size: 12,
+                //                             search: searchText
+                //                         }
+                //                     });
+                //                 }
+                //             }
+                //
+                //         }
+                //     ]
+                // }
                 {
                     xtype: 'container',
+                    itemId: 'songsPagination',
+                    cls: 'cappuccino-pagination',
+
+                    width: '100%',
+                    margin: '20 0',
 
                     layout: {
                         type: 'hbox',
@@ -607,63 +711,76 @@ Ext.define('MusicApp.view.SongsView', {
                         align: 'center'
                     },
 
-                    margin: '20 0',
-
                     items: [
+
+                        // Previous Arrow
                         {
                             xtype: 'button',
                             itemId: 'songsPrevPage',
-                            text: 'Previous',
+                            iconCls: 'x-fa fa-chevron-left',
+                            ui: 'plain',
+                            cls: 'cappuccino-page-arrow',
+                            width: 40,
+                            height: 40,
                             disabled: true,
 
                             handler: function () {
+                                var view = Ext.ComponentQuery.query('songsview')[0];
 
-                                var grid =
-                                    Ext.ComponentQuery.query('#songsGrid')[0];
-
-                                var store = grid.getStore();
-
-                                var previousPage = store.currentPage - 1;
-
-                                if (previousPage >= 1) {
-                                    store.load({
-                                        params: {
-                                            page: previousPage,
-                                            size: 12
-                                        }
-                                    });
+                                if (view) {
+                                    var grid = view.down('#songsGrid');
+                                    view.loadSongsPage(grid.getStore().currentPage - 1);
                                 }
                             }
                         },
 
+                        // Page Number Input
                         {
-                            xtype: 'component',
-                            itemId: 'songsPageInfo',
-                            html: 'Page 1',
-                            margin: '0 15'
+                            xtype: 'numberfield',
+                            itemId: 'songsPageInput',
+                            value: 1,
+                            minValue: 1,
+                            width: 75,
+                            height: 40,
+                            cls: 'cappuccino-page-input',
+                            margin: '0 10',
+
+                            listeners: {
+                                action: function (field) {
+                                    var view = Ext.ComponentQuery.query('songsview')[0];
+
+                                    if (view) {
+                                        view.loadSongsPage(field.getValue());
+                                    }
+                                }
+                            }
                         },
 
+                        // Total Pages
+                        {
+                            xtype: 'component',
+                            itemId: 'songsTotalPages',
+                            html: 'of 1',
+                            cls: 'cappuccino-total-pages',
+                            margin: '0 10'
+                        },
+
+                        // Next Arrow
                         {
                             xtype: 'button',
                             itemId: 'songsNextPage',
-                            text: 'Next',
+                            iconCls: 'x-fa fa-chevron-right',
+                            ui: 'plain',
+                            cls: 'cappuccino-page-arrow',
+                            width: 40,
+                            height: 40,
 
                             handler: function () {
+                                var view = Ext.ComponentQuery.query('songsview')[0];
 
-                                var grid =
-                                    Ext.ComponentQuery.query('#songsGrid')[0];
-
-                                var store = grid.getStore();
-
-                                var nextPage = store.currentPage + 1;
-
-                                if (nextPage <= store.totalPages) {
-                                    store.load({
-                                        params: {
-                                            page: nextPage,
-                                            size: 12
-                                        }
-                                    });
+                                if (view) {
+                                    var grid = view.down('#songsGrid');
+                                    view.loadSongsPage(grid.getStore().currentPage + 1);
                                 }
                             }
                         }
@@ -672,6 +789,82 @@ Ext.define('MusicApp.view.SongsView', {
             ]
         }
     ],
+
+
+loadSongsPage: function (page) {
+
+    var grid = this.down('#songsGrid');
+
+    if (!grid) {
+        return;
+    }
+
+    var store = grid.getStore();
+
+    page = parseInt(page, 10);
+
+    var totalPages = store.totalPages || 0;
+
+    if (
+        isNaN(page) ||
+        page < 1 ||
+        page > totalPages ||
+        totalPages === 0
+    ) {
+        var pageInput = this.down('#songsPageInput');
+
+        if (pageInput) {
+            pageInput.setValue(store.currentPage || 1);
+        }
+
+        return;
+    }
+
+    var searchField = this.down('#songSearch');
+
+    var searchText = searchField
+        ? (searchField.getValue() || '').trim()
+        : '';
+
+    store.load({
+        params: {
+            page: page,
+            size: 12,
+            search: searchText
+        }
+    });
+},
+
+updateSongsPagination: function (currentPage, totalPages) {
+
+    var pageInput = this.down('#songsPageInput');
+    var totalPagesText = this.down('#songsTotalPages');
+    var prevButton = this.down('#songsPrevPage');
+    var nextButton = this.down('#songsNextPage');
+
+    totalPages = totalPages || 0;
+
+    if (pageInput) {
+        pageInput.setValue(currentPage || 1);
+        pageInput.setMaxValue(Math.max(totalPages, 1));
+    }
+
+    if (totalPagesText) {
+        totalPagesText.setHtml('of ' + totalPages);
+    }
+
+    if (prevButton) {
+        prevButton.setDisabled(currentPage <= 1 || totalPages === 0);
+    }
+
+    if (nextButton) {
+        nextButton.setDisabled(
+            currentPage >= totalPages || totalPages === 0
+        );
+    }
+},
+
+
     initialize: function () {
         this.callParent(arguments);
 

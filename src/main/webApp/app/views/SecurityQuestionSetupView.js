@@ -242,7 +242,7 @@ Ext.define('MusicApp.view.SecurityQuestionSetupView', {
                     'Setup Completed',
                     'Your security questions have been saved successfully.'
                 );
-
+                window.location.hash = 'dashboardview';
                 Ext.Viewport.removeAll(true);
 
                 Ext.Viewport.add({

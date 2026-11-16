@@ -43,14 +43,20 @@ public class SongController {
         songService.deleteSong(id);
     }
 
+
     @GetMapping("/page")
     public ResponseEntity<SongPaginationResponse> getSongsByPage(
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size) {
-        if(page<1 || size<1){
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @RequestParam(value = "search", required = false) String search) {
+
+        if (page < 1 || size < 1) {
             return ResponseEntity.badRequest().build();
         }
-        SongPaginationResponse response=songService.getSongByPage(page,size);
+
+        SongPaginationResponse response =
+                songService.getSongByPage(page, size, search);
+
         return ResponseEntity.ok(response);
     }
 

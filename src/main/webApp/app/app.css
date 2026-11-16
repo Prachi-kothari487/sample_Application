@@ -516,7 +516,6 @@
 .x-dialog .x-input-wrap,
 .x-dialog .x-input-wrap-el {
     background-color: #FFFCF7 !important;
-    border: 1px solid var(--coffee-light) !important;
     border-radius: 8px !important;
     box-shadow: none !important;
 }
@@ -1220,4 +1219,141 @@
 }
 .clickable-dashboard-card {
     cursor: pointer;
+}
+
+.x-trigger .x-icon-el {
+    color: #351904;
+
+}
+
+/* =========================================
+   CAPPUCCINO DROPDOWN STYLING
+   Border and focus color: #351904
+========================================= */
+
+
+/* 2. SECURITY QUESTION DROPDOWNS */
+.security-setup-field .x-selectfield .x-input-wrap,
+.security-setup-field .x-selectfield .x-input-wrap-el,
+.security-setup-field.x-focused .x-input-wrap,
+.security-setup-field.x-focused .x-input-wrap-el {
+    border: 1px solid #351904 !important;
+    border-color: #351904 !important;
+    background-color: #FFFCF7 !important;
+    box-shadow: none !important;
+}
+
+/* 3. DROPDOWN TRIGGER / ARROW */
+.x-selectfield .x-trigger,
+.x-selectfield .x-trigger .x-icon-el,
+.x-trigger .x-icon-el {
+    color: #351904 !important;
+}
+
+/* 4. OPENED DROPDOWN / PICKER */
+.x-picker,
+.x-picker .x-list,
+.x-list-outer-ct {
+    background-color: #FFF8ED !important;
+    /*border: 1px solid #351904 !important;*/
+    box-shadow: 0 4px 12px rgba(53, 25, 4, 0.15) !important;
+}
+
+/* 5. DROPDOWN OPTIONS */
+.x-picker .x-listitem,
+.x-list-outer-ct .x-listitem {
+    background-color: #FFF8ED !important;
+    color: #351904 !important;
+}
+
+/* Selected / highlighted option */
+.x-picker .x-listitem.x-selected,
+.x-picker .x-listitem.x-hover,
+.x-list-outer-ct .x-listitem.x-selected,
+.x-list-outer-ct .x-listitem.x-hover {
+    background-color: #EADBC8 !important;
+    color: #351904 !important;
+}
+
+
+
+/* Grid dropdown menu */
+.x-menu,
+.x-menu-body-el {
+    background-color: #FFFFFF !important;
+    border: 1px solid #351904 !important;
+}
+
+.x-menu .x-menuitem,
+.x-menu .x-menuitem .x-text-el {
+    color: #351904 !important;
+}
+
+.x-menu .x-menuitem.x-hover,
+.x-menu .x-menuitem.x-active {
+    background-color: #FFFFFF !important;
+}
+
+/* MusicVault - Grid Header Dropdown Menu */
+.x-menu,
+.x-menu-body-el {
+    background-color: #FFF8ED !important;
+}
+
+/* Hovered / selected menu item */
+.x-menuitem.x-hovered,
+.x-menuitem.x-focused,
+.x-menuitem.x-pressed,
+.x-menuitem.x-checked,
+.x-menuitem.x-selected {
+    background-color: #D8B99A !important;
+    background-image: none !important;
+}
+
+/* Menu item text */
+.x-menuitem.x-hovered *,
+.x-menuitem.x-focused *,
+.x-menuitem.x-pressed *,
+.x-menuitem.x-checked *,
+.x-menuitem.x-selected * {
+    color: #351904 !important;
+}
+
+/* Override the actual inner menu item hover background */
+.x-menuitem.x-hovered .x-body-el,
+.x-menuitem.x-focused .x-body-el,
+.x-menuitem.x-pressed .x-body-el,
+.x-menuitem.x-checked .x-body-el,
+.x-menuitem.x-selected .x-body-el {
+    background: #D8B99A !important;
+    background-image: none !important;
+    color: #351904 !important;
+}
+
+/* Keep menu item text and icons brown */
+.x-menuitem.x-hovered .x-inner-el,
+.x-menuitem.x-focused .x-inner-el,
+.x-menuitem.x-checked .x-inner-el {
+    color: #351904 !important;
+}
+.cappuccino-pagination .cappuccino-page-arrow .x-inner-el {
+    background: #FFF8ED;
+    border: 1px solid #C9A58B;
+    border-radius: 9px;
+}
+
+.cappuccino-pagination .cappuccino-page-arrow .x-icon-el {
+    color: #4B3028;
+}
+
+.cappuccino-pagination .cappuccino-page-input .x-input-wrap-el {
+    background: #FFF8ED;
+    border: 1px solid #C9A58B;
+    border-radius: 9px;
+}
+
+.cappuccino-pagination .cappuccino-total-pages {
+    color: #4B3028;
+    font-size: 14px;
+    font-weight: 600;
 }
