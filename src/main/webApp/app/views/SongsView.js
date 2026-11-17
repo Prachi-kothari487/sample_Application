@@ -9,7 +9,7 @@ Ext.define('MusicApp.view.SongsView', {
 
     items: [
 
-        // 1. Heading Section
+
         {
             xtype: 'container',
             layout: {
@@ -33,8 +33,6 @@ Ext.define('MusicApp.view.SongsView', {
                         </div>
                     `
                 },
-
-                // Add Song Button
                 {
                     xtype: 'button',
                     text: '+ Add Song',
@@ -179,7 +177,7 @@ Ext.define('MusicApp.view.SongsView', {
             ]
         },
 
-        // 2. Content Panel
+
         {
             xtype: 'container',
             cls: 'songs-content-panel',
@@ -262,52 +260,7 @@ Ext.define('MusicApp.view.SongsView', {
                             }
                         },
 
-                        // listeners: {
-                        //     load: function (store, records, successful) {
-                        //
-                        //         if (!successful) {
-                        //             return;
-                        //         }
-                        //
-                        //         var data = store.getProxy().getReader().rawData;
-                        //
-                        //         console.log('Song Pagination response:', data);
-                        //
-                        //         if (!data) {
-                        //             console.error('Song pagination data not found');
-                        //             return;
-                        //         }
-                        //
-                        //         store.currentPage = data.currentPage;
-                        //         store.totalPages = data.totalPages;
-                        //
-                        //         var pageInfo =
-                        //             Ext.ComponentQuery.query('#songsPageInfo')[0];
-                        //
-                        //         var prevButton =
-                        //             Ext.ComponentQuery.query('#songsPrevPage')[0];
-                        //
-                        //         var nextButton =
-                        //             Ext.ComponentQuery.query('#songsNextPage')[0];
-                        //
-                        //         if (pageInfo) {
-                        //             pageInfo.setHtml(
-                        //                 'Page ' + data.currentPage +
-                        //                 ' of ' + data.totalPages
-                        //             );
-                        //         }
-                        //
-                        //         if (prevButton) {
-                        //             prevButton.setDisabled(data.currentPage <= 1);
-                        //         }
-                        //
-                        //         if (nextButton) {
-                        //             nextButton.setDisabled(
-                        //                 data.currentPage >= data.totalPages
-                        //             );
-                        //         }
-                        //     }
-                        // }
+
                         listeners: {
                             load: function (store, records, successful) {
 
@@ -367,8 +320,6 @@ Ext.define('MusicApp.view.SongsView', {
                             dataIndex: 'year',
                             width: 90
                         },
-
-                        // Edit Action
                         {
                             itemId:'songActionsColumn',
                             hidden:true,
@@ -606,97 +557,7 @@ Ext.define('MusicApp.view.SongsView', {
                 },
 
 
-                // {
-                //     xtype: 'container',
-                //
-                //     layout: {
-                //         type: 'hbox',
-                //         pack: 'center',
-                //         align: 'center'
-                //     },
-                //
-                //     margin: '20 0',
-                //
-                //     items: [
-                //         {
-                //             xtype: 'button',
-                //             itemId: 'songsPrevPage',
-                //             text: 'Previous',
-                //             disabled: true,
-                //
-                //
-                //             handler: function () {
-                //
-                //                 var grid = Ext.ComponentQuery.query('#songsGrid')[0];
-                //
-                //                 if (!grid) {
-                //                     return;
-                //                 }
-                //
-                //                 var store = grid.getStore();
-                //                 var previousPage = store.currentPage - 1;
-                //
-                //                 var searchField = Ext.ComponentQuery.query('#songSearch')[0];
-                //                 var searchText = searchField
-                //                     ? (searchField.getValue() || '').trim()
-                //                     : '';
-                //
-                //                 if (previousPage >= 1) {
-                //                     store.load({
-                //                         params: {
-                //                             page: previousPage,
-                //                             size: 12,
-                //                             search: searchText
-                //                         }
-                //                     });
-                //                 }
-                //             }
-                //
-                //         },
-                //
-                //         {
-                //             xtype: 'component',
-                //             itemId: 'songsPageInfo',
-                //             html: 'Page 1',
-                //             margin: '0 15'
-                //         },
-                //
-                //         {
-                //             xtype: 'button',
-                //             itemId: 'songsNextPage',
-                //             text: 'Next',
-                //
-                //
-                //             handler: function () {
-                //
-                //                 var grid = Ext.ComponentQuery.query('#songsGrid')[0];
-                //
-                //                 if (!grid) {
-                //                     return;
-                //                 }
-                //
-                //                 var store = grid.getStore();
-                //                 var nextPage = store.currentPage + 1;
-                //
-                //                 var searchField = Ext.ComponentQuery.query('#songSearch')[0];
-                //                 var searchText = searchField
-                //                     ? (searchField.getValue() || '').trim()
-                //                     : '';
-                //
-                //                 if (nextPage <= store.totalPages) {
-                //                     store.load({
-                //                         params: {
-                //                             page: nextPage,
-                //                             size: 12,
-                //                             search: searchText
-                //                         }
-                //                     });
-                //                 }
-                //             }
-                //
-                //         }
-                //     ]
-                // }
+
                 {
                     xtype: 'container',
                     itemId: 'songsPagination',
@@ -712,8 +573,6 @@ Ext.define('MusicApp.view.SongsView', {
                     },
 
                     items: [
-
-                        // Previous Arrow
                         {
                             xtype: 'button',
                             itemId: 'songsPrevPage',
@@ -733,14 +592,13 @@ Ext.define('MusicApp.view.SongsView', {
                                 }
                             }
                         },
-
-                        // Page Number Input
                         {
                             xtype: 'numberfield',
                             itemId: 'songsPageInput',
                             value: 1,
                             minValue: 1,
-                            width: 75,
+                            clearable:false,
+                            width: 50,
                             height: 40,
                             cls: 'cappuccino-page-input',
                             margin: '0 10',
@@ -755,8 +613,6 @@ Ext.define('MusicApp.view.SongsView', {
                                 }
                             }
                         },
-
-                        // Total Pages
                         {
                             xtype: 'component',
                             itemId: 'songsTotalPages',
@@ -764,8 +620,6 @@ Ext.define('MusicApp.view.SongsView', {
                             cls: 'cappuccino-total-pages',
                             margin: '0 10'
                         },
-
-                        // Next Arrow
                         {
                             xtype: 'button',
                             itemId: 'songsNextPage',

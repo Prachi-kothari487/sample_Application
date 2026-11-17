@@ -1209,6 +1209,7 @@
 }
 .x-textfield .x-input-el {
     background-color: #ffffff !important;
+
 }
 .password-validation-message {
     font-size: 12px;
@@ -1226,13 +1227,6 @@
 
 }
 
-/* =========================================
-   CAPPUCCINO DROPDOWN STYLING
-   Border and focus color: #351904
-========================================= */
-
-
-/* 2. SECURITY QUESTION DROPDOWNS */
 .security-setup-field .x-selectfield .x-input-wrap,
 .security-setup-field .x-selectfield .x-input-wrap-el,
 .security-setup-field.x-focused .x-input-wrap,
@@ -1310,7 +1304,6 @@
     background-image: none !important;
 }
 
-/* Menu item text */
 .x-menuitem.x-hovered *,
 .x-menuitem.x-focused *,
 .x-menuitem.x-pressed *,
@@ -1319,7 +1312,6 @@
     color: #351904 !important;
 }
 
-/* Override the actual inner menu item hover background */
 .x-menuitem.x-hovered .x-body-el,
 .x-menuitem.x-focused .x-body-el,
 .x-menuitem.x-pressed .x-body-el,
@@ -1330,7 +1322,6 @@
     color: #351904 !important;
 }
 
-/* Keep menu item text and icons brown */
 .x-menuitem.x-hovered .x-inner-el,
 .x-menuitem.x-focused .x-inner-el,
 .x-menuitem.x-checked .x-inner-el {
@@ -1338,7 +1329,7 @@
 }
 .cappuccino-pagination .cappuccino-page-arrow .x-inner-el {
     background: #FFF8ED;
-    border: 1px solid #C9A58B;
+    border: 1px solid #351904;
     border-radius: 9px;
 }
 
@@ -1348,7 +1339,7 @@
 
 .cappuccino-pagination .cappuccino-page-input .x-input-wrap-el {
     background: #FFF8ED;
-    border: 1px solid #C9A58B;
+    border: 1px solid #4e290d;
     border-radius: 9px;
 }
 
@@ -1357,3 +1348,22 @@
     font-size: 14px;
     font-weight: 600;
 }
+
+.x-keyboard-mode .x-listitem.x-focused:after {
+
+    border: 1px solid #4b3028;
+
+}
+.x-menucheckitem.x-active .x-body-el {
+    background-color: #ffffff;
+}
+.x-menuitem.x-active .x-body-el {
+    color: #f0f0f0;
+    background-color: #61422c;
+}
+
+.x-textfield .x-input-el {
+    color: #351904;
+
+}
+

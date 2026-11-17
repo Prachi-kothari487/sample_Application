@@ -519,43 +519,7 @@ Ext.define('MusicApp.view.UsersView', {
                                 keepRawData: true
                             }
                         },
-                        // listeners: {
-                        //     load: function (store, records, successful) {
-                        //         if (!successful) {
-                        //             return;
-                        //         }
-                        //
-                        //         var data = store.getProxy().getReader().rawData;
-                        //
-                        //         console.log('Pagination response:', data);
-                        //
-                        //         if (!data) {
-                        //             console.error('Pagination data not found');
-                        //             return;
-                        //         }
-                        //
-                        //         store.currentPage = data.currentPage;
-                        //         store.totalPages = data.totalPages;
-                        //
-                        //         var pageInfo = Ext.ComponentQuery.query('#usersPageInfo')[0];
-                        //         var prevButton = Ext.ComponentQuery.query('#usersPrevPage')[0];
-                        //         var nextButton = Ext.ComponentQuery.query('#usersNextPage')[0];
-                        //
-                        //         if (pageInfo) {
-                        //             pageInfo.setHtml(
-                        //                 'Page ' + data.currentPage + ' of ' + data.totalPages
-                        //             );
-                        //         }
-                        //
-                        //         if (prevButton) {
-                        //             prevButton.setDisabled(data.currentPage <= 1);
-                        //         }
-                        //
-                        //         if (nextButton) {
-                        //             nextButton.setDisabled(data.currentPage >= data.totalPages);
-                        //         }
-                        //     }
-                        // }
+
 
                         listeners: {
                             load: function (store, records, successful) {
@@ -835,71 +799,6 @@ Ext.define('MusicApp.view.UsersView', {
                     ]
                 },
 
-                // {
-                //     xtype: 'container',
-                //     layout: {
-                //         type: 'hbox',
-                //         pack: 'center',
-                //         align: 'center'
-                //     },
-                //     margin: '20 0',
-                //     items: [
-                //         {
-                //             xtype: 'button',
-                //             itemId: 'usersPrevPage',
-                //             text: 'Previous',
-                //             disabled: true,
-                //             handler: function () {
-                //                 var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
-                //
-                //                 var previousPage = store.currentPage - 1;
-                //
-                //                 var searchField = Ext.ComponentQuery.query('#usersSearchField')[0];
-                //                 var searchText = searchField ? (searchField.getValue() || '').trim() : '';
-                //
-                //                 if (previousPage >= 1) {
-                //                     store.load({
-                //                         params: {
-                //                             page: previousPage,
-                //                             size: 12,
-                //                             search: searchText
-                //                         }
-                //                     });
-                //                 }
-                //             }
-                //         },
-                //         {
-                //             xtype: 'component',
-                //             itemId: 'usersPageInfo',
-                //             html: 'Page 1',
-                //             margin: '0 15'
-                //         },
-                //         {
-                //             xtype: 'button',
-                //             itemId: 'usersNextPage',
-                //             text: 'Next',
-                //             handler: function () {
-                //                 var store = Ext.ComponentQuery.query('usersview grid')[0].getStore();
-                //
-                //                 var nextPage = store.currentPage + 1;
-                //
-                //                 var searchField = Ext.ComponentQuery.query('#usersSearchField')[0];
-                //                 var searchText = searchField ? (searchField.getValue() || '').trim() : '';
-                //
-                //                 if (nextPage <= store.totalPages) {
-                //                     store.load({
-                //                         params: {
-                //                             page: nextPage,
-                //                             size: 12,
-                //                             search: searchText
-                //                         }
-                //                     });
-                //                 }
-                //             }
-                //         }
-                //     ]
-                // }
-
                 {
                     xtype: 'container',
                     itemId: 'usersPagination',
@@ -915,8 +814,6 @@ Ext.define('MusicApp.view.UsersView', {
                     },
 
                     items: [
-
-                        // Previous Arrow
                         {
                             xtype: 'button',
                             itemId: 'usersPrevPage',
@@ -936,14 +833,13 @@ Ext.define('MusicApp.view.UsersView', {
                                 }
                             }
                         },
-
-                        // Page Number Input
                         {
                             xtype: 'numberfield',
                             itemId: 'usersPageInput',
                             value: 1,
                             minValue: 1,
-                            width: 75,
+                            clearable: false,
+                            width: 50,
                             height: 40,
                             cls: 'cappuccino-page-input',
                             margin: '0 10',
