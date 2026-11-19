@@ -135,11 +135,15 @@ public class RoleBasedAccessInterceptor implements HandlerInterceptor {
             boolean isSearchRequest =
                     "POST".equalsIgnoreCase(method)
                             && "/api/songs/search".equals(path);
-
+            boolean isLikeAction =
+                    path.matches("/api/songs/\\d+/like") &&
+                            ("POST".equalsIgnoreCase(method) ||
+                                    "DELETE".equalsIgnoreCase(method));
             boolean isAdmin =
                     "ADMIN".equalsIgnoreCase(role);
 
-            if (!isReadRequest && !isSearchRequest && !isAdmin) {
+            if (!isReadRequest && !isSearchRequest && !isAdmin &&
+                    !isLikeAction) {
 
                 response.sendError(
                         HttpServletResponse.SC_FORBIDDEN,

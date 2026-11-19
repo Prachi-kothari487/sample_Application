@@ -97,16 +97,21 @@ Ext.define('MusicApp.view.ForgotPasswordView', {
                                 email: values.email
                             })
                         })
+
                             .then(function (response) {
-                                return response.json().then(function (data) {
-                                    if (!response.ok) {
+
+                                if (!response.ok) {
+                                    return response.text().then(function (message) {
+
                                         throw new Error(
-                                            data.message || 'Unable to process request.'
+                                            'This Account does not exists!!'
                                         );
-                                    }
-                                    return data;
-                                });
+                                    });
+                                }
+
+                                return response.json();
                             })
+
                             .then(function (questions) {
                                 Ext.Viewport.removeAll(true);
 

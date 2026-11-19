@@ -234,6 +234,20 @@ public class UserService {
                 user.getStatus()
         );
     }
+
+    public int getUserIdByUsername(String username) {
+
+        User user = userDao.findByName(username);
+
+        if (user == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "User not found"
+            );
+        }
+
+        return user.getId();
+    }
     public boolean emailExists(String email) {
         if (email == null || email.isBlank()) {
             return false;

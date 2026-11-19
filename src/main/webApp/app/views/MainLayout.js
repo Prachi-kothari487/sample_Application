@@ -35,7 +35,8 @@ Ext.define('MusicApp.view.MainLayout', {
             'dashboardview',
             'usersview',
             'songsview',
-            'profileview'
+            'profileview',
+            'likedsongsview'
         ];
 
         if (allowedPages.indexOf(savedPage) !== -1) {
@@ -45,7 +46,8 @@ Ext.define('MusicApp.view.MainLayout', {
         }
     },
 
-    showPage: function (pageXtype) {
+
+    showPage: function (pageXtype, pageData) {
 
         console.log('Requested page:', pageXtype);
 
@@ -58,9 +60,15 @@ Ext.define('MusicApp.view.MainLayout', {
 
         pageContainer.removeAll(true);
 
-        var newPage = Ext.create({
+        var pageConfig = {
             xtype: pageXtype
-        });
+        };
+
+        if (pageXtype === 'playlistdetailsview' && pageData) {
+            pageConfig.playlist = pageData;
+        }
+
+        var newPage = Ext.create(pageConfig);
 
         pageContainer.add(newPage);
 
@@ -68,4 +76,5 @@ Ext.define('MusicApp.view.MainLayout', {
 
         console.log('Page loaded:', pageXtype);
     }
+
 });

@@ -1367,3 +1367,131 @@
 
 }
 
+
+/* Playlist cards */
+.cappuccino-playlist-card {
+    background-color: #FFF8ED !important;
+    border: 1px solid #C9A58B !important;
+    border-radius: 12px !important;
+}
+
+.cappuccino-playlist-card .x-body {
+    background-color: transparent !important;
+}
+
+.playlist-card-icon {
+    font-size: 30px;
+    color: #B77B52;
+}
+
+.playlist-card-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #4B3028;
+}
+
+.playlist-card-description {
+    font-size: 13px;
+    color: #9A8575;
+    margin-top: 7px;
+}
+
+.playlist-card-footer {
+    font-size: 12px;
+    color: #8B6248;
+}
+
+.playlist-empty-state {
+    text-align: center;
+    padding: 55px 20px;
+}
+
+.playlist-empty-icon {
+    font-size: 42px;
+    color: #B77B52;
+    margin-bottom: 12px;
+}
+
+.playlist-empty-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4B3028;
+}
+
+.playlist-empty-description {
+    font-size: 14px;
+    color: #9A8575;
+    margin-top: 10px;
+}
+
+.playlist-card-song-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 7px 0;
+    border-bottom: 1px solid #E8D8C8;
+    color: #4B3028;
+    font-size: 13px;
+}
+
+.playlist-card-song-artist {
+    color: #9A8575;
+    font-size: 11px;
+    padding-left: 18px;
+}
+
+.playlist-card-more {
+    color: #B77B52;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 9px;
+}
+.playlist-detail-song-card {
+    background: #FFFAF4;
+    border: 1px solid #C9A58B;
+    border-radius: 12px;
+}
+
+.playlist-detail-song-title {
+    color: #4B3028;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.playlist-detail-song-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #8A7161;
+    font-size: 13px;
+}
+.cappuccino-remove-song-button {
+    background: #F5EBDD;
+    border: 1px solid #C9A58B;
+    border-radius: 8px;
+    color: #8B4A3A;
+    font-weight: 600;
+}
+
+.cappuccino-remove-song-button .x-button-label {
+    color: #8B4A3A;
+}
+.cappuccino-songs-grid .x-gridcell[ data-columnid="likeSongColumn" ] {
+    color: #A65353;
+}
+.liked-song-heart {
+    color: #B77B52 !important;
+}
+
+.unliked-song-heart {
+    color: #9B8275 !important;
+}
+.liked-song-heart {
+    color: #B77B52 !important;
+    opacity: 1;
+}
+
+.unliked-song-heart {
+    color: #9B8275 !important;
+    opacity: 0.55;
+}

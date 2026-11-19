@@ -225,7 +225,17 @@ Ext.define('MusicApp.view.SongsView', {
                     xtype: 'grid',
                     itemId: 'songsGrid',
                     cls: 'cappuccino-songs-grid',
-
+                    itemConfig: {
+                        viewModel: {
+                            formulas: {
+                                likeIconCls: function (get) {
+                                    return get('record.isLiked')
+                                        ? 'x-fa fa-heart liked-song-heart'
+                                        : 'x-fa fa-heart unliked-song-heart';
+                                }
+                            }
+                        }
+                    },
                     width: '100%',
                     minHeight: 350,
                     margin: '16 0 0 0',
@@ -237,7 +247,8 @@ Ext.define('MusicApp.view.SongsView', {
                             'artist',
                             'album',
                             'genre',
-                            'year'
+                            'year',
+                            'isLiked'
                         ],
 
                         autoLoad: true,
@@ -280,6 +291,8 @@ Ext.define('MusicApp.view.SongsView', {
                                 var songsView = Ext.ComponentQuery.query('songsview')[0];
 
                                 if (songsView) {
+                                    songsView.applyLikedState(records);
+
                                     songsView.updateSongsPagination(
                                         data.currentPage,
                                         data.totalPages
@@ -320,6 +333,263 @@ Ext.define('MusicApp.view.SongsView', {
                             dataIndex: 'year',
                             width: 90
                         },
+
+                        {
+                            itemId: 'playlistActionsColumn',
+                            text: 'Playlist',
+                            width: 155,
+
+                            cell: {
+                                tools: {
+                                    addToPlaylist: {
+                                        iconCls: 'x-fa fa-plus-circle',
+                                        text: 'Add to Playlist',
+
+                                        handler: function (grid, location) {
+
+                                            var record = location.record;
+                                            var songId = record.get('id');
+
+
+                                            fetch('/sample-application/api/playlists', {
+                                                method: 'GET',
+                                                credentials: 'same-origin'
+                                            })
+                                                .then(function (response) {
+                                                    if (!response.ok) {
+                                                        throw new Error('Unable to load your playlists.');
+                                                    }
+
+                                                    return response.json();
+                                                })
+                                                .then(function (playlists) {
+
+                                                    if (!playlists || playlists.length === 0) {
+                                                        Ext.Msg.alert(
+                                                            'No Playlists',
+                                                            'You have not created any playlists yet. Please create a playlist first.'
+                                                        );
+                                                        return;
+                                                    }
+
+
+                                                    var playlistOptions = playlists.map(function (playlist) {
+                                                        return {
+                                                            text: playlist.name,
+                                                            value: playlist.id
+                                                        };
+                                                    });
+
+
+                                                    var form = Ext.create('Ext.form.Panel', {
+                                                        bodyPadding: 20,
+
+                                                        items: [
+                                                            {
+                                                                xtype: 'selectfield',
+                                                                name: 'playlistId',
+                                                                label: 'Choose Playlist',
+                                                                labelAlign: 'top',
+                                                                placeholder: 'Select a playlist',
+                                                                required: true,
+                                                                options: playlistOptions,
+                                                                value: playlists.length > 0 ? playlists[0].id : null
+                                                            }
+                                                        ]
+                                                    });
+
+                                                    var dialog = Ext.create('Ext.Dialog', {
+                                                        title: 'Add Song to Playlist',
+                                                        width: 380,
+                                                        modal: true,
+                                                        closable: true,
+                                                        cls: 'cappuccino-form-dialog',
+
+                                                        items: [form],
+
+                                                        buttons: [
+                                                            {
+                                                                text: 'Cancel',
+                                                                ui: 'plain',
+                                                                cls: 'cappuccino-dialog-cancel',
+
+                                                                handler: function () {
+                                                                    dialog.destroy();
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Add',
+                                                                ui: 'plain',
+                                                                cls: 'cappuccino-dialog-save',
+
+                                                                handler: function () {
+
+                                                                    var playlistId =
+                                                                        form.down('selectfield').getValue();
+
+                                                                    if (!playlistId) {
+                                                                        Ext.Msg.alert(
+                                                                            'Validation',
+                                                                            'Please select a playlist.'
+                                                                        );
+                                                                        return;
+                                                                    }
+
+
+                                                                    fetch(
+                                                                        '/sample-application/api/playlists/' +
+                                                                        playlistId + '/songs',
+                                                                        {
+                                                                            method: 'POST',
+
+                                                                            headers: {
+                                                                                'Content-Type': 'application/json'
+                                                                            },
+
+                                                                            credentials: 'same-origin',
+
+                                                                            body: JSON.stringify({
+                                                                                songId: songId
+                                                                            })
+                                                                        }
+                                                                    )
+                                                                        .then(function (response) {
+                                                                            if (!response.ok) {
+                                                                                throw new Error(
+                                                                                    'Unable to add this song. It may already exist in the selected playlist.'
+                                                                                );
+                                                                            }
+
+                                                                            return response;
+                                                                        })
+                                                                        .then(function () {
+
+                                                                            dialog.destroy();
+
+                                                                            Ext.Msg.alert(
+                                                                                'Success',
+                                                                                'Song added to your playlist successfully!',
+                                                                                null,
+                                                                                {
+                                                                                    cls: 'cappuccino-alert'
+                                                                                }
+                                                                            );
+                                                                        })
+                                                                        .catch(function (error) {
+                                                                            Ext.Msg.alert(
+                                                                                'Error',
+                                                                                error.message,
+                                                                                null,
+                                                                                {
+                                                                                    cls: 'cappuccino-alert'
+                                                                                }
+                                                                            );
+                                                                        });
+                                                                }
+                                                            }
+                                                        ]
+                                                    });
+
+                                                    dialog.show();
+                                                })
+                                                .catch(function (error) {
+                                                    Ext.Msg.alert(
+                                                        'Error',
+                                                        error.message,
+                                                        null,
+                                                        {
+                                                            cls: 'cappuccino-alert'
+                                                        }
+                                                    );
+                                                });
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            itemId: 'likeSongColumn',
+                            text: 'Like',
+                            width: 90,
+
+                            cell: {
+                                tools: {
+                                    like: {
+                                        bind: {
+                                            iconCls: '{likeIconCls}'
+                                        },
+
+                                        text: 'Like / Unlike',
+
+                                        handler: function (grid, location) {
+
+                                            var record = location.record;
+                                            var songId = record.get('id');
+                                            var isLiked = record.get('isLiked');
+
+                                            var method = isLiked ? 'DELETE' : 'POST';
+
+                                            fetch(
+                                                '/sample-application/api/songs/' + songId + '/like',
+                                                {
+                                                    method: method,
+                                                    credentials: 'same-origin'
+                                                }
+                                            )
+                                                .then(function (response) {
+
+                                                    if (!response.ok) {
+                                                        throw new Error(
+                                                            isLiked
+                                                                ? 'Unable to remove this song from Liked Songs.'
+                                                                : 'Unable to add this song to Liked Songs.'
+                                                        );
+                                                    }
+
+                                                    var songsView = Ext.ComponentQuery.query('songsview')[0];
+
+                                                    if (songsView) {
+
+                                                        var songKey = String(songId);
+
+                                                        if (isLiked) {
+                                                            delete songsView.likedSongIds[songKey];
+                                                        } else {
+                                                            songsView.likedSongIds[songKey] = true;
+                                                        }
+                                                    }
+
+                                                    record.set('isLiked', !isLiked);
+                                                    Ext.Msg.alert(
+                                                        'Success',
+                                                        isLiked
+                                                            ? 'Song removed from Liked Songs!'
+                                                            : 'Song added to Liked Songs!',
+                                                        null,
+                                                        {
+                                                            cls: 'cappuccino-alert'
+                                                        }
+                                                    );
+                                                })
+                                                .catch(function (error) {
+
+                                                    console.error('Like/Unlike error:', error);
+
+                                                    Ext.Msg.alert(
+                                                        'Error',
+                                                        error.message,
+                                                        null,
+                                                        {
+                                                            cls: 'cappuccino-alert'
+                                                        }
+                                                    );
+                                                });
+                                        }
+                                    }
+                                }
+                            }
+                        },
+
                         {
                             itemId:'songActionsColumn',
                             hidden:true,
@@ -643,7 +913,21 @@ Ext.define('MusicApp.view.SongsView', {
             ]
         }
     ],
+    applyLikedState: function (records) {
 
+        var view = this;
+        var likedSongIds = view.likedSongIds || {};
+
+        records.forEach(function (record) {
+
+            var songId = record.get('id');
+
+            record.set(
+                'isLiked',
+                !!likedSongIds[String(songId)]
+            );
+        });
+    },
 
 loadSongsPage: function (page) {
 
@@ -721,7 +1005,49 @@ updateSongsPagination: function (currentPage, totalPages) {
 
     initialize: function () {
         this.callParent(arguments);
+        var view = this;
 
+        view.likedSongIds = Object.create(null);
+
+        fetch('/sample-application/api/songs/liked', {
+            method: 'GET',
+            credentials: 'same-origin'
+        })
+            .then(function (response) {
+
+                if (!response.ok) {
+                    throw new Error('Unable to load liked songs.');
+                }
+
+                return response.json();
+            })
+            .then(function (data) {
+
+                var likedSongs = Array.isArray(data)
+                    ? data
+                    : (data.songs || data.data || []);
+
+                likedSongs.forEach(function (song) {
+
+                    var songId = song.id || song.songId ||
+                        (song.song && song.song.id);
+
+                    if (songId != null) {
+                        view.likedSongIds[String(songId)] = true;
+                    }
+                });
+
+                var grid = view.down('#songsGrid');
+
+                if (grid) {
+                    view.applyLikedState(grid.getStore().getRange());
+                }
+
+                console.log('Liked song IDs:', view.likedSongIds);
+            })
+            .catch(function (error) {
+                console.error('Unable to load liked songs:', error);
+            });
         var addButton = this.down('#addSongButton');
         var actionColumn = this.down('#songActionsColumn');
 
@@ -745,6 +1071,16 @@ updateSongsPagination: function (currentPage, totalPages) {
 
                 if (actionColumn) {
                     actionColumn.setHidden(!isAdmin);
+                }
+                var playlistColumn = view.down('#playlistActionsColumn');
+                var likeColumn = view.down('#likeSongColumn');
+
+                if (playlistColumn) {
+                    playlistColumn.setHidden(isAdmin);
+                }
+
+                if (likeColumn) {
+                    likeColumn.setHidden(isAdmin);
                 }
 
                 console.log('SongsView role:', role);

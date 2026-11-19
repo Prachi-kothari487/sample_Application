@@ -43,6 +43,28 @@ Ext.define('MusicApp.view.Sidebar', {
         },
         {
             xtype: 'button',
+            text: '▣   My Playlists',
+            itemId: 'playlistsNavButton',
+            cls:'dashboard-nav-button',
+            margin: '8 0',
+            handler: function (button){
+                button.up('mainlayout').showPage('myplaylistsview');
+            }
+
+        },
+        {
+            xtype: 'button',
+            text:'♥   Liked Songs',
+            itemId: 'likedSongsNavButton',
+            cls:'dashboard-nav-button',
+            margin: '8 0',
+            handler:function (button){
+                button.up('mainlayout').showPage('likedsongsview');
+            }
+
+        },
+        {
+            xtype: 'button',
             text: '♙   Profile',
             cls: 'dashboard-nav-button',
             margin: '8 0',
@@ -103,7 +125,8 @@ Ext.define('MusicApp.view.Sidebar', {
         this.callParent(arguments);
 
         const usersButton = this.down('#usersNavButton');
-
+        const playlistsButton = this.down('#playlistsNavButton');
+        const likedSongsButton = this.down('#likedSongsNavButton');
         fetch('/sample-application/api/auth/role', {
             method: 'GET',
             credentials: 'same-origin'
@@ -117,8 +140,11 @@ Ext.define('MusicApp.view.Sidebar', {
             .then(data => {
                 const role = (data.role || '').trim().toUpperCase();
 
-                usersButton.setHidden(role !== 'ADMIN');
+                var isAdmin = role === 'ADMIN';
 
+                usersButton.setHidden(!isAdmin);
+                playlistsButton.setHidden(isAdmin);
+                likedSongsButton.setHidden(isAdmin);
                 console.log('Logged-in role:', role);
             })
             .catch(error => {
